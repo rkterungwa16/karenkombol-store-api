@@ -18,12 +18,8 @@
     "forceConsistentCasingInFileNames": false,
     "noFallthroughCasesInSwitch": false,
     "paths": {
-      "@database/database": [
-        "libs/database/src"
-      ],
-      "@database/database/*": [
-        "libs/database/src/*"
-      ]
+      "@database": ["src/database"],
+      "@config": ["src/config"]
     }
   }
 }
