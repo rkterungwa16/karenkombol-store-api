@@ -22,7 +22,10 @@ export class User extends Document {
   @Prop()
   avatar: string;
 
-  @Prop()
+  @Prop({
+    type: String,
+    enum: [UserStatus.ACTIVE, UserStatus.BLOCKED, UserStatus.INACTIVE],
+  })
   status: UserStatus;
 
   @Prop({ type: [Types.ObjectId], ref: 'Role' })
