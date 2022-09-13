@@ -12,11 +12,12 @@ export enum UserRoles {
 }
 
 export interface IUser extends Document {
+  readonly id: string;
   readonly firstName: string;
   readonly lastName: string;
   readonly email: string;
   readonly company: string;
-  readonly account: string;
+  // readonly account: string;
   readonly avatar: string;
   readonly status: UserStatus;
   // readonly createdAt: string;

@@ -19,7 +19,7 @@ export class CreateUserRequestDto {
   @ApiProperty({
     example: 'karenkombol-ateliers',
   })
-  readonly companyName: string;
+  companyName: string;
 
   @IsString()
   @IsEmail()
@@ -27,7 +27,7 @@ export class CreateUserRequestDto {
   @ApiProperty({
     example: 'karen@karenkombol-ateliers.com',
   })
-  readonly email: string;
+  email: string;
 
   @Matches(passwordRegex, { message: 'Password too weak' })
   @IsNotEmpty()
