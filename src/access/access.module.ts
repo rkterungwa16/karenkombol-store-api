@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { PermissionModule } from './permissions/permission.module';
+import { PermissionModule } from './permission/permission.module';
 import { RoleModule } from './role/role.module';
 
 @Module({
