@@ -5,7 +5,7 @@ export class UserMapper {
   public static async toDto(model: User): Promise<UserResponseDto> {
     const dto = new UserResponseDto();
 
-    dto.id = model.id;
+    dto.id = model._id;
     dto.firstName = model.firstName;
     dto.lastName = model.lastName;
     dto.email = model.email;

@@ -13,6 +13,9 @@ export class User extends Document {
   @Prop({ unique: true })
   email: string;
 
+  @Prop()
+  password: string;
+
   // @Prop({ type: Types.ObjectId, ref: 'Company' })
   // company: string;
 

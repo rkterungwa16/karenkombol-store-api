@@ -15,6 +15,7 @@ export interface IUser extends Document {
   readonly id: string;
   readonly firstName: string;
   readonly lastName: string;
+  readonly password: string;
   readonly email: string;
   readonly company: string;
   // readonly account: string;

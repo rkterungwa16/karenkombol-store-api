@@ -5,6 +5,7 @@ import { AppService } from './app.service';
 import { DatabaseModule } from './database/database.module';
 import { UsersModule } from './user/user.module';
 import { AccessModule } from './access/access.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -14,6 +15,7 @@ import { AccessModule } from './access/access.module';
     DatabaseModule,
     UsersModule,
     AccessModule,
+    AuthModule,
   ],
 })
 export class AppModule {
