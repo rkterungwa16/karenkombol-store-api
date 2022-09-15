@@ -1,6 +1,6 @@
 import { Schema, Prop, SchemaFactory } from '@nestjs/mongoose';
 import { Document, Types } from 'mongoose';
-import { UserStatus } from '../interfaces/user.interface';
+import { UserStatus } from '../enums';
 
 @Schema()
 export class User extends Document {
@@ -16,8 +16,8 @@ export class User extends Document {
   @Prop()
   password: string;
 
-  // @Prop({ type: Types.ObjectId, ref: 'Company' })
-  // company: string;
+  @Prop({ type: Types.ObjectId, ref: 'Company' })
+  company: string;
 
   // @Prop({ type: Types.ObjectId, ref: 'Account' })
   // account: string;

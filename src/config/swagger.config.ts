@@ -15,5 +15,5 @@ export const SwaggerConfig = (app: INestApplication, apiVersion: string) => {
 
   const document = SwaggerModule.createDocument(app, options);
 
-  SwaggerModule.setup(`api/v${apiVersion}/swagger`, app, document);
+  SwaggerModule.setup(`api/v${apiVersion}`, app, document);
 };

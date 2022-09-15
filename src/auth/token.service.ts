@@ -3,7 +3,7 @@ import { JwtService } from '@nestjs/jwt';
 import { Model } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
 import { Injectable, Logger } from '@nestjs/common';
-import { UserStatus } from '@user/interfaces/user.interface';
+import { UserStatus } from '@user/enums';
 
 import { User } from '@user/schemas/user.schema';
 import {

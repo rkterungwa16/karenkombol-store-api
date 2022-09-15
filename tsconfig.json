@@ -23,7 +23,8 @@
       "@helpers": ["src/helpers"],
       "@access/*": ["src/access/*"],
       "@user/*": ["src/user/*"],
-      "@http/*": ["src/http/*"]
+      "@http/*": ["src/http/*"],
+      "@company/*": ["src/company/*"]
     }
   }
 }
