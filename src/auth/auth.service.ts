@@ -33,8 +33,6 @@ export class AuthService {
       email,
     });
 
-    const userDto = await UserMapper.toDto(user);
-
     if (!user) {
       throw new InvalidCredentialsException();
     }
@@ -50,6 +48,10 @@ export class AuthService {
     if (user.status == UserStatus.INACTIVE) {
       throw new DisabledUserException(ErrorType.InactiveUser);
     }
+
+    const userDto = await UserMapper.toDto(
+      await (await user.populate('company')).populate('roles'),
+    );
 
     const payload: JwtPayload = { id: userDto.id, email };
     const token = await this.tokenService.generateAuthToken(payload);
