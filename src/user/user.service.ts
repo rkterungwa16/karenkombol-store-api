@@ -2,40 +2,71 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { Model } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
 import { HashHelper } from '@helpers';
-import { CreateUserRequestDto, UserResponseDto } from './dto';
+import { CreateUserRequestDto, UserResponseDto, CreateUserDto } from './dto';
 import { User } from './schemas/user.schema';
 import { Company } from '@company/schema/company.schema';
 import { UserMapper } from './user.mapper';
+import { Role } from '@access/role/schemas/role.schema';
+import { Permission } from '@access/permission/schema/permission.schema';
+import { UserExistsException, CompanyExistsException } from '@http/exceptions';
+import {
+  PermissionResources,
+  PermissionActions,
+} from '@access/permission/interfaces/permission.interface';
+import { UserStatus } from './enums';
 
 @Injectable()
 export class UsersService {
   constructor(
     @InjectModel(User.name) private readonly userModel: Model<User>,
     @InjectModel(Company.name) private readonly companyModel: Model<Company>,
+    @InjectModel(Role.name) private readonly roleModel: Model<Role>,
+    @InjectModel(Permission.name)
+    private readonly permissionModel: Model<Permission>,
   ) {}
   public async create(
-    createUserDto: CreateUserRequestDto,
+    createUserRequestDto: CreateUserRequestDto,
   ): Promise<UserResponseDto> {
+    const createUserDto = new CreateUserDto();
     const userExists = await this.userModel.findOne({
-      email: createUserDto.email,
+      email: createUserRequestDto.email,
     });
     if (userExists) {
-      // throw error
+      throw new UserExistsException(createUserRequestDto.email);
     }
     const companyExists = await this.companyModel.findOne({
-      name: createUserDto.companyName,
+      name: createUserRequestDto.companyName,
     });
     if (companyExists) {
-      // throw error.
+      // Find the super-admin to send an invite
+      // Super admin can assign invite roles to any other individual.
+      throw new CompanyExistsException(createUserRequestDto.companyName);
     }
-    createUserDto.password = await HashHelper.encrypt(createUserDto.password);
+    const newCompany = await this.companyModel.create({
+      name: createUserRequestDto.companyName,
+    });
+    const newPermission = await this.permissionModel.create({
+      resource: PermissionResources.ALL,
+      actions: [...Object.values(PermissionActions)],
+      company: newCompany._id,
+    });
+    const newRole = await this.roleModel.create({
+      name: 'super-admin',
+      company: newCompany._id,
+      permissions: [newPermission._id],
+    });
+
+    createUserDto.password = await HashHelper.encrypt(
+      createUserRequestDto.password,
+    );
+    createUserDto.company = newCompany._id;
+    createUserDto.email = createUserRequestDto.email;
+    createUserDto.roles = [newRole._id];
+    createUserDto.status = UserStatus.ACTIVE;
     const newUser = await this.userModel.create(createUserDto);
-    // Check if company name exists.
-    // Create company
-    // Check if user exists with email
-    // Check if company exists
-    // Create company with email
-    // Check if company exists with this email
-    return UserMapper.toDto(newUser);
+
+    return UserMapper.toDto(
+      await (await newUser.populate('company')).populate('roles'),
+    );
   }
 }

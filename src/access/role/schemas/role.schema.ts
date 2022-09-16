@@ -6,6 +6,9 @@ export class Role extends Document {
   @Prop()
   name: string;
 
+  @Prop({ type: Types.ObjectId, ref: 'Company' })
+  company: string;
+
   @Prop({ type: [Types.ObjectId], ref: 'Permission' })
   permissions: string[];
 }

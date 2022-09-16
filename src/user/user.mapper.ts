@@ -12,6 +12,7 @@ export class UserMapper {
     dto.avatar = model.avatar;
     dto.roles = model.roles;
     dto.status = model.status;
+    dto.company = model.company;
     return dto;
   }
 }

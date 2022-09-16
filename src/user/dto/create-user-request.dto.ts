@@ -3,7 +3,7 @@ import {
   IsNotEmpty,
   IsEmail,
   IsString,
-  IsOptional,
+  Contains,
   Matches,
   Length,
   IsAlphanumeric,
@@ -12,6 +12,7 @@ import {
 import { ApiProperty } from '@nestjs/swagger';
 
 const passwordRegex = /((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/;
+const specialCharacters = /[ !@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/g;
 export class CreateUserRequestDto {
   @IsString()
   @MaxLength(30)
@@ -31,7 +32,9 @@ export class CreateUserRequestDto {
 
   @Matches(passwordRegex, { message: 'Password too weak' })
   @IsNotEmpty()
-  @IsAlphanumeric()
+  @Matches(specialCharacters, {
+    message: 'password must contain special characters',
+  })
   @Length(6, 20)
   @ApiProperty({
     example: 'Hello123',
