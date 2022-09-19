@@ -37,6 +37,9 @@ export class UsersService {
     const companyExists = await this.companyModel.findOne({
       name: createUserRequestDto.companyName,
     });
+    // Send invite link to user via email
+    // user clicks on the link to open create account form with company name displayed as a disabled input
+    // user enters email and password
     if (companyExists) {
       // Find the super-admin to send an invite
       // Super admin can assign invite roles to any other individual.

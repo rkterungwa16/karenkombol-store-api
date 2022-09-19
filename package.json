@@ -76,11 +76,16 @@
     "coverageDirectory": "./coverage",
     "testEnvironment": "node",
     "roots": [
-      "<rootDir>/src/",
-      "<rootDir>/libs/"
+      "<rootDir>/src/"
     ],
     "moduleNameMapper": {
-      "^@database/database(|/.*)$": "<rootDir>/libs/database/src/$1"
+      "^@database/(.*)": ["<rootDir>/src/database/$1"],
+      "^@config": ["<rootDir>/src/config"],
+      "^@helpers": ["<rootDir>/src/helpers"],
+      "^@access/(.*)": ["<rootDir>/src/access/$1"],
+      "^@user/(.*)": ["<rootDir>/src/user/$1"],
+      "^@http/(.*)": ["<rootDir>/src/http/$1"],
+      "^@company/(.*)": ["<rootDir>/src/company/$1"]
     }
   }
 }
