@@ -13,6 +13,7 @@ import {
 import { User } from './schemas/user.schema';
 
 import { DatabaseModule } from '@database/database.module';
+import { UserExistsException } from '@http/exceptions';
 
 describe('UsersService', () => {
   let service: UsersService;
@@ -56,7 +57,7 @@ describe('UsersService', () => {
   it('user model should be defined', () => {
     expect(model).toBeDefined();
   });
-  it('should test user service', async () => {
+  it('should create user', async () => {
     const exampleCreatedUser = {
       companyName: 'example',
       email: 'test@example.com',
@@ -71,5 +72,21 @@ describe('UsersService', () => {
     });
 
     expect(createdUser.email).toEqual('test@example.com');
+  });
+  it('should throw exeception for existing user', async () => {
+    const exampleCreatedUser = {
+      companyName: 'example',
+      email: 'test@example.com',
+      password: '@Test12345',
+    };
+    jest.spyOn(model, 'findOne').mockReturnValueOnce({
+      ...exampleCreatedUser,
+    } as any);
+
+    await expect(
+      service.create({
+        ...exampleCreatedUser,
+      }),
+    ).rejects.toThrow(new UserExistsException(exampleCreatedUser.email));
   });
 });

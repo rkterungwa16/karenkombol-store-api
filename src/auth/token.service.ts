@@ -13,7 +13,6 @@ import {
 } from '@http/exceptions';
 import { ValidateTokenResponseDto, JwtPayload, TokenDto } from './dtos';
 import { TokenError, TokenType } from './enums';
-
 @Injectable()
 export class TokenService {
   constructor(
@@ -29,10 +28,10 @@ export class TokenService {
     const refreshTokenExpires = this.configService.get(
       'REFRESH_TOKEN_EXPIRES_IN',
     );
+
     const tokenType = this.configService.get('TOKEN_TYPE');
     const accessToken = this.generateToken(payload, accessTokenExpires);
     const refreshToken = this.generateToken(payload, refreshTokenExpires);
-
     return {
       tokenType,
       accessToken,
@@ -89,7 +88,11 @@ export class TokenService {
   }
 
   private generateToken(payload: JwtPayload, expiresIn: string): string {
-    const token = this.jwtService.sign(payload, { expiresIn });
+    const token = this.jwtService.sign(payload, {
+      expiresIn,
+      secret: this.configService.get('TOKEN_SECRET'),
+      algorithm: 'HS256',
+    });
     return token;
   }
 }
