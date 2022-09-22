@@ -1,7 +1,6 @@
-import { ConfigModule, ConfigService } from '@nestjs/config';
-import { MongooseModule } from '@nestjs/mongoose';
+import { ConfigService, ConfigModule } from '@nestjs/config';
 
-const mongodbConnection = (configService: ConfigService) => {
+export const mongodbConnection = (configService: ConfigService) => {
   const mapMongodbUrl = {
     development: configService.get<string>('DEV_DATABASE_URL'),
     production: configService.get<string>('PROD_DATABASE_URL'),
@@ -14,10 +13,8 @@ const mongodbConnection = (configService: ConfigService) => {
   };
 };
 
-export const databaseProviders = [
-  MongooseModule.forRootAsync({
-    imports: [ConfigModule],
-    useFactory: mongodbConnection,
-    inject: [ConfigService],
-  }),
-];
+export const mongodbService = {
+  imports: [ConfigModule],
+  useFactory: mongodbConnection,
+  inject: [ConfigService],
+};

@@ -1,7 +1,8 @@
 import { Module } from '@nestjs/common';
-import { databaseProviders } from './database.service';
+import { MongooseModule } from '@nestjs/mongoose';
 
+import { mongodbService } from './database.service';
 @Module({
-  imports: [...databaseProviders],
+  imports: [MongooseModule.forRootAsync(mongodbService)],
 })
 export class DatabaseModule {}
