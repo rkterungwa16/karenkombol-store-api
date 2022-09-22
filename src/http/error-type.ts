@@ -43,4 +43,5 @@ export enum ErrorType {
   BlockedUser = 'BLOCKED_USER',
   InactiveUser = 'INACTIVE_USER',
   ForeignKeyConflict = 'FOREIGN_KEY_CONFLICT',
+  DisabledUserException = 'DISABLED_USER',
 }
