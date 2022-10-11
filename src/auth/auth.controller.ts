@@ -51,6 +51,8 @@ export class AuthController {
         // Valid for 30 day
         maxAge: 24 * 60 * 60 * 1000,
         httpOnly: true,
+        secure: true,
+        sameSite: 'strict',
       })
       .status(HttpStatus.OK);
     return {
@@ -74,6 +76,8 @@ export class AuthController {
         // Valid for 30 day
         maxAge: 24 * 60 * 60 * 1000,
         httpOnly: true,
+        secure: true,
+        sameSite: 'strict',
       })
       .status(HttpStatus.OK);
     return {
