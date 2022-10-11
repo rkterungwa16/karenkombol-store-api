@@ -25,6 +25,7 @@ import {
 } from './dtos';
 import { TokenService } from './token.service';
 import { AuthService } from './auth.service';
+import { CookieNames } from './enums';
 
 @ApiTags('Auth')
 @Controller({
@@ -48,7 +49,7 @@ export class AuthController {
   ): Promise<LoginResponseDto> {
     const token = await this.authService.login(authCredentialsDto);
     response
-      .cookie('x-refresh-token', token.refreshToken, {
+      .cookie(CookieNames.REFRESH_TOKEN, token.refreshToken, {
         // Valid for 30 day
         maxAge: 24 * 60 * 60 * 1000,
         httpOnly: true,
