@@ -6,6 +6,7 @@ import {
   Body,
   Res,
   HttpStatus,
+  Req,
 } from '@nestjs/common';
 import {
   ApiInternalServerErrorResponse,
@@ -47,7 +48,7 @@ export class AuthController {
   ): Promise<LoginResponseDto> {
     const token = await this.authService.login(authCredentialsDto);
     response
-      .cookie('x-session-token', token.refreshToken, {
+      .cookie('x-refresh-token', token.refreshToken, {
         // Valid for 30 day
         maxAge: 24 * 60 * 60 * 1000,
         httpOnly: true,
@@ -65,21 +66,9 @@ export class AuthController {
   @ApiUnauthorizedResponse({ description: 'Refresh token invalid or expired' })
   @ApiInternalServerErrorResponse({ description: 'Server error' })
   @Post('/token/refresh')
-  async getNewToken(
-    @Body(ValidationPipe) refreshTokenDto: RefreshTokenRequestDto,
-    @Res({ passthrough: true }) response: Response,
-  ): Promise<LoginResponseDto> {
-    const { refreshToken } = refreshTokenDto;
+  async getNewToken(@Req() request: Request): Promise<LoginResponseDto> {
+    const refreshToken = request.cookies('x-refresh-token');
     const token = await this.tokenService.generateRefreshToken(refreshToken);
-    response
-      .cookie('x-session-token', token.refreshToken, {
-        // Valid for 30 day
-        maxAge: 24 * 60 * 60 * 1000,
-        httpOnly: true,
-        secure: true,
-        sameSite: 'strict',
-      })
-      .status(HttpStatus.OK);
     return {
       accessToken: token.accessToken,
     };
