@@ -21,6 +21,7 @@ import { UserStatus } from '@user/enums';
 
 describe('AuthService', () => {
   let service: AuthService;
+  let tokenService: TokenService;
   let model: Model<User>;
 
   beforeEach(async () => {
@@ -45,6 +46,7 @@ describe('AuthService', () => {
 
     service = module.get<AuthService>(AuthService);
     model = module.get<Model<User>>(getModelToken('User'));
+    tokenService = module.get<TokenService>(TokenService);
   });
 
   it('should be defined', () => {
@@ -62,11 +64,17 @@ describe('AuthService', () => {
       ...exampleLoggedInUser,
       password: await HashHelper.encrypt('@Test12345'),
     } as any);
+    jest.spyOn(tokenService, 'generateAuthToken').mockReturnValue({
+      accessToken: 'loggedToken',
+      accessTokenExpires: 1,
+      tokenType: '',
+      refreshToken: '',
+    });
     const createdUser = await service.login({
       ...exampleLoggedInUser,
     });
 
-    expect(createdUser.user.email).toEqual('test@example.com');
+    expect(createdUser.accessToken).toEqual('loggedToken');
   });
 
   it('should not login user with invalid credentials', async () => {

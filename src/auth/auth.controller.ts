@@ -1,4 +1,12 @@
-import { ValidationPipe, Controller, Post, Body } from '@nestjs/common';
+import { Request, Response } from 'express';
+import {
+  ValidationPipe,
+  Controller,
+  Post,
+  Body,
+  Res,
+  HttpStatus,
+} from '@nestjs/common';
 import {
   ApiInternalServerErrorResponse,
   ApiUnauthorizedResponse,
@@ -13,7 +21,6 @@ import {
   ValidateTokenRequestDto,
   RefreshTokenRequestDto,
   LoginResponseDto,
-  TokenDto,
 } from './dtos';
 import { TokenService } from './token.service';
 import { AuthService } from './auth.service';
@@ -34,10 +41,21 @@ export class AuthController {
   @ApiUnauthorizedResponse({ description: 'Invalid credentials' })
   @ApiInternalServerErrorResponse({ description: 'Server error' })
   @Post('/login')
-  login(
+  async login(
     @Body(ValidationPipe) authCredentialsDto: AuthCredentialsRequestDto,
+    @Res({ passthrough: true }) response: Response,
   ): Promise<LoginResponseDto> {
-    return this.authService.login(authCredentialsDto);
+    const token = await this.authService.login(authCredentialsDto);
+    response
+      .cookie('x-session-token', token.refreshToken, {
+        // Valid for 30 day
+        maxAge: 24 * 60 * 60 * 1000,
+        httpOnly: true,
+      })
+      .status(HttpStatus.OK);
+    return {
+      accessToken: token.accessToken,
+    };
   }
 
   @ApiOperation({ description: 'Renew access in the application' })
@@ -47,9 +65,20 @@ export class AuthController {
   @Post('/token/refresh')
   async getNewToken(
     @Body(ValidationPipe) refreshTokenDto: RefreshTokenRequestDto,
-  ): Promise<TokenDto> {
+    @Res({ passthrough: true }) response: Response,
+  ): Promise<LoginResponseDto> {
     const { refreshToken } = refreshTokenDto;
-    return this.tokenService.generateRefreshToken(refreshToken);
+    const token = await this.tokenService.generateRefreshToken(refreshToken);
+    response
+      .cookie('x-session-token', token.refreshToken, {
+        // Valid for 30 day
+        maxAge: 24 * 60 * 60 * 1000,
+        httpOnly: true,
+      })
+      .status(HttpStatus.OK);
+    return {
+      accessToken: token.accessToken,
+    };
   }
 
   @ApiOperation({ description: 'Validate token' })

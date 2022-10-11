@@ -11,6 +11,7 @@ import {
   AuthCredentialsRequestDto,
   JwtPayload,
   LoginResponseDto,
+  TokenDto,
 } from './dtos';
 import { User } from '@user/schemas/user.schema';
 import { TokenService } from './token.service';
@@ -28,7 +29,7 @@ export class AuthService {
   public async login({
     email,
     password,
-  }: AuthCredentialsRequestDto): Promise<LoginResponseDto> {
+  }: AuthCredentialsRequestDto): Promise<TokenDto> {
     const user = await this.userModel.findOne({
       email,
     });
@@ -56,9 +57,6 @@ export class AuthService {
     const payload: JwtPayload = { id: userDto.id, email };
     const token = await this.tokenService.generateAuthToken(payload);
 
-    return {
-      user: userDto,
-      token,
-    };
+    return token;
   }
 }

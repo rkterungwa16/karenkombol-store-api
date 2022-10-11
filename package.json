@@ -32,6 +32,7 @@
     "bcryptjs": "^2.4.3",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.13.2",
+    "cookie-parser": "^1.4.6",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
     "rxjs": "^7.2.0"
@@ -79,13 +80,27 @@
       "<rootDir>/src/"
     ],
     "moduleNameMapper": {
-      "^@database/(.*)": ["<rootDir>/src/database/$1"],
-      "^@config": ["<rootDir>/src/config"],
-      "^@helpers": ["<rootDir>/src/helpers"],
-      "^@access/(.*)": ["<rootDir>/src/access/$1"],
-      "^@user/(.*)": ["<rootDir>/src/user/$1"],
-      "^@http/(.*)": ["<rootDir>/src/http/$1"],
-      "^@company/(.*)": ["<rootDir>/src/company/$1"]
+      "^@database/(.*)": [
+        "<rootDir>/src/database/$1"
+      ],
+      "^@config": [
+        "<rootDir>/src/config"
+      ],
+      "^@helpers": [
+        "<rootDir>/src/helpers"
+      ],
+      "^@access/(.*)": [
+        "<rootDir>/src/access/$1"
+      ],
+      "^@user/(.*)": [
+        "<rootDir>/src/user/$1"
+      ],
+      "^@http/(.*)": [
+        "<rootDir>/src/http/$1"
+      ],
+      "^@company/(.*)": [
+        "<rootDir>/src/company/$1"
+      ]
     }
   }
 }
