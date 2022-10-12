@@ -24,7 +24,8 @@
       "@access/*": ["src/access/*"],
       "@user/*": ["src/user/*"],
       "@http/*": ["src/http/*"],
-      "@company/*": ["src/company/*"]
+      "@company/*": ["src/company/*"],
+      "@enums": ["src/enums"],
     }
   }
 }

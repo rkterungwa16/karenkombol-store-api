@@ -12,7 +12,7 @@ import {
   InvalidTokenException,
 } from '@http/exceptions';
 import { ValidateTokenResponseDto, JwtPayload, TokenDto } from './dtos';
-import { TokenError, TokenType } from './enums';
+import { TokenError, TokenType } from '../enums';
 @Injectable()
 export class TokenService {
   constructor(

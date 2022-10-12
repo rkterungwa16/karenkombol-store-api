@@ -89,6 +89,9 @@
       "^@helpers": [
         "<rootDir>/src/helpers"
       ],
+      "^@enums": [
+        "<rootDir>/src/enums"
+      ],
       "^@access/(.*)": [
         "<rootDir>/src/access/$1"
       ],

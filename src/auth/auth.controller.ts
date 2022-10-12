@@ -25,7 +25,7 @@ import {
 } from './dtos';
 import { TokenService } from './token.service';
 import { AuthService } from './auth.service';
-import { CookieNames } from './enums';
+import { CookieNames } from '../enums';
 
 @ApiTags('Auth')
 @Controller({
@@ -68,7 +68,7 @@ export class AuthController {
   @ApiInternalServerErrorResponse({ description: 'Server error' })
   @Post('/token/refresh')
   async getNewToken(@Req() request: Request): Promise<LoginResponseDto> {
-    const refreshToken = request.cookies('x-refresh-token');
+    const refreshToken = request.cookies(CookieNames.REFRESH_TOKEN);
     const token = await this.tokenService.generateRefreshToken(refreshToken);
     return {
       accessToken: token.accessToken,
