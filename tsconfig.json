@@ -9,7 +9,7 @@
     "target": "es2017",
     "sourceMap": true,
     "outDir": "./dist",
-    "baseUrl": "./",
+    "baseUrl": ".",
     "incremental": true,
     "skipLibCheck": true,
     "strictNullChecks": false,
@@ -21,11 +21,11 @@
       "@database/*": ["src/database/*"],
       "@config": ["src/config"],
       "@helpers": ["src/helpers"],
+      "@enums/*": ["src/enums/*"],
       "@access/*": ["src/access/*"],
       "@user/*": ["src/user/*"],
       "@http/*": ["src/http/*"],
-      "@company/*": ["src/company/*"],
-      "@enums": ["src/enums"],
+      "@company/*": ["src/company/*"]
     }
   }
 }

@@ -1,6 +1,6 @@
 import { Schema, Prop, SchemaFactory } from '@nestjs/mongoose';
 import { Document, Types } from 'mongoose';
-import { UserStatus } from '../enums';
+import { UserStatus } from '../../enums';
 
 @Schema()
 export class User extends Document {

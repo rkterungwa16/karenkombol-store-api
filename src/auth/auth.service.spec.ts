@@ -17,7 +17,7 @@ import { User } from '@user/schemas/user.schema';
 
 import { AuthService } from './auth.service';
 import { TokenService } from './token.service';
-import { UserStatus } from '@user/enums';
+import { UserStatus } from '../enums';
 
 describe('AuthService', () => {
   let service: AuthService;
