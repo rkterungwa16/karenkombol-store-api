@@ -3,7 +3,7 @@ import { JwtService } from '@nestjs/jwt';
 import { Model } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
 import { Injectable, Logger } from '@nestjs/common';
-import { UserStatus } from '../enums';
+import { UserStatus } from '@enums';
 
 import { User } from '@user/schemas/user.schema';
 import {
@@ -12,7 +12,7 @@ import {
   InvalidTokenException,
 } from '@http/exceptions';
 import { ValidateTokenResponseDto, JwtPayload, TokenDto } from './dtos';
-import { TokenError, TokenType } from '../enums';
+import { TokenError, TokenType } from '@enums';
 @Injectable()
 export class TokenService {
   constructor(

@@ -13,7 +13,7 @@ import {
   PermissionResources,
   PermissionActions,
 } from '@access/permission/interfaces/permission.interface';
-import { UserStatus } from '../enums';
+import { UserStatus } from '@enums';
 
 @Injectable()
 export class UsersService {

@@ -25,7 +25,7 @@ import {
 } from './dtos';
 import { TokenService } from './token.service';
 import { AuthService } from './auth.service';
-import { CookieNames } from '../enums';
+import { CookieNames } from '@enums';
 
 @ApiTags('Auth')
 @Controller({

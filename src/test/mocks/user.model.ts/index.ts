@@ -1,4 +1,4 @@
-import { UserStatus } from '../../../enums';
+import { UserStatus } from '@enums';
 import { createdCompany, createdRole } from '../../fixtures';
 
 export type CreateUserProps = {

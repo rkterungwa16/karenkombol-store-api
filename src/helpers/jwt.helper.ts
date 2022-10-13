@@ -1,6 +1,6 @@
 import { Request } from 'express';
 
-import { JwtDetails } from '../enums';
+import { JwtDetails } from '@enums';
 
 export const extractJwt = (request: Request) => {
   if (request.headers[JwtDetails.AUTH_HEADER]) {

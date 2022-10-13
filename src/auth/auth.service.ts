@@ -15,7 +15,7 @@ import {
 } from './dtos';
 import { User } from '@user/schemas/user.schema';
 import { TokenService } from './token.service';
-import { UserStatus } from '../enums';
+import { UserStatus } from '@enums';
 import { UserMapper } from '@user/user.mapper';
 import { ErrorType } from '@http/error-type';
 

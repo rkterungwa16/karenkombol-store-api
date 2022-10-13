@@ -21,11 +21,12 @@
       "@database/*": ["src/database/*"],
       "@config": ["src/config"],
       "@helpers": ["src/helpers"],
-      "@enums/*": ["src/enums/*"],
+      "@enums": ["src/enums"],
       "@access/*": ["src/access/*"],
       "@user/*": ["src/user/*"],
       "@http/*": ["src/http/*"],
-      "@company/*": ["src/company/*"]
+      "@company/*": ["src/company/*"],
+      "@decorators": ["src/decorators"]
     }
   }
 }
