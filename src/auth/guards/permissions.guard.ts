@@ -5,7 +5,7 @@ import { Model } from 'mongoose';
 
 import { extractJwt } from '@helpers';
 import { TokenService } from '../token.service';
-import { TokenType } from '@enums';
+import { TokenType, UserRoles } from '@enums';
 import { User } from '@user/schemas/user.schema';
 import { IPermissionDecorator } from '@decorators';
 import { Permission } from '@access/permission/schema/permission.schema';
@@ -39,6 +39,13 @@ export class JwtGuard implements CanActivate {
     const roleModels = await Promise.all(
       userModel.roles.map((role) => this.roleModel.findById(role)),
     );
+
+    const isSuperAdmin = roleModels.find(
+      (role) => role.name === UserRoles.SUPER_ADMIN,
+    );
+    if (isSuperAdmin) {
+      return true;
+    }
     // Check if permission exists for this users role
     // If permission exists check if user can perform specified action
     const roleWithPermissionExists = roleModels.find((role) => {

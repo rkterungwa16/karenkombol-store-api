@@ -13,7 +13,7 @@ import {
   PermissionResources,
   PermissionActions,
 } from '@access/permission/interfaces/permission.interface';
-import { UserStatus } from '@enums';
+import { UserRoles, UserStatus } from '@enums';
 
 @Injectable()
 export class UsersService {
@@ -54,7 +54,7 @@ export class UsersService {
       company: newCompany._id,
     });
     const newRole = await this.roleModel.create({
-      name: 'super-admin',
+      name: UserRoles.SUPER_ADMIN,
       company: newCompany._id,
       permissions: [newPermission._id],
     });
