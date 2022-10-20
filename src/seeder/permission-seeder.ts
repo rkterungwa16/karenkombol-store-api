@@ -24,6 +24,9 @@ export class PermissionsSeeder implements Seeder {
   }
 
   async drop(): Promise<any> {
-    return this.permission.deleteMany({});
+    const collectionExists = this.permission.collection.collectionName;
+    if (collectionExists) {
+      return this.permission.collection.drop();
+    }
   }
 }
