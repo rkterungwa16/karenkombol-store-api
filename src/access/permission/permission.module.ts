@@ -12,5 +12,10 @@ import { Permission, PermissionSchema } from './schema/permission.schema';
   ],
   controllers: [PermissionController],
   providers: [PermissionService],
+  exports: [
+    MongooseModule.forFeature([
+      { name: Permission.name, schema: PermissionSchema },
+    ]),
+  ],
 })
 export class PermissionModule {}

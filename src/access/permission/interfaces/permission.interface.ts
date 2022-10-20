@@ -10,10 +10,21 @@ export enum PermissionActions {
 
 export enum PermissionResources {
   ALL = 'all',
+  ORDERS = 'orders',
+  PRODUCTS = 'products',
+  VARIANTS = 'variants',
+  USERS = 'users',
+  CUSTOMERS = 'customers',
+  PERMISSIONS = 'permissions',
+  ROLES = 'roles',
+  ADDRESS = 'address',
+  FULLFILLMENT = 'fullfillment',
+  PAYMENT_METHOD = 'payment_method',
+  CURRENCIES = 'currencies',
+  INVOICE = 'invoice',
 }
 
 export interface IPermissions extends Document {
   readonly resource: string;
-  readonly company: string;
   readonly actions: PermissionActions[];
 }

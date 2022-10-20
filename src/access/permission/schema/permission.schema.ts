@@ -4,13 +4,10 @@ import { PermissionActions } from '../interfaces/permission.interface';
 
 @Schema()
 export class Permission extends Document {
-  @Prop()
+  @Prop({ type: String })
   resource: string;
 
-  @Prop({ type: Types.ObjectId, ref: 'Company' })
-  company: string;
-
-  @Prop()
+  @Prop({ type: Array })
   actions: PermissionActions[];
 }
 

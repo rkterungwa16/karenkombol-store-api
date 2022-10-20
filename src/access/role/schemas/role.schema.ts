@@ -3,7 +3,7 @@ import { Document, Types } from 'mongoose';
 
 @Schema()
 export class Role extends Document {
-  @Prop()
+  @Prop({ type: String })
   name: string;
 
   @Prop({ type: Types.ObjectId, ref: 'Company' })
