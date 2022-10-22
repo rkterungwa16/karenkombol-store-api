@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 
@@ -10,6 +10,7 @@ import {
   UpdateRoleRequestDto,
 } from './dto';
 import { RoleMapper } from './role.mapper';
+import { RoleExistsException } from '@http/exceptions';
 
 @Injectable()
 export class RoleService {
@@ -20,12 +21,19 @@ export class RoleService {
   public async create(
     createRoleRequestDto: CreateRoleRequestDto,
   ): Promise<RoleResponseDto> {
+    const name = createRoleRequestDto.name.toLowerCase();
+    const roleExists = await this.roleModel.findOne({
+      name,
+    });
+    if (roleExists) {
+      throw new RoleExistsException(name);
+    }
     const newCompany = await this.companyModel.findById(
       createRoleRequestDto.company,
     );
 
     const newRole = await this.roleModel.create({
-      name: createRoleRequestDto.name,
+      name,
       company: newCompany._id,
       permissions: createRoleRequestDto.permissions,
     });
@@ -41,5 +49,21 @@ export class RoleService {
       updateRoleRequestDto,
     );
     return RoleMapper.toDto(updatedRole);
+  }
+
+  public async fetchRoleById(id: string): Promise<RoleResponseDto> {
+    const role = await this.roleModel.findById(id);
+    if (!role) {
+      throw new NotFoundException();
+    }
+    return RoleMapper.toDto(role);
+  }
+
+  public async fetchRoles(): Promise<RoleResponseDto[]> {
+    const roles = await this.roleModel.find();
+    if (roles.length) {
+      return roles.map((_role) => RoleMapper.toDto(_role));
+    }
+    return [];
   }
 }

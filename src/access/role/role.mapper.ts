@@ -2,7 +2,7 @@ import { RoleResponseDto, CreateRoleRequestDto } from './dto';
 import { Role } from './schemas/role.schema';
 
 export class RoleMapper {
-  public static async toDto(model: Role): Promise<RoleResponseDto> {
+  public static toDto(model: Role): RoleResponseDto {
     const dto = new RoleResponseDto();
 
     dto.id = model._id;
