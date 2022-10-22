@@ -11,6 +11,7 @@ import {
 } from './dto';
 import { RoleMapper } from './role.mapper';
 import { RoleExistsException } from '@http/exceptions';
+import { PaginationQueryDto } from 'src/common';
 
 @Injectable()
 export class RoleService {
@@ -52,15 +53,22 @@ export class RoleService {
   }
 
   public async fetchRoleById(id: string): Promise<RoleResponseDto> {
-    const role = await this.roleModel.findById(id);
+    const role = await this.roleModel.findById(id).populate('permissions');
     if (!role) {
       throw new NotFoundException();
     }
     return RoleMapper.toDto(role);
   }
 
-  public async fetchRoles(): Promise<RoleResponseDto[]> {
-    const roles = await this.roleModel.find();
+  public async fetchRoles(
+    paginationQuery: PaginationQueryDto,
+  ): Promise<RoleResponseDto[]> {
+    const { limit, offset } = paginationQuery;
+    const roles = await this.roleModel
+      .find()
+      .skip(offset)
+      .limit(limit)
+      .populate('permissions');
     if (roles.length) {
       return roles.map((_role) => RoleMapper.toDto(_role));
     }

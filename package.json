@@ -93,6 +93,9 @@
       "^@helpers": [
         "<rootDir>/src/helpers"
       ],
+      "^@common": [
+        "<rootDir>/src/common"
+      ],
       "^@enums": [
         "<rootDir>/src/enums"
       ],
