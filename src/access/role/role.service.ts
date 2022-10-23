@@ -19,7 +19,7 @@ export class RoleService {
     @InjectModel(Company.name) private readonly companyModel: Model<Company>,
     @InjectModel(Role.name) private readonly roleModel: Model<Role>,
   ) {}
-  public async create(
+  public async createRole(
     createRoleRequestDto: CreateRoleRequestDto,
   ): Promise<RoleResponseDto> {
     const name = createRoleRequestDto.name.toLowerCase();
