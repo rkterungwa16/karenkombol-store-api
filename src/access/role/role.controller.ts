@@ -7,10 +7,16 @@ import {
   Post,
   Put,
   Query,
+  UseGuards,
   ValidationPipe,
 } from '@nestjs/common';
 
-import { ApiOperation, ApiQuery, ApiConflictResponse } from '@nestjs/swagger';
+import {
+  ApiOperation,
+  ApiQuery,
+  ApiConflictResponse,
+  ApiBadRequestResponse,
+} from '@nestjs/swagger';
 
 import { Permission } from '@decorators';
 
@@ -26,8 +32,11 @@ import {
   PermissionResources,
 } from '@access/permission/interfaces/permission.interface';
 import { PaginationQueryDto } from 'src/common';
+import { JwtGuard } from 'src/auth/guards';
+import { PermissionGuard } from 'src/auth/guards/permissions.guard';
 
 @Controller('role')
+@UseGuards(JwtGuard)
 export class RoleController {
   constructor(private roleService: RoleService) {}
   @ApiOperation({ description: 'Get a paginated role list' })
@@ -41,6 +50,7 @@ export class RoleController {
     resource: PermissionResources.ROLES,
     action: PermissionActions.READ,
   })
+  @UseGuards(PermissionGuard)
   @Get()
   public fetchRoles(
     @Query() paginationQuery: PaginationQueryDto,
@@ -53,6 +63,7 @@ export class RoleController {
     resource: PermissionResources.ROLES,
     action: PermissionActions.READ,
   })
+  @UseGuards(PermissionGuard)
   @Get('/:id')
   public getRoleById(
     @Param('id', ParseIntPipe) id: string,
@@ -61,11 +72,12 @@ export class RoleController {
   }
 
   @ApiOperation({ description: 'Create new role' })
-  @ApiConflictResponse({ description: 'Role already exists' })
+  @ApiConflictResponse({ description: "There's a role with name admin" })
   @Permission({
     resource: PermissionResources.ROLES,
     action: PermissionActions.CREATE,
   })
+  @UseGuards(PermissionGuard)
   @Post()
   public createRole(
     @Body(ValidationPipe) roleDto: CreateRoleRequestDto,
@@ -74,11 +86,12 @@ export class RoleController {
   }
 
   @ApiOperation({ description: 'Update role by id' })
-  @ApiConflictResponse({ description: 'Role already exists' })
+  @ApiBadRequestResponse({ description: "There's no role with specified id" })
   @Permission({
     resource: PermissionResources.ROLES,
     action: PermissionActions.UPDATE,
   })
+  @UseGuards(PermissionGuard)
   @Put('/:id')
   public updateRole(
     @Param('id') id: string,

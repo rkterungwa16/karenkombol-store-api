@@ -7,3 +7,4 @@ export * from './invalid-credentials.exception';
 export * from './invalid-token.exception';
 export * from './disabled-user.exception';
 export * from './company-exists.exception';
+export * from './role-doesnot-exist.exception';

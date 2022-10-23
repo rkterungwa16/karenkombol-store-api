@@ -10,7 +10,10 @@ import {
   UpdateRoleRequestDto,
 } from './dto';
 import { RoleMapper } from './role.mapper';
-import { RoleExistsException } from '@http/exceptions';
+import {
+  RoleDoesNotExistsException,
+  RoleExistsException,
+} from '@http/exceptions';
 import { PaginationQueryDto } from 'src/common';
 
 @Injectable()
@@ -45,11 +48,15 @@ export class RoleService {
     id: string,
     updateRoleRequestDto: UpdateRoleRequestDto,
   ): Promise<RoleResponseDto> {
-    const updatedRole = await this.roleModel.findByIdAndUpdate(
-      id,
-      updateRoleRequestDto,
-    );
-    return RoleMapper.toDto(updatedRole);
+    try {
+      const updatedRole = await this.roleModel.findByIdAndUpdate(
+        id,
+        updateRoleRequestDto,
+      );
+      return RoleMapper.toDto(updatedRole);
+    } catch (e) {
+      throw new RoleDoesNotExistsException();
+    }
   }
 
   public async fetchRoleById(id: string): Promise<RoleResponseDto> {

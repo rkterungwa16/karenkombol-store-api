@@ -12,7 +12,7 @@ import { Permission } from '@access/permission/schema/permission.schema';
 import { Role } from '@access/role/schemas/role.schema';
 
 @Injectable()
-export class JwtGuard implements CanActivate {
+export class PermissionGuard implements CanActivate {
   constructor(
     private tokenService: TokenService,
     private reflector: Reflector,
