@@ -26,6 +26,7 @@ export class PermissionGuard implements CanActivate {
       'permission',
       context.getHandler(),
     );
+
     if (!permission) {
       return true;
     }

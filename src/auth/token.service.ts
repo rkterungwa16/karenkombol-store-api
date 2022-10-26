@@ -50,7 +50,9 @@ export class TokenService {
 
   public verifyToken(token: string, type: TokenType) {
     try {
-      return this.jwtService.verify(token);
+      return this.jwtService.verify(token, {
+        secret: this.configService.get('TOKEN_SECRET'),
+      });
     } catch ({ name }) {
       if (
         name == TokenError.TokenExpiredError &&
@@ -70,7 +72,9 @@ export class TokenService {
 
   public async validateToken(token: string): Promise<ValidateTokenResponseDto> {
     try {
-      const { id } = this.jwtService.verify(token);
+      const { id } = this.jwtService.verify(token, {
+        secret: this.configService.get('TOKEN_SECRET'),
+      });
       const user = await this.userModel.findById(id);
       if (
         !user ||
