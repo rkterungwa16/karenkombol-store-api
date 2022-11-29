@@ -23,5 +23,12 @@ import {
   ],
   providers: [RoleService, TokenService, JwtService],
   controllers: [RoleController],
+  // TODO: The idea is to make these components available to all modules that depend on it in the application.
+  // exports: [
+  //   MongooseModule.forFeature([{ name: Role.name, schema: RoleSchema }]),
+  //   MongooseModule.forFeature([
+  //     { name: Permission.name, schema: PermissionSchema },
+  //   ]),
+  // ],
 })
 export class RoleModule {}
