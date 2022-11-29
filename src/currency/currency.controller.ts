@@ -39,7 +39,7 @@ import { PermissionGuard } from 'src/auth/guards/permissions.guard';
 @UseGuards(JwtGuard)
 export class CurrencyController {
   constructor(private currencyService: CurrencyService) {}
-  @ApiOperation({ description: 'Get a paginated role list' })
+  @ApiOperation({ description: 'Get a paginated currency list' })
   @ApiQuery({
     name: 'search',
     type: 'string',
@@ -52,13 +52,13 @@ export class CurrencyController {
   })
   @UseGuards(PermissionGuard)
   @Get()
-  public fetchRoles(
+  public fetchCurrencies(
     @Query() paginationQuery: PaginationQueryDto,
   ): Promise<CurrencyResponseDto[]> {
     return this.currencyService.fetchCurrencies(paginationQuery);
   }
 
-  @ApiOperation({ description: 'Get role by id' })
+  @ApiOperation({ description: 'Get currency by id' })
   @Permission({
     resource: PermissionResources.CURRENCIES,
     action: PermissionActions.READ,
@@ -71,8 +71,11 @@ export class CurrencyController {
     return this.currencyService.fetchCurrencyById(id);
   }
 
-  @ApiOperation({ description: 'Create new role' })
-  @ApiConflictResponse({ description: "There's a role with name admin" })
+  @ApiOperation({
+    description:
+      'Create new currency, assign your shop base currency a rate of 1. Assign all other currencies the equivalent of the base currency rate. Example 1NGN = 0.00142 USD',
+  })
+  @ApiConflictResponse({ description: "There's a currency with code NGN" })
   @Permission({
     resource: PermissionResources.CURRENCIES,
     action: PermissionActions.CREATE,
@@ -80,13 +83,15 @@ export class CurrencyController {
   @UseGuards(PermissionGuard)
   @Post()
   public createCurrency(
-    @Body(ValidationPipe) roleDto: CreateCurrencyRequestDto,
+    @Body(ValidationPipe) currencyDto: CreateCurrencyRequestDto,
   ): Promise<CurrencyResponseDto> {
-    return this.currencyService.createCurrency(roleDto);
+    return this.currencyService.createCurrency(currencyDto);
   }
 
-  @ApiOperation({ description: 'Update role by id' })
-  @ApiBadRequestResponse({ description: "There's no role with specified id" })
+  @ApiOperation({ description: 'Update currency by id' })
+  @ApiBadRequestResponse({
+    description: "There's no currency with specified id",
+  })
   @Permission({
     resource: PermissionResources.CURRENCIES,
     action: PermissionActions.UPDATE,
@@ -95,8 +100,8 @@ export class CurrencyController {
   @Put('/:id')
   public updateCurrency(
     @Param('id') id: string,
-    @Body(ValidationPipe) roleDto: UpdateCurrencyRequestDto,
+    @Body(ValidationPipe) currencyDto: UpdateCurrencyRequestDto,
   ): Promise<CurrencyResponseDto> {
-    return this.currencyService.update(id, roleDto);
+    return this.currencyService.update(id, currencyDto);
   }
 }

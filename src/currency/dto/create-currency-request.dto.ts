@@ -16,4 +16,10 @@ export class CreateCurrencyRequestDto {
     example: '₦',
   })
   symbol: string;
+
+  @IsNotEmpty()
+  @ApiProperty({
+    example: 1,
+  })
+  rate: number;
 }

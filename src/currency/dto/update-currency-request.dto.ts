@@ -10,4 +10,9 @@ export class UpdateCurrencyRequestDto {
     example: '₦',
   })
   symbol: string;
+
+  @ApiProperty({
+    example: 1,
+  })
+  rate: number;
 }

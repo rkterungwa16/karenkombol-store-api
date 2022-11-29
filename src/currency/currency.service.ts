@@ -34,6 +34,7 @@ export class CurrencyService {
     const newCurrency = await this.currencyModel.create({
       code,
       symbol: createCurrencyRequestDto.symbol,
+      rate: createCurrencyRequestDto.rate,
     });
     return CurrencyMapper.toDto(newCurrency);
   }
