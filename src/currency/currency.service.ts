@@ -20,7 +20,7 @@ export class CurrencyService {
   constructor(
     @InjectModel(Currency.name) private readonly currencyModel: Model<Currency>,
   ) {}
-  public async createRole(
+  public async createCurrency(
     createCurrencyRequestDto: CreateCurrencyRequestDto,
   ): Promise<CurrencyResponseDto> {
     const code = createCurrencyRequestDto.code.toUpperCase();
@@ -53,7 +53,7 @@ export class CurrencyService {
     }
   }
 
-  public async fetchRoleById(id: string): Promise<CurrencyResponseDto> {
+  public async fetchCurrencyById(id: string): Promise<CurrencyResponseDto> {
     const currency = await this.currencyModel.findById(id);
     if (!currency) {
       throw new CurrencyDoesNotExistsException();
@@ -61,7 +61,7 @@ export class CurrencyService {
     return CurrencyMapper.toDto(currency);
   }
 
-  public async fetchRoles(
+  public async fetchCurrencies(
     paginationQuery: PaginationQueryDto,
   ): Promise<CurrencyResponseDto[]> {
     const { limit, offset } = paginationQuery;
