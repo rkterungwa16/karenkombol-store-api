@@ -20,6 +20,13 @@ Set environment variables:
 cp .env.example .env
 ```
 
+Generate resources
+```bash
+nest generate <schematic> <name>
+# example
+nest generate service currency
+```
+
 ## Running the app
 
 ```bash

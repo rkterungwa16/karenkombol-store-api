@@ -7,6 +7,8 @@ import { UsersModule } from './user/user.module';
 import { AccessModule } from './access/access.module';
 import { AuthModule } from './auth/auth.module';
 import { CompanyModule } from './company/company.module';
+import { CurrencyController } from './currency/currency.controller';
+import { CurrencyService } from './currency/currency.service';
 
 @Module({
   imports: [
@@ -19,6 +21,8 @@ import { CompanyModule } from './company/company.module';
     AuthModule,
     CompanyModule,
   ],
+  controllers: [CurrencyController],
+  providers: [CurrencyService],
 })
 export class AppModule {
   static port: number;

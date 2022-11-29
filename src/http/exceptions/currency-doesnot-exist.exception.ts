@@ -1,10 +1,10 @@
 import { NotFoundException } from '@nestjs/common';
 import { ErrorType } from '../error-type';
 
-export class RoleDoesNotExistsException extends NotFoundException {
+export class CurrencyDoesNotExistsException extends NotFoundException {
   constructor() {
     super({
-      errorType: ErrorType.RoleDoesNotExist,
+      errorType: ErrorType.CurrencyDoesNotExist,
       message: `There's no role with id'`,
     });
   }
