@@ -7,6 +7,9 @@ import { AuthModule } from './auth/auth.module';
 import { CompanyModule } from './company/company.module';
 import { CurrencyModule } from './currency/currency.module';
 import { VariantModule } from './variant/variant.module';
+import { ColorService } from './color/color.service';
+import { ColorController } from './color/color.controller';
+import { ColorModule } from './color/color.module';
 
 @Module({
   imports: [
@@ -20,7 +23,10 @@ import { VariantModule } from './variant/variant.module';
     CompanyModule,
     CurrencyModule,
     VariantModule,
+    ColorModule,
   ],
+  providers: [ColorService],
+  controllers: [ColorController],
 })
 export class AppModule {
   static port: number;
