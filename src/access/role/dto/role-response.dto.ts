@@ -3,7 +3,9 @@ import { ICompany } from '@company/interface/company.interface';
 import { IPermissions } from '@access/permission/interfaces/permission.interface';
 
 export class RoleResponseDto {
-  @ApiProperty()
+  @ApiProperty({
+    example: 'roleId',
+  })
   id: string;
   @ApiProperty({
     example: {

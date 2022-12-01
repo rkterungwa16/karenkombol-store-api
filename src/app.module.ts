@@ -1,15 +1,12 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import { DatabaseModule } from './database/database.module';
 import { UsersModule } from './user/user.module';
 import { AccessModule } from './access/access.module';
 import { AuthModule } from './auth/auth.module';
 import { CompanyModule } from './company/company.module';
-import { CurrencyController } from './currency/currency.controller';
-import { CurrencyService } from './currency/currency.service';
 import { CurrencyModule } from './currency/currency.module';
+import { VariantModule } from './variant/variant.module';
 
 @Module({
   imports: [
@@ -22,6 +19,7 @@ import { CurrencyModule } from './currency/currency.module';
     AuthModule,
     CompanyModule,
     CurrencyModule,
+    VariantModule,
   ],
 })
 export class AppModule {
