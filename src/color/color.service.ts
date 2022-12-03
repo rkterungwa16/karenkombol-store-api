@@ -67,7 +67,10 @@ export class ColorService {
     paginationQuery: PaginationQueryDto,
   ): Promise<ColorResponseDto[]> {
     const { limit, offset } = paginationQuery;
-    const colors = await this.colorModel.find().skip(offset).limit(limit);
+    const colors: IColor[] = await this.colorModel
+      .find()
+      .skip(offset)
+      .limit(limit);
     if (colors.length) {
       return colors.map((_color) => ColorMapper.toDto(_color));
     }

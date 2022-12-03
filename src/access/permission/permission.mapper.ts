@@ -1,8 +1,8 @@
 import { PermissionsResponseDto } from './dto';
-import { Permission } from './schema/permission.schema';
+import { IPermission } from './interfaces/permission.interface';
 
 export class PermissionMapper {
-  public static toDto(model: Permission): PermissionsResponseDto {
+  public static toDto(model: IPermission): PermissionsResponseDto {
     const dto = new PermissionsResponseDto();
 
     dto.id = model._id;

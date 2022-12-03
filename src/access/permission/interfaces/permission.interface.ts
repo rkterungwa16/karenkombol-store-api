@@ -24,7 +24,7 @@ export enum PermissionResources {
   INVOICE = 'invoice',
 }
 
-export interface IPermissions {
+export interface IPermission {
   readonly _id: string;
   readonly resource: string;
   readonly actions: PermissionActions[];

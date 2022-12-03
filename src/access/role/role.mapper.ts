@@ -1,8 +1,8 @@
-import { RoleResponseDto, CreateRoleRequestDto } from './dto';
-import { Role } from './schemas/role.schema';
+import { RoleResponseDto } from './dto';
+import { IRole } from './interfaces/roles.interface';
 
 export class RoleMapper {
-  public static toDto(model: Role): RoleResponseDto {
+  public static toDto(model: IRole): RoleResponseDto {
     const dto = new RoleResponseDto();
 
     dto.id = model._id;
