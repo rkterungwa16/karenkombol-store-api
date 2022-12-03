@@ -5,7 +5,7 @@ export class RoleDoesNotExistsException extends NotFoundException {
   constructor() {
     super({
       errorType: ErrorType.RoleDoesNotExist,
-      message: `There's no role with id'`,
+      message: `role does not exist`,
     });
   }
 }

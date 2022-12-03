@@ -5,7 +5,7 @@ export class CurrencyDoesNotExistsException extends NotFoundException {
   constructor() {
     super({
       errorType: ErrorType.CurrencyDoesNotExist,
-      message: `There's no role with id'`,
+      message: 'currency does not exist',
     });
   }
 }

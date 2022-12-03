@@ -7,6 +7,7 @@ import { AuthModule } from './auth/auth.module';
 import { CompanyModule } from './company/company.module';
 import { CurrencyModule } from './currency/currency.module';
 import { VariantModule } from './variant/variant.module';
+import { ColorModule } from './color/color.module';
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { VariantModule } from './variant/variant.module';
     CompanyModule,
     CurrencyModule,
     VariantModule,
+    ColorModule,
   ],
 })
 export class AppModule {

@@ -6,12 +6,12 @@ export enum CompanyStatus {
   INACTIVE = 'inactive',
 }
 
-export interface ICompany extends Document {
+export interface ICompany {
+  _id: string;
   readonly name: string;
-  readonly contacts: string[];
-  readonly addresses: string[];
-  readonly phonenumber: string;
-  readonly id: string;
-  readonly email: string;
-  readonly status: CompanyStatus;
+  readonly contacts?: string[];
+  readonly addresses?: string[];
+  readonly phonenumber?: string;
+  readonly email?: string;
+  readonly status?: CompanyStatus;
 }

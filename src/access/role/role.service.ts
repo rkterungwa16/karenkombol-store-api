@@ -15,6 +15,8 @@ import {
   RoleExistsException,
 } from '@http/exceptions';
 import { PaginationQueryDto } from 'src/common';
+import { IRole } from './interfaces/roles.interface';
+import { ICompany } from '@company/interface/company.interface';
 
 @Injectable()
 export class RoleService {
@@ -26,17 +28,17 @@ export class RoleService {
     createRoleRequestDto: CreateRoleRequestDto,
   ): Promise<RoleResponseDto> {
     const name = createRoleRequestDto.name.toLowerCase();
-    const roleExists = await this.roleModel.findOne({
+    const roleExists: IRole = await this.roleModel.findOne({
       name,
     });
     if (roleExists) {
       throw new RoleExistsException(name);
     }
-    const newCompany = await this.companyModel.findById(
+    const newCompany: ICompany = await this.companyModel.findById(
       createRoleRequestDto.company,
     );
 
-    const newRole = await this.roleModel.create({
+    const newRole: IRole = await this.roleModel.create({
       name,
       company: newCompany._id,
       permissions: createRoleRequestDto.permissions,
@@ -49,7 +51,7 @@ export class RoleService {
     updateRoleRequestDto: UpdateRoleRequestDto,
   ): Promise<RoleResponseDto> {
     try {
-      const updatedRole = await this.roleModel.findByIdAndUpdate(
+      const updatedRole: IRole = await this.roleModel.findByIdAndUpdate(
         id,
         updateRoleRequestDto,
       );
@@ -60,7 +62,9 @@ export class RoleService {
   }
 
   public async fetchRoleById(id: string): Promise<RoleResponseDto> {
-    const role = await this.roleModel.findById(id).populate('permissions');
+    const role: IRole = await this.roleModel
+      .findById(id)
+      .populate('permissions');
     if (!role) {
       throw new NotFoundException();
     }
@@ -71,7 +75,7 @@ export class RoleService {
     paginationQuery: PaginationQueryDto,
   ): Promise<RoleResponseDto[]> {
     const { limit, offset } = paginationQuery;
-    const roles = await this.roleModel
+    const roles: IRole[] = await this.roleModel
       .find()
       .skip(offset)
       .limit(limit)

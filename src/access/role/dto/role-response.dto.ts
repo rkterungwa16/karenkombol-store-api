@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { ICompany } from '@company/interface/company.interface';
-import { IPermissions } from '@access/permission/interfaces/permission.interface';
+import { IPermission } from '@access/permission/interfaces/permission.interface';
 
 export class RoleResponseDto {
   @ApiProperty({
@@ -28,5 +28,5 @@ export class RoleResponseDto {
       },
     ],
   })
-  permissions: string[] | IPermissions[];
+  permissions: string[] | IPermission[];
 }

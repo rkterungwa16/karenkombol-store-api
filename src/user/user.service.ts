@@ -12,6 +12,7 @@ import { UserExistsException, CompanyExistsException } from '@http/exceptions';
 import {
   PermissionResources,
   PermissionActions,
+  IPermission,
 } from '@access/permission/interfaces/permission.interface';
 import { UserRoles, UserStatus } from '@enums';
 
@@ -48,7 +49,7 @@ export class UsersService {
     const newCompany = await this.companyModel.create({
       name: createUserRequestDto.companyName,
     });
-    const newPermission = await this.permissionModel.create({
+    const newPermission: IPermission = await this.permissionModel.create({
       resource: PermissionResources.ALL,
       actions: [...Object.values(PermissionActions)],
       company: newCompany._id,

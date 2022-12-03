@@ -1,4 +1,4 @@
-import { Document } from 'mongoose';
+import { Document, Types } from 'mongoose';
 
 export enum PermissionActions {
   CREATE = 'create',
@@ -24,7 +24,8 @@ export enum PermissionResources {
   INVOICE = 'invoice',
 }
 
-export interface IPermissions extends Document {
+export interface IPermission {
+  readonly _id: string;
   readonly resource: string;
   readonly actions: PermissionActions[];
 }

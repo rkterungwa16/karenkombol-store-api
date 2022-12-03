@@ -22,6 +22,6 @@ export class PermissionController {
   @UseGuards(PermissionGuard)
   @Get()
   public fetchRoles(): Promise<PermissionsResponseDto[]> {
-    return this.permissionService.fetchRoles();
+    return this.permissionService.fetchPermissions();
   }
 }
