@@ -1,6 +1,5 @@
-import { Document } from 'mongoose';
-
-export interface IColor extends Document {
+export interface IColor {
+  _id: string;
   hexCode: string;
   name: string;
 }

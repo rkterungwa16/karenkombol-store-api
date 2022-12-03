@@ -1,6 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 
-export class ColorRequestDto {
+export class ColorResponseDto {
+  id: string;
   @ApiProperty({
     example: 'black',
   })

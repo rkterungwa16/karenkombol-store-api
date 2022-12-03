@@ -1,0 +1,13 @@
+import { ColorResponseDto } from './dto';
+import { IColor } from './interface/color.interface';
+
+export class ColorMapper {
+  public static toDto(model: IColor): ColorResponseDto {
+    const dto = new ColorResponseDto();
+
+    dto.id = model._id;
+    dto.hexCode = model.hexCode;
+    dto.name = model.name;
+    return dto;
+  }
+}
