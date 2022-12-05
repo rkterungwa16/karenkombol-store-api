@@ -6,6 +6,9 @@ export class TestCompanyModel {
   findOne = jest.fn();
   update = jest.fn();
   remove = jest.fn();
+  find = jest.fn().mockReturnValue([createdCompany]);
+  findById = jest.fn();
+  findByIdAndUpdate = jest.fn();
 }
 // export const TestCompanyModel = {
 //   find: jest.fn().mockReturnValue(customersArray),

@@ -1,6 +1,7 @@
 import { IsNotEmpty, IsString } from 'class-validator';
 
 import { ApiProperty } from '@nestjs/swagger';
+import { IRole } from '../interfaces/roles.interface';
 
 export class CreateRoleRequestDto {
   @IsString()
@@ -8,17 +9,17 @@ export class CreateRoleRequestDto {
   @ApiProperty({
     example: 'admin',
   })
-  name: string;
+  name: IRole['name'];
 
   @IsNotEmpty()
   @ApiProperty({
     example: 'companyId',
   })
-  company: string;
+  company: IRole['company'];
 
   @IsNotEmpty()
   @ApiProperty({
     example: ['permissionId'],
   })
-  permissions: string[];
+  permissions: IRole['permissions'];
 }

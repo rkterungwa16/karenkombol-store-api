@@ -1,8 +1,8 @@
 import { CurrencyResponseDto } from './dto';
-import { Currency } from './schema/currency.schema';
+import { ICurrency } from './interface/currency.interface';
 
 export class CurrencyMapper {
-  public static toDto(model: Currency): CurrencyResponseDto {
+  public static toDto(model: ICurrency): CurrencyResponseDto {
     const dto = new CurrencyResponseDto();
 
     dto.id = model._id;

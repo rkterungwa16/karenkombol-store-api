@@ -1,7 +1,7 @@
 import { Controller, Get, Query, UseGuards } from '@nestjs/common';
 import { ApiOperation } from '@nestjs/swagger';
-import { JwtGuard } from 'src/auth/guards';
-import { PermissionGuard } from 'src/auth/guards/permissions.guard';
+import { JwtGuard } from '@auth/guards';
+import { PermissionGuard } from '@auth/guards/permissions.guard';
 import {
   PermissionResources,
   PermissionActions,

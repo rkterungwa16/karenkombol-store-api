@@ -4,7 +4,7 @@ import { RoleController } from './role.controller';
 import { MongooseModule } from '@nestjs/mongoose';
 import { Role, RoleSchema } from './schemas/role.schema';
 import { Company, CompanySchema } from '@company/schema/company.schema';
-import { TokenService } from 'src/auth/token.service';
+import { TokenService } from '@auth/token.service';
 import { User, UserSchema } from '@user/schemas/user.schema';
 import { JwtService } from '@nestjs/jwt';
 import {

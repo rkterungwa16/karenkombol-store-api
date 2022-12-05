@@ -3,7 +3,7 @@ import { CurrencyService } from './currency.service';
 import { CurrencyController } from './currency.controller';
 import { MongooseModule } from '@nestjs/mongoose';
 import { Currency, CurrencySchema } from './schema/currency.schema';
-import { TokenService } from 'src/auth/token.service';
+import { TokenService } from '@auth/token.service';
 import { User, UserSchema } from '@user/schemas/user.schema';
 import { JwtService } from '@nestjs/jwt';
 import {

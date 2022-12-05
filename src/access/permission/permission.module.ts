@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { MongooseModule } from '@nestjs/mongoose';
 import { User, UserSchema } from '@user/schemas/user.schema';
-import { TokenService } from 'src/auth/token.service';
+import { TokenService } from '@auth/token.service';
 import { PermissionController } from './permission.controller';
 import { PermissionService } from './permission.service';
 import { Permission, PermissionSchema } from './schema/permission.schema';

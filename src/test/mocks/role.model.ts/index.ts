@@ -6,4 +6,7 @@ export class TestRoleModel {
   findOne = jest.fn();
   update = jest.fn();
   remove = jest.fn();
+  find = jest.fn().mockReturnValue([createdRole]);
+  findById = jest.fn();
+  findByIdAndUpdate = jest.fn();
 }

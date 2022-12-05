@@ -31,9 +31,9 @@ import {
   PermissionActions,
   PermissionResources,
 } from '@access/permission/interfaces/permission.interface';
-import { PaginationQueryDto } from 'src/common';
-import { JwtGuard } from 'src/auth/guards';
-import { PermissionGuard } from 'src/auth/guards/permissions.guard';
+import { PaginationQueryDto } from '@common';
+import { JwtGuard } from '@auth/guards';
+import { PermissionGuard } from '@auth/guards/permissions.guard';
 
 @Controller('role')
 @UseGuards(JwtGuard)
@@ -79,10 +79,10 @@ export class RoleController {
   })
   @UseGuards(PermissionGuard)
   @Post()
-  public createRole(
+  public create(
     @Body(ValidationPipe) roleDto: CreateRoleRequestDto,
   ): Promise<RoleResponseDto> {
-    return this.roleService.createRole(roleDto);
+    return this.roleService.create(roleDto);
   }
 
   @ApiOperation({ description: 'Update role by id' })

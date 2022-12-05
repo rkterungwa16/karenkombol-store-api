@@ -13,7 +13,8 @@ import {
   CurrencyDoesNotExistsException,
   CurrencyExistsException,
 } from '@http/exceptions';
-import { PaginationQueryDto } from 'src/common';
+import { PaginationQueryDto } from '@common';
+import { ICurrency } from './interface/currency.interface';
 
 @Injectable()
 export class CurrencyService {
@@ -24,7 +25,7 @@ export class CurrencyService {
     createCurrencyRequestDto: CreateCurrencyRequestDto,
   ): Promise<CurrencyResponseDto> {
     const code = createCurrencyRequestDto.code.toUpperCase();
-    const currencyExists = await this.currencyModel.findOne({
+    const currencyExists: ICurrency = await this.currencyModel.findOne({
       code,
     });
     if (currencyExists) {
@@ -44,10 +45,11 @@ export class CurrencyService {
     updateCurrencyRequestDto: UpdateCurrencyRequestDto,
   ): Promise<CurrencyResponseDto> {
     try {
-      const updatedCurrency = await this.currencyModel.findByIdAndUpdate(
-        id,
-        updateCurrencyRequestDto,
-      );
+      const updatedCurrency: ICurrency =
+        await this.currencyModel.findByIdAndUpdate(
+          id,
+          updateCurrencyRequestDto,
+        );
       return CurrencyMapper.toDto(updatedCurrency);
     } catch (e) {
       throw new CurrencyDoesNotExistsException();
@@ -55,7 +57,7 @@ export class CurrencyService {
   }
 
   public async fetchCurrencyById(id: string): Promise<CurrencyResponseDto> {
-    const currency = await this.currencyModel.findById(id);
+    const currency: ICurrency = await this.currencyModel.findById(id);
     if (!currency) {
       throw new CurrencyDoesNotExistsException();
     }
@@ -66,7 +68,7 @@ export class CurrencyService {
     paginationQuery: PaginationQueryDto,
   ): Promise<CurrencyResponseDto[]> {
     const { limit, offset } = paginationQuery;
-    const currencies = await this.currencyModel
+    const currencies: ICurrency[] = await this.currencyModel
       .find()
       .skip(offset)
       .limit(limit);

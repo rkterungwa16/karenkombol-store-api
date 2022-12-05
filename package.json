@@ -108,6 +108,15 @@
       "^@user/(.*)": [
         "<rootDir>/src/user/$1"
       ],
+      "^@auth/(.*)": [
+        "<rootDir>/src/auth/$1"
+      ],
+      "^@color/(.*)": [
+        "<rootDir>/src/color/$1"
+      ],
+      "^@currency/(.*)": [
+        "<rootDir>/src/currency/$1"
+      ],
       "^@http/(.*)": [
         "<rootDir>/src/http/$1"
       ],

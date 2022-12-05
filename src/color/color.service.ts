@@ -13,7 +13,7 @@ import {
   RoleDoesNotExistsException,
   RoleExistsException,
 } from '@http/exceptions';
-import { PaginationQueryDto } from 'src/common';
+import { PaginationQueryDto } from '@common';
 import { IColor } from './interface/color.interface';
 
 @Injectable()
