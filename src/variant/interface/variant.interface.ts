@@ -1,5 +1,5 @@
 import { Document } from 'mongoose';
-import { IColor } from 'src/color/interface/color.interface';
+import { IColor } from '@color/interface/color.interface';
 
 export interface IVariant extends Document {
   imageUrls: string[];

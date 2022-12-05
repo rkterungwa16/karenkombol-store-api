@@ -11,7 +11,6 @@ import { SeederModule, SeederModuleOptions } from './seeder.module';
 import { SeederService } from './seeder.service';
 import { Seeder } from './seeder.interface';
 import { DatabaseModule } from '../database/database.module';
-import { AppModule } from '../../src/app.module';
 import { AccessModule } from '../access/access.module';
 import { UsersModule } from '../user/user.module';
 import { PermissionsSeeder } from './permission-seeder';

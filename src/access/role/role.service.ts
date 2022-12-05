@@ -14,7 +14,7 @@ import {
   RoleDoesNotExistsException,
   RoleExistsException,
 } from '@http/exceptions';
-import { PaginationQueryDto } from 'src/common';
+import { PaginationQueryDto } from '@common';
 import { IRole } from './interfaces/roles.interface';
 import { ICompany } from '@company/interface/company.interface';
 
@@ -24,7 +24,7 @@ export class RoleService {
     @InjectModel(Company.name) private readonly companyModel: Model<Company>,
     @InjectModel(Role.name) private readonly roleModel: Model<Role>,
   ) {}
-  public async createRole(
+  public async create(
     createRoleRequestDto: CreateRoleRequestDto,
   ): Promise<RoleResponseDto> {
     const name = createRoleRequestDto.name.toLowerCase();
