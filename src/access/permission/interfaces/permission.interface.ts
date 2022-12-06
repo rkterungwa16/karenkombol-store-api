@@ -22,6 +22,8 @@ export enum PermissionResources {
   PAYMENT_METHOD = 'payment_method',
   CURRENCIES = 'currencies',
   INVOICE = 'invoice',
+  COLORS = 'colors',
+  SIZE = 'size',
 }
 
 export interface IPermission {
