@@ -6,8 +6,8 @@ import { AccessModule } from './access/access.module';
 import { AuthModule } from './auth/auth.module';
 import { CompanyModule } from './company/company.module';
 import { CurrencyModule } from './currency/currency.module';
-import { VariantModule } from './variant/variant.module';
 import { ColorModule } from './color/color.module';
+import { ProductModule } from './product/product.module';
 
 @Module({
   imports: [
@@ -20,8 +20,8 @@ import { ColorModule } from './color/color.module';
     AuthModule,
     CompanyModule,
     CurrencyModule,
-    VariantModule,
     ColorModule,
+    ProductModule,
   ],
 })
 export class AppModule {
