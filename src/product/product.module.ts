@@ -7,6 +7,7 @@ import { VariantModule } from './variant/variant.module';
 @Module({
   providers: [ProductService],
   controllers: [ProductController],
+  imports: [CategoryModule, VariantModule],
   exports: [CategoryModule, VariantModule],
 })
 export class ProductModule {}

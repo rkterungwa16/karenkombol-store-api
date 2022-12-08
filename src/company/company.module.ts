@@ -7,7 +7,7 @@ import { TokenService } from '@auth/token.service';
 import { JwtService } from '@nestjs/jwt';
 
 @Module({
-  providers: [CompanyService, TokenService, JwtService],
+  // providers: [CompanyService, TokenService, JwtService],
   controllers: [CompanyController],
   imports: [
     MongooseModule.forFeature([{ name: Company.name, schema: CompanySchema }]),
