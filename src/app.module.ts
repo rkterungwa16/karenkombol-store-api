@@ -8,6 +8,7 @@ import { CompanyModule } from './company/company.module';
 import { CurrencyModule } from './currency/currency.module';
 import { ColorModule } from './color/color.module';
 import { ProductModule } from './product/product.module';
+import { LibModule } from './lib/lib.module';
 
 @Module({
   imports: [
@@ -22,6 +23,7 @@ import { ProductModule } from './product/product.module';
     CurrencyModule,
     ColorModule,
     ProductModule,
+    LibModule,
   ],
 })
 export class AppModule {
