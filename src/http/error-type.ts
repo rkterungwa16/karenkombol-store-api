@@ -39,6 +39,8 @@ export enum ErrorType {
   RoleDoesNotExist = 'ROLE_DOEST_NOT_EXIST',
   ColorDoesNotExist = 'COLOR_DOES_NOT_EXIST',
   ColorExists = 'COLOR_EXISTS',
+  CategoryDoesNotExist = 'COLOR_DOES_NOT_EXIST',
+  CategoryExists = 'COLOR_EXISTS',
   CurrencyExists = 'CURRENCY_EXISTS',
   CurrencyDoesNotExist = 'CURRENCY_DOEST_NOT_EXIST',
   UserExists = 'USER_EXISTS',
