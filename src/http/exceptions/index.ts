@@ -12,3 +12,5 @@ export * from './currency-exists.exception';
 export * from './currency-doesnot-exist.exception';
 export * from './category-doesnot-exist.exception';
 export * from './category-exists.exception';
+export * from './product-doesnot-exist.exception';
+export * from './product-exists.exception';

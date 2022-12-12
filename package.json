@@ -36,6 +36,7 @@
     "class-validator": "^0.13.2",
     "cloudinary": "^1.32.0",
     "cookie-parser": "^1.4.6",
+    "mime-types": "^2.1.35",
     "node-mailjet": "^5.1.1",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
@@ -117,6 +118,9 @@
       ],
       "^@currency/(.*)": [
         "<rootDir>/src/currency/$1"
+      ],
+      "^@product/(.*)": [
+        "<rootDir>/src/product/$1"
       ],
       "^@http/(.*)": [
         "<rootDir>/src/http/$1"
