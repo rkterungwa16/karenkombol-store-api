@@ -16,7 +16,7 @@ import {
   ProductExistsException,
 } from '@http/exceptions';
 import { PaginationQueryDto } from '@common';
-import { IProduct } from './interface/Product.interface';
+import { IProduct } from './interface/product.interface';
 import { ICategory } from './category/interface/category.interface';
 
 @Injectable()

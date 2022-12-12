@@ -24,8 +24,6 @@ export const ConfigureCloudinaryService: DynamicModule = {
     },
   ],
 };
-
-@Module({})
 export class ConfigureCloudinaryModule {
   static register(): DynamicModule {
     return {
@@ -35,6 +33,7 @@ export class ConfigureCloudinaryModule {
         {
           provide: CloudinaryConstants.PROVIDER_NAME,
           useFactory: ConfigureCloudinary,
+          inject: [ConfigService],
         },
       ],
     };
