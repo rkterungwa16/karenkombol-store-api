@@ -1,7 +1,8 @@
 import { Document } from 'mongoose';
 import { IColor } from '@color/interface/color.interface';
 
-export interface IVariant extends Document {
+export interface IVariant {
+  _id: string;
   imageUrls: string[];
   product: string;
   variantSize: string;

@@ -1,0 +1,24 @@
+import { IsNotEmpty, IsString } from 'class-validator';
+
+import { ApiProperty } from '@nestjs/swagger';
+
+export class UpdateProductRequestDto {
+  @ApiProperty({
+    example: 'imgurl',
+  })
+  imageUrl: string;
+
+  @IsNotEmpty()
+  @IsString()
+  @ApiProperty({
+    example: 'v-neck short-sleeve shirt',
+  })
+  name: string;
+
+  @IsNotEmpty()
+  @IsString()
+  @ApiProperty({
+    example: 'beautiful design for short sleeve shirt',
+  })
+  description: string;
+}
