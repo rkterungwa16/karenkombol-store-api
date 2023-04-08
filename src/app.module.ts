@@ -9,6 +9,7 @@ import { CurrencyModule } from './currency/currency.module';
 import { ColorModule } from './color/color.module';
 import { ProductModule } from './product/product.module';
 import { LibModule } from './lib/lib.module';
+import { SizeModule } from './size/size.module';
 
 @Module({
   imports: [
@@ -24,6 +25,7 @@ import { LibModule } from './lib/lib.module';
     ColorModule,
     ProductModule,
     LibModule,
+    SizeModule,
   ],
 })
 export class AppModule {

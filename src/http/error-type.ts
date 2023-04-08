@@ -45,6 +45,8 @@ export enum ErrorType {
   ProductExists = 'PRODUCT_EXISTS',
   CurrencyExists = 'CURRENCY_EXISTS',
   CurrencyDoesNotExist = 'CURRENCY_DOEST_NOT_EXIST',
+  SizeExists = 'SIZE_EXISTS',
+  SizeDoesNotExist = 'SIZE_DOEST_NOT_EXIST',
   UserExists = 'USER_EXISTS',
   CompanyExists = 'COMPANY_EXISTS',
   InvalidCurrentPassword = 'INVALID_CURRENT_PASSWORD',
