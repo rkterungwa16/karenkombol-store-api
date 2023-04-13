@@ -27,6 +27,7 @@
       "@auth/*": ["src/auth/*"],
       "@color/*": ["src/color/*"],
       "@currency/*": ["src/currency/*"],
+      "@size/*": ["src/size/*"],
       "@product/*": ["src/product/*"],
       "@http/*": ["src/http/*"],
       "@company/*": ["src/company/*"],

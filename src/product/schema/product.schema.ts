@@ -1,4 +1,5 @@
 import { Schema, Prop, SchemaFactory } from '@nestjs/mongoose';
+import { ProductStatus } from '@product/interface/product.interface';
 import { Document, Types } from 'mongoose';
 
 @Schema()
@@ -11,6 +12,14 @@ export class Product extends Document {
   category: string;
   @Prop({ type: String })
   imageUrl: string;
+  @Prop({ type: String, enum: [...Object.values(ProductStatus)] })
+  status: ProductStatus;
+
+  @Prop({ type: Boolean })
+  published: boolean;
+
+  @Prop({ type: [String] })
+  tags: string[];
 }
 
 export const ProductSchema = SchemaFactory.createForClass(Product);
