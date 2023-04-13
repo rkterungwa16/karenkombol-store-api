@@ -9,7 +9,7 @@ export class SizeResponseDto {
   type: string;
 
   @ApiProperty({
-    example: 'XS',
+    example: ['XS'],
   })
-  value: string | number;
+  values: (string | number)[];
 }

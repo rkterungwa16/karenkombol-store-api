@@ -4,10 +4,10 @@ export class UpdateSizeRequestDto {
   @ApiProperty({
     example: 'General size',
   })
-  type: string;
+  type?: string;
 
   @ApiProperty({
     example: 'XS',
   })
-  value: string | number;
+  value?: string | number;
 }

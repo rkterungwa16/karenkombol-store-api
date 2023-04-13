@@ -20,57 +20,67 @@ export class SizeService {
   constructor(
     @InjectModel(Size.name) private readonly sizeModel: Model<Size>,
   ) {}
-  public async createCurrency(
+  public async createSize(
     createSizeRequestDto: CreateSizeRequestDto,
   ): Promise<SizeResponseDto> {
-    const code = createSizeRequestDto.type.toLowerCase();
+    const type = createSizeRequestDto.type.toLowerCase();
     const sizeExists: ISize = await this.sizeModel.findOne({
-      code,
+      type,
     });
     if (sizeExists) {
-      throw new SizeExistsException(code);
+      throw new SizeExistsException(type);
     }
 
-    const newCurrency = await this.sizeModel.create({
+    const newSize = await this.sizeModel.create({
       type: createSizeRequestDto.type,
-      value: createSizeRequestDto.value,
+      values: [createSizeRequestDto.value],
     });
-    return SizeMapper.toDto(newCurrency);
+    return SizeMapper.toDto(newSize);
   }
 
   public async update(
     id: string,
-    updateCurrencyRequestDto: UpdateSizeRequestDto,
+    updateSizeRequestDto: UpdateSizeRequestDto,
   ): Promise<SizeResponseDto> {
-    try {
-      const updatedSize: ISize = await this.sizeModel.findByIdAndUpdate(
-        id,
-        updateCurrencyRequestDto,
-      );
-      return SizeMapper.toDto(updatedSize);
-    } catch (e) {
-      throw new SizeDoesNotExistsException();
+    const { value, type } = updateSizeRequestDto;
+    const sizeValueExists = await this.sizeModel.findOne({
+      id,
+      values: value,
+    });
+    if (sizeValueExists) {
+      throw new SizeExistsException(sizeValueExists.type, value);
     }
+    const updatedSize: ISize = await this.sizeModel.findByIdAndUpdate(
+      id,
+      {
+        type,
+        $push: {
+          values: value,
+        },
+      },
+      { new: true },
+    );
+    return SizeMapper.toDto(updatedSize);
   }
 
-  public async fetchCurrencyById(id: string): Promise<SizeResponseDto> {
-    const currency: ISize = await this.sizeModel.findById(id);
-    if (!currency) {
+  public async fetchSizeById(id: string): Promise<SizeResponseDto> {
+    const size: ISize = await this.sizeModel.findById(id);
+    if (!size) {
       throw new SizeDoesNotExistsException();
     }
-    return SizeMapper.toDto(currency);
+    return SizeMapper.toDto(size);
   }
 
-  public async fetchCurrencies(
+  public async fetchSizes(
     paginationQuery: PaginationQueryDto,
   ): Promise<SizeResponseDto[]> {
     const { limit, offset } = paginationQuery;
-    const currencies: ISize[] = await this.sizeModel
+    const sizes: ISize[] = await this.sizeModel
       .find()
       .skip(offset)
       .limit(limit);
-    if (currencies.length) {
-      return currencies.map((_currency) => SizeMapper.toDto(_currency));
+    if (sizes.length) {
+      return sizes.map((_size) => SizeMapper.toDto(_size));
     }
     return [];
   }

@@ -11,10 +11,12 @@ import { setModelData } from '../test/model';
 import { Size, SizeSchema } from './schema/size.schema';
 import { SizeService } from './size.service';
 import { createSize } from '../test/fixtures';
+import { SizeExistsException } from '@http/exceptions';
 
 describe('SizeService', () => {
   let service: SizeService;
   let sizeModel: Model<Size>;
+  let size;
   beforeAll(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
@@ -39,16 +41,33 @@ describe('SizeService', () => {
 
     service = module.get<SizeService>(SizeService);
     sizeModel = module.get(getModelToken('Size'));
-    const size = await setModelData(sizeModel).populate(createSize);
-    console.log('size -->>', size);
+    size = await setModelData(sizeModel).populate(createSize);
   });
 
   afterAll(async () => {
-    console.log('size model', sizeModel);
     await setModelData(sizeModel).reset();
   });
 
   it('should be defined', () => {
     expect(service).toBeDefined();
+  });
+
+  describe('update', () => {
+    it('should update size', async () => {
+      const result = await service.update(size._id, {
+        value: 'SM',
+      });
+
+      expect(result.values).toMatchObject(['XS', 'SM']);
+      expect(result.type).toEqual('General Size');
+    });
+
+    it('should throw error for existing size value', async () => {
+      await expect(
+        service.update(size._id, {
+          value: 'XS',
+        }),
+      ).rejects.toThrow(new SizeExistsException('General Size', 'XS'));
+    });
   });
 });

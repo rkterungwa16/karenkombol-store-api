@@ -7,7 +7,7 @@ export class Size extends Document {
   type: string;
 
   @Prop({ type: [String, Number] })
-  value: string | number;
+  values: (string | number)[];
 }
 
 export const SizeSchema = SchemaFactory.createForClass(Size);

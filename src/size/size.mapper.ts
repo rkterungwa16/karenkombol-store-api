@@ -7,7 +7,7 @@ export class SizeMapper {
 
     dto.id = model._id;
     dto.type = model.type;
-    dto.value = model.value;
+    dto.values = model.values;
     return dto;
   }
 }
