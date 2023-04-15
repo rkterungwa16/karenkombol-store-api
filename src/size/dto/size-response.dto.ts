@@ -1,4 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { SizeValueResponseDto } from './size-value-response.dto';
 
 export class SizeResponseDto {
   @ApiProperty()
@@ -9,7 +10,7 @@ export class SizeResponseDto {
   type: string;
 
   @ApiProperty({
-    example: ['XS'],
+    example: [{ value: 'XS', size: 'size_1234' }],
   })
-  values: (string | number)[];
+  values: SizeValueResponseDto[];
 }

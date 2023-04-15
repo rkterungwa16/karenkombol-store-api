@@ -5,6 +5,7 @@ import {
 } from '@http/exceptions';
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
+import { create } from 'domain';
 import { Model } from 'mongoose';
 import {
   CreateSizeRequestDto,
@@ -12,18 +13,44 @@ import {
   UpdateSizeRequestDto,
 } from './dto';
 import { ISize } from './interface/size.interface';
+import { SizeValue } from './schema/size-value.schema';
 import { Size } from './schema/size.schema';
+import { SizeValueMapper } from './size-value.mapper';
 import { SizeMapper } from './size.mapper';
+
+/**
+ * List all sizes. List size values associated with type
+ * One size type is associated with many size values
+ * One size value is associated with on size type
+ * Delete size value for a size type.
+ * - API should pass both size id and sizeValue id
+ * - Should be able to delete multiple sizeValues in one API call.
+ * Delete a size type. Delete all associated size values.
+ * - API should pass sizeId
+ * Update size value for a size type.
+ * - API should pass both sizeId and sizeValueId
+ * - Should be able to update multiple sizeValues
+ * Update size with its associated values.
+ * If a user edits a size value, api finds that size value by id and applies edit.
+ * - pass size value id and property to be edited.
+ * If a user edits a size with size value.
+ * - pass size id, pass size value id.
+ * List sizes with array of size value objects.
+ */
 
 @Injectable()
 export class SizeService {
   constructor(
     @InjectModel(Size.name) private readonly sizeModel: Model<Size>,
+    @InjectModel(SizeValue.name)
+    private readonly sizeValueModel: Model<SizeValue>,
   ) {}
   public async createSize(
     createSizeRequestDto: CreateSizeRequestDto,
   ): Promise<SizeResponseDto> {
+    let newSize;
     const type = createSizeRequestDto.type.toLowerCase();
+    const value = createSizeRequestDto.value;
     const sizeExists: ISize = await this.sizeModel.findOne({
       type,
     });
@@ -31,10 +58,32 @@ export class SizeService {
       throw new SizeExistsException(type);
     }
 
-    const newSize = await this.sizeModel.create({
+    newSize = await this.sizeModel.create({
       type: createSizeRequestDto.type,
-      values: [createSizeRequestDto.value],
     });
+    if (value) {
+      const newSizeValue = await this.sizeValueModel.create({
+        size: newSize._id,
+        value,
+      });
+      newSize = await this.sizeModel
+        .findByIdAndUpdate(
+          newSize._id,
+          {
+            $push: {
+              values: newSizeValue._id,
+            },
+          },
+          { new: true },
+        )
+        .populate('values');
+
+      newSize = newSize.toObject();
+      newSize.values = newSize?.values.map((_v) => ({
+        ...SizeValueMapper.toDto(_v),
+      }));
+    }
+
     return SizeMapper.toDto(newSize);
   }
 
@@ -71,17 +120,17 @@ export class SizeService {
     return SizeMapper.toDto(size);
   }
 
-  public async fetchSizes(
-    paginationQuery: PaginationQueryDto,
-  ): Promise<SizeResponseDto[]> {
-    const { limit, offset } = paginationQuery;
-    const sizes: ISize[] = await this.sizeModel
-      .find()
-      .skip(offset)
-      .limit(limit);
-    if (sizes.length) {
-      return sizes.map((_size) => SizeMapper.toDto(_size));
-    }
-    return [];
-  }
+  // public async fetchSizes(
+  //   paginationQuery: PaginationQueryDto,
+  // ): Promise<SizeResponseDto[]> {
+  //   const { limit, offset } = paginationQuery;
+  //   const sizes: ISize[] = await this.sizeModel
+  //     .find()
+  //     .skip(offset)
+  //     .limit(limit);
+  //   if (sizes.length) {
+  //     return sizes.map((_size) => SizeMapper.toDto(_size));
+  //   }
+  //   return [];
+  // }
 }

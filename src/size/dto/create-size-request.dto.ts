@@ -14,5 +14,5 @@ export class CreateSizeRequestDto {
   @ApiProperty({
     example: 'XS',
   })
-  value: string | number;
+  value?: string | number;
 }
