@@ -7,7 +7,13 @@ export class UpdateSizeRequestDto {
   type?: string;
 
   @ApiProperty({
-    example: 'XS',
+    example: {
+      id: 'size-value_1234',
+      value: 'XS',
+    },
   })
-  value?: string | number;
+  sizeValue?: {
+    id: string;
+    value: string | number;
+  };
 }

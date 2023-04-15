@@ -1,6 +1,6 @@
 import { DatabaseModule } from '@database/database.module';
 import { ConfigModule } from '@nestjs/config';
-import { Model, Connection } from 'mongoose';
+import { Model, Connection, Types, ObjectId } from 'mongoose';
 import {
   getModelToken,
   MongooseModule,
@@ -11,7 +11,7 @@ import { setModelData } from '../test/model';
 import { Size, SizeSchema } from './schema/size.schema';
 import { SizeService } from './size.service';
 import { createSize } from '../test/fixtures';
-import { SizeExistsException } from '@http/exceptions';
+import { SizeDoesNotExistsException } from '@http/exceptions';
 import { SizeValue, SizeValueSchema } from './schema/size-value.schema';
 
 describe('SizeService', () => {
@@ -19,6 +19,7 @@ describe('SizeService', () => {
   let sizeModel: Model<Size>;
   let sizeValueModel: Model<SizeValue>;
   let size;
+  let sizeValue;
   beforeAll(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
@@ -53,6 +54,14 @@ describe('SizeService', () => {
     sizeModel = module.get(getModelToken('Size'));
     sizeValueModel = module.get(getModelToken('SizeValue'));
     size = await setModelData(sizeModel).populate(createSize);
+    sizeValue = await setModelData(sizeValueModel).populate({
+      size: size._id,
+      value: 'XL',
+    });
+
+    size = await sizeModel.findByIdAndUpdate(size._id, {
+      values: [sizeValue._id],
+    });
   });
 
   afterAll(async () => {
@@ -75,22 +84,35 @@ describe('SizeService', () => {
     });
   });
 
-  // describe('update', () => {
-  //   it('should update size', async () => {
-  //     const result = await service.update(size._id, {
-  //       value: 'SM',
-  //     });
+  describe('update', () => {
+    it('should update size', async () => {
+      const result = await service.update(size._id, {
+        type: 'General Size',
+      });
+      expect(result.type).toEqual('General Size');
+    });
 
-  //     expect(result.values).toMatchObject(['XS', 'SM']);
-  //     expect(result.type).toEqual('General Size');
-  //   });
+    it('should update size value from XL to XS', async () => {
+      const result = await service.update(size._id, {
+        type: 'General Size',
+        sizeValue: {
+          id: sizeValue._id,
+          value: 'XS',
+        },
+      });
+      expect(result.values.find((_v) => _v.value === 'XS')).toBeTruthy();
+    });
 
-  //   it('should throw error for existing size value', async () => {
-  //     await expect(
-  //       service.update(size._id, {
-  //         value: 'XS',
-  //       }),
-  //     ).rejects.toThrow(new SizeExistsException('General Size', 'XS'));
-  //   });
-  // });
+    it('should throw error for non-existing size value', async () => {
+      await expect(
+        service.update(size._id, {
+          type: 'French Size',
+          sizeValue: {
+            id: '4edd40c86762e0fb12000003',
+            value: 'XXL',
+          },
+        }),
+      ).rejects.toThrow(new SizeDoesNotExistsException());
+    });
+  });
 });

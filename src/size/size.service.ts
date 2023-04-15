@@ -6,7 +6,7 @@ import {
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { create } from 'domain';
-import { Model } from 'mongoose';
+import { Model, Types } from 'mongoose';
 import {
   CreateSizeRequestDto,
   SizeResponseDto,
@@ -91,24 +91,33 @@ export class SizeService {
     id: string,
     updateSizeRequestDto: UpdateSizeRequestDto,
   ): Promise<SizeResponseDto> {
-    const { value, type } = updateSizeRequestDto;
-    const sizeValueExists = await this.sizeModel.findOne({
-      id,
-      values: value,
-    });
-    if (sizeValueExists) {
-      throw new SizeExistsException(sizeValueExists.type, value);
-    }
-    const updatedSize: ISize = await this.sizeModel.findByIdAndUpdate(
-      id,
-      {
-        type,
-        $push: {
-          values: value,
+    const { sizeValue, type } = updateSizeRequestDto;
+    if (sizeValue) {
+      const updatedSizeValue = await this.sizeValueModel.findOneAndUpdate(
+        {
+          _id: new Types.ObjectId(sizeValue.id),
+          size: id,
         },
-      },
-      { new: true },
-    );
+        {
+          value: sizeValue.value,
+        },
+      );
+      if (!updatedSizeValue) {
+        throw new SizeDoesNotExistsException();
+      }
+    }
+    const updatedSize: ISize = await this.sizeModel
+      .findByIdAndUpdate(
+        id,
+        {
+          type,
+        },
+        { new: true },
+      )
+      .populate('values');
+    if (!updatedSize) {
+      throw new SizeDoesNotExistsException();
+    }
     return SizeMapper.toDto(updatedSize);
   }
 
