@@ -12,6 +12,7 @@ import {
   SizeResponseDto,
   UpdateSizeRequestDto,
 } from './dto';
+import { SizeQueryDto } from './dto/size-query.dto';
 import { ISize } from './interface/size.interface';
 import { SizeValue } from './schema/size-value.schema';
 import { Size } from './schema/size.schema';
@@ -129,17 +130,18 @@ export class SizeService {
     return SizeMapper.toDto(size);
   }
 
-  // public async fetchSizes(
-  //   paginationQuery: PaginationQueryDto,
-  // ): Promise<SizeResponseDto[]> {
-  //   const { limit, offset } = paginationQuery;
-  //   const sizes: ISize[] = await this.sizeModel
-  //     .find()
-  //     .skip(offset)
-  //     .limit(limit);
-  //   if (sizes.length) {
-  //     return sizes.map((_size) => SizeMapper.toDto(_size));
-  //   }
-  //   return [];
-  // }
+  public async fetchSizes(
+    paginationQuery: SizeQueryDto,
+  ): Promise<SizeResponseDto[]> {
+    // const sizes = await this.sizeModel
+    //   .find({
+    //     $or: [],
+    //   })
+    //   .skip(skip())
+    //   .limit(limit);
+    // if (sizes.length) {
+    //   return sizes.map((_size) => SizeMapper.toDto(_size));
+    // }
+    return [];
+  }
 }

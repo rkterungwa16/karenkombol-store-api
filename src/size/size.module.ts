@@ -12,10 +12,14 @@ import {
 import { Role, RoleSchema } from '@access/role/schemas/role.schema';
 import { SizeService } from './size.service';
 import { SizeController } from './size.controller';
+import { SizeValue, SizeValueSchema } from './schema/size-value.schema';
 
 @Module({
   imports: [
     MongooseModule.forFeature([{ name: Size.name, schema: SizeSchema }]),
+    MongooseModule.forFeature([
+      { name: SizeValue.name, schema: SizeValueSchema },
+    ]),
     MongooseModule.forFeature([{ name: User.name, schema: UserSchema }]),
     MongooseModule.forFeature([
       { name: Permission.name, schema: PermissionSchema },

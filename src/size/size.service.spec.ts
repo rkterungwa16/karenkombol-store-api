@@ -84,6 +84,15 @@ describe('SizeService', () => {
     });
   });
 
+  describe('find', () => {
+    it('should filter sizes with pagination', async () => {
+      // const result = await service.fetchSizes({});
+      // console.log('result -->>', result);
+      // expect(result.values.find((_v) => _v.value)).toBeTruthy();
+      // expect(result.type).toEqual('French size');
+    });
+  });
+
   describe('update', () => {
     it('should update size', async () => {
       const result = await service.update(size._id, {

@@ -30,6 +30,8 @@
       "@size/*": ["src/size/*"],
       "@product/*": ["src/product/*"],
       "@http/*": ["src/http/*"],
+      "@filter": ["src/filter"],
+      "@pagination": ["src/pagination"],
       "@company/*": ["src/company/*"],
       "@decorators": ["src/decorators"],
       "@common": ["src/common"]
