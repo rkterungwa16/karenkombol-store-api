@@ -14,6 +14,6 @@ export class SizeController {
   ): Promise<SizeResponseDto[]> {
     console.log('query -->>', sizeQueryDto);
     console.log('pagination -->>', pagination);
-    return this.sizeService.fetchSizes(sizeQueryDto);
+    return this.sizeService.fetchSizes(pagination);
   }
 }

@@ -134,13 +134,14 @@ export class SizeService {
     paginationQuery: PaginationRequest,
   ): Promise<SizeResponseDto[]> {
     const { limit, skip, params } = paginationQuery;
-    console.log('limit -->>', limit);
-    console.log('skip', skip);
+    const dbFilter = Object.keys(params).map((key) => ({
+      [key]: params[key],
+    }));
     const sizes = await this.sizeModel
       .find({
-        $or: [],
+        $or: dbFilter,
       })
-      .skip(skip())
+      .skip(skip)
       .limit(limit);
     if (sizes.length) {
       return sizes.map((_size) => SizeMapper.toDto(_size));
