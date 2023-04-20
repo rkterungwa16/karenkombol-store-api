@@ -9,6 +9,9 @@ export class ProductMapper {
     dto.name = model.name;
     dto.description = model.description;
     dto.imageUrl = model.imageUrl;
+    dto.tags = model.tags;
+    dto.status = model.status;
+    dto.published = model.published;
     return dto;
   }
 }

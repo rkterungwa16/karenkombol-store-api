@@ -14,3 +14,4 @@ export * from './category-doesnot-exist.exception';
 export * from './category-exists.exception';
 export * from './product-doesnot-exist.exception';
 export * from './product-exists.exception';
+export * from './size';

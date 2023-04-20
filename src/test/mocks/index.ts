@@ -4,3 +4,5 @@ export * from './user.model.ts';
 export * from './company.model';
 export * from './color.model';
 export * from './currency.model';
+export * from './category.model';
+export * from './product.model';

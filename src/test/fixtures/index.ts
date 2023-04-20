@@ -5,3 +5,5 @@ export * from './color';
 export * from './currency';
 export * from './category';
 export * from './variant';
+export * from './product';
+export * from './size';

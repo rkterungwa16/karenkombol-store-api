@@ -1,7 +1,6 @@
-import { DynamicModule, Module } from '@nestjs/common';
-import { ConfigService, ConfigModule } from '@nestjs/config';
+import { DynamicModule } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import * as cloudinary from 'cloudinary';
-import { CloudinaryModule } from './cloudinary.module';
 import { CloudinaryConstants } from './enums';
 
 export const ConfigureCloudinary = (configService: ConfigService) => {
@@ -14,22 +13,14 @@ export const ConfigureCloudinary = (configService: ConfigService) => {
   return cloudinaryV2;
 };
 
-export const ConfigureCloudinaryService: DynamicModule = {
-  module: CloudinaryModule,
-  imports: [ConfigModule],
-  providers: [
-    {
-      provide: CloudinaryConstants.PROVIDER_NAME,
-      useFactory: ConfigureCloudinary,
-    },
-  ],
-};
 export class ConfigureCloudinaryModule {
   static register(): DynamicModule {
     return {
       module: ConfigureCloudinaryModule,
-      imports: [ConfigModule],
+      // Register ConfigService will be injected into or used by ConfigureCloudinary.
+      // When using ConfigCloudinary, the factory is returned.
       providers: [
+        ConfigService,
         {
           provide: CloudinaryConstants.PROVIDER_NAME,
           useFactory: ConfigureCloudinary,

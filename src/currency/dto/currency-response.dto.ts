@@ -4,9 +4,7 @@ export class CurrencyResponseDto {
   @ApiProperty()
   id: string;
   @ApiProperty({
-    example: {
-      example: 'NGN',
-    },
+    example: 'NGN',
   })
   code: string;
 

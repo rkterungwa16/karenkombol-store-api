@@ -119,6 +119,9 @@
       "^@currency/(.*)": [
         "<rootDir>/src/currency/$1"
       ],
+      "^@size/(.*)": [
+        "<rootDir>/src/size/$1"
+      ],
       "^@product/(.*)": [
         "<rootDir>/src/product/$1"
       ],

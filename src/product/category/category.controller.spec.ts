@@ -8,7 +8,7 @@ import {
   TestPermissionModel,
   TestRoleModel,
   TestCurrencyModel,
-} from 'src/test/mocks';
+} from '../../test/mocks';
 import { CategoryController } from './category.controller';
 import { CategoryService } from './category.service';
 
