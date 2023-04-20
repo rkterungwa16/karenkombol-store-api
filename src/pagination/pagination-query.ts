@@ -17,7 +17,8 @@ export class PaginationQuery {
   @Type(() => Number)
   limit = PaginationQuery.DEFAULT_LIMIT;
 
-  skip() {
-    return (this.page - 1) * this.limit;
-  }
+  @IsInt()
+  @IsOptional()
+  @Type(() => Number)
+  skip = 0;
 }

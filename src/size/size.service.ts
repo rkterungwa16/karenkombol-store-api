@@ -5,7 +5,7 @@ import {
 } from '@http/exceptions';
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { create } from 'domain';
+import { PaginationRequest } from '@pagination';
 import { Model, Types } from 'mongoose';
 import {
   CreateSizeRequestDto,
@@ -131,17 +131,20 @@ export class SizeService {
   }
 
   public async fetchSizes(
-    paginationQuery: SizeQueryDto,
+    paginationQuery: PaginationRequest,
   ): Promise<SizeResponseDto[]> {
-    // const sizes = await this.sizeModel
-    //   .find({
-    //     $or: [],
-    //   })
-    //   .skip(skip())
-    //   .limit(limit);
-    // if (sizes.length) {
-    //   return sizes.map((_size) => SizeMapper.toDto(_size));
-    // }
+    const { limit, skip, params } = paginationQuery;
+    console.log('limit -->>', limit);
+    console.log('skip', skip);
+    const sizes = await this.sizeModel
+      .find({
+        $or: [],
+      })
+      .skip(skip())
+      .limit(limit);
+    if (sizes.length) {
+      return sizes.map((_size) => SizeMapper.toDto(_size));
+    }
     return [];
   }
 }
