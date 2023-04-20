@@ -137,6 +137,7 @@ export class SizeService {
     const dbFilter = Object.keys(params).map((key) => ({
       [key]: params[key],
     }));
+    console.log('dbfilter', dbFilter);
     const sizes = await this.sizeModel
       .find({
         $or: dbFilter,

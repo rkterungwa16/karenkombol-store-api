@@ -24,7 +24,7 @@ export class SizeQueryDto extends PaginationQuery {
   createdAt?: DateFilterDto;
 
   @IsOptional()
-  @ValidateNested()
+  @ValidateNested({ each: true })
   @Type(() => DateFilterDto)
   updatedAt?: DateFilterDto;
 
