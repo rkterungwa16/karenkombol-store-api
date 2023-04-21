@@ -95,6 +95,12 @@
       "^@helpers": [
         "<rootDir>/src/helpers"
       ],
+      "^@pagination": [
+        "<rootDir>/src/pagination"
+      ],
+      "^@filter": [
+        "<rootDir>/src/filter"
+      ],
       "^@common": [
         "<rootDir>/src/common"
       ],
