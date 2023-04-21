@@ -137,9 +137,14 @@ export class SizeService {
     const dbFilter = Object.keys(params).map((key) => ({
       [key]: params[key],
     }));
+
+    const otherFilters = dbFilter.filter((_filter) => !_filter.values);
     const sizes = await this.sizeModel
       .find({
-        $or: dbFilter,
+        $or: otherFilters,
+      })
+      .populate('values', {
+        values: params.values,
       })
       .skip(skip)
       .limit(limit);

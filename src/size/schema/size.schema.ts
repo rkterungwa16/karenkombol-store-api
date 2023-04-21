@@ -6,7 +6,7 @@ export class Size extends Document {
   @Prop({ type: String, unique: true })
   type: string;
 
-  @Prop({ type: [{ type: Types.ObjectId, ref: 'SizeValue' }] })
+  @Prop({ type: [Types.ObjectId], ref: 'SizeValue' })
   values?: string[];
 }
 

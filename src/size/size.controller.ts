@@ -1,5 +1,5 @@
 import { Controller, Get, Query, ValidationPipe } from '@nestjs/common';
-import { PaginationParams } from '@pagination';
+import { extractPaginationDetails } from '@pagination';
 import { SizeResponseDto } from './dto';
 import { SizeQueryDto } from './dto/size-query.dto';
 import { SizeService } from './size.service';
@@ -10,10 +10,8 @@ export class SizeController {
   @Get()
   public fetchSizes(
     @Query(new ValidationPipe()) sizeQueryDto: SizeQueryDto,
-    @PaginationParams() pagination: any,
   ): Promise<SizeResponseDto[]> {
-    console.log('query -->>', sizeQueryDto);
-    console.log('pagination -->>', pagination);
+    const pagination = extractPaginationDetails(sizeQueryDto);
     return this.sizeService.fetchSizes(pagination);
   }
 }

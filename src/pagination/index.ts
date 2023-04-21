@@ -1,4 +1,4 @@
 export * from './pagination-query';
 export * from './pagination-response.dto';
-export * from './pagination-decorator';
+export * from './extract-pagination-details';
 export * from './pagination-request.interface';
