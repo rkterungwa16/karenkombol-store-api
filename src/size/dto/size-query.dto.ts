@@ -7,6 +7,7 @@ import {
 } from 'class-validator';
 import { DateFilterDto, NumberFilterDto } from '@filter';
 import { PaginationQuery } from '@pagination';
+import { SizeValueQueryDto } from './size-value-query.dto';
 
 export class SizeQueryDto extends PaginationQuery {
   @IsString()
@@ -15,8 +16,8 @@ export class SizeQueryDto extends PaginationQuery {
 
   @IsNumber()
   @IsOptional()
-  @Transform(({ value }) => Number(value))
-  amount?: number;
+  @Type(() => NumberFilterDto)
+  amount?: NumberFilterDto;
 
   @IsOptional()
   @ValidateNested({ each: true })
@@ -29,6 +30,7 @@ export class SizeQueryDto extends PaginationQuery {
   updatedAt?: DateFilterDto;
 
   @IsOptional()
-  @Transform((value) => (typeof value === 'number' ? NumberFilterDto : value))
-  value?: string | number;
+  @ValidateNested({ each: true })
+  @Type(() => SizeValueQueryDto)
+  values?: SizeValueQueryDto;
 }
