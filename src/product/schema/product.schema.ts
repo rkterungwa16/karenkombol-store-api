@@ -12,6 +12,7 @@ export class Product extends Document {
   category: string;
   @Prop({ type: String })
   imageUrl: string;
+
   @Prop({ type: String, enum: [...Object.values(ProductStatus)] })
   status: ProductStatus;
 

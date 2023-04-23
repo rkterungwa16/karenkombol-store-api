@@ -55,12 +55,13 @@ export class SizeService {
     const sizeExists: ISize = await this.sizeModel.findOne({
       type,
     });
+
     if (sizeExists) {
       throw new SizeExistsException(type);
     }
 
     newSize = await this.sizeModel.create({
-      type: createSizeRequestDto.type,
+      type,
     });
     if (value) {
       const newSizeValue = await this.sizeValueModel.create({
@@ -97,12 +98,13 @@ export class SizeService {
       const updatedSizeValue = await this.sizeValueModel.findOneAndUpdate(
         {
           _id: new Types.ObjectId(sizeValue.id),
-          size: id,
+          size: new Types.ObjectId(id),
         },
         {
           value: sizeValue.value,
         },
       );
+      console.log('updated size value', updatedSizeValue);
       if (!updatedSizeValue) {
         throw new SizeDoesNotExistsException();
       }
@@ -111,7 +113,7 @@ export class SizeService {
       .findByIdAndUpdate(
         id,
         {
-          type,
+          ...(type && { type: type.toLowerCase() }),
         },
         { new: true },
       )
@@ -133,18 +135,22 @@ export class SizeService {
   public async fetchSizes(
     paginationQuery: PaginationRequest,
   ): Promise<SizeResponseDto[]> {
+    let otherFilters;
     const { limit, skip, params } = paginationQuery;
-    const dbFilter = Object.keys(params).map((key) => ({
-      [key]: params[key],
-    }));
 
-    const otherFilters = dbFilter.filter((_filter) => !_filter.values);
+    if (params) {
+      const dbFilter = Object.keys(params).map((key) => ({
+        [key]: params[key],
+      }));
+
+      otherFilters = dbFilter.filter((_filter) => !_filter.values);
+    }
     const sizes = await this.sizeModel
       .find({
-        $or: otherFilters,
+        ...(otherFilters && { $or: otherFilters }),
       })
       .populate('values', {
-        values: params.values,
+        ...(params?.values && { values: params?.values }),
       })
       .skip(skip)
       .limit(limit);
