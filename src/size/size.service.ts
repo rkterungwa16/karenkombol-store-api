@@ -13,8 +13,7 @@ import {
   SizeResponseDto,
   UpdateSizeRequestDto,
 } from './dto';
-import { SizeQueryDto } from './dto/size-query.dto';
-import { SizeValueResponseDto } from './dto/size-value-response.dto';
+
 import { ISize } from './interface/size.interface';
 import { SizeValue } from './schema/size-value.schema';
 import { Size } from './schema/size.schema';
