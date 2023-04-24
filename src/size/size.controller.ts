@@ -9,6 +9,7 @@ import {
   Controller,
   Get,
   Param,
+  Patch,
   Post,
   Put,
   Query,
@@ -23,6 +24,7 @@ import {
 } from '@nestjs/swagger';
 import { extractPaginationDetails } from '@pagination';
 import {
+  AddSizeValueRequestDto,
   CreateSizeRequestDto,
   SizeResponseDto,
   UpdateSizeRequestDto,
@@ -84,8 +86,24 @@ export class SizeController {
     @Param('id') id: string,
     @Body(new ValidationPipe()) sizeDto: UpdateSizeRequestDto,
   ): Promise<SizeResponseDto> {
-    console.log('id -->>', id);
     console.log('size dto', sizeDto);
     return this.sizeService.update(id, sizeDto);
+  }
+
+  @ApiOperation({ description: 'Update size by id' })
+  @ApiBadRequestResponse({
+    description: "There's no size of type",
+  })
+  @Permission({
+    resource: PermissionResources.CURRENCIES,
+    action: PermissionActions.UPDATE,
+  })
+  @UseGuards(PermissionGuard)
+  @Patch('/:id/add')
+  public addSizeValue(
+    @Param('id') id: string,
+    @Body(new ValidationPipe()) sizeDto: AddSizeValueRequestDto,
+  ): Promise<SizeResponseDto> {
+    return this.sizeService.addValueToSize(id, sizeDto);
   }
 }

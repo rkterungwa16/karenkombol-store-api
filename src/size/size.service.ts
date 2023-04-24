@@ -9,10 +9,12 @@ import { PaginationRequest } from '@pagination';
 import { Model, Types } from 'mongoose';
 import {
   CreateSizeRequestDto,
+  AddSizeValueRequestDto,
   SizeResponseDto,
   UpdateSizeRequestDto,
 } from './dto';
 import { SizeQueryDto } from './dto/size-query.dto';
+import { SizeValueResponseDto } from './dto/size-value-response.dto';
 import { ISize } from './interface/size.interface';
 import { SizeValue } from './schema/size-value.schema';
 import { Size } from './schema/size.schema';
@@ -50,7 +52,7 @@ export class SizeService {
     createSizeRequestDto: CreateSizeRequestDto,
   ): Promise<SizeResponseDto> {
     let newSize;
-    const type = createSizeRequestDto.type.toLowerCase();
+    const type = createSizeRequestDto.type;
     const value = createSizeRequestDto.value;
     const sizeExists: ISize = await this.sizeModel.findOne({
       type,
@@ -89,6 +91,38 @@ export class SizeService {
     return SizeMapper.toDto(newSize);
   }
 
+  public async addValueToSize(
+    id: string,
+    addSizeValueRequestDto: AddSizeValueRequestDto,
+  ): Promise<SizeResponseDto> {
+    const { value } = addSizeValueRequestDto;
+    const sizeExists = await this.sizeModel.findById(id);
+    if (!sizeExists) {
+      throw new Error();
+    }
+    const newSizeValue = await this.sizeValueModel.create({
+      size: id,
+      value,
+    });
+    let updatedSize = await this.sizeModel
+      .findByIdAndUpdate(
+        id,
+        {
+          $push: {
+            values: newSizeValue._id,
+          },
+        },
+        { new: true },
+      )
+      .populate('values');
+    updatedSize = updatedSize.toObject();
+    updatedSize.values = updatedSize?.values.map((_v: any) => ({
+      ...SizeValueMapper.toDto(_v),
+    })) as any;
+
+    return SizeMapper.toDto(updatedSize);
+  }
+
   public async update(
     id: string,
     updateSizeRequestDto: UpdateSizeRequestDto,
@@ -104,7 +138,6 @@ export class SizeService {
           value: sizeValue.value,
         },
       );
-      console.log('updated size value', updatedSizeValue);
       if (!updatedSizeValue) {
         throw new SizeDoesNotExistsException();
       }
@@ -113,7 +146,7 @@ export class SizeService {
       .findByIdAndUpdate(
         id,
         {
-          ...(type && { type: type.toLowerCase() }),
+          ...(type && { type }),
         },
         { new: true },
       )
@@ -125,7 +158,7 @@ export class SizeService {
   }
 
   public async fetchSizeById(id: string): Promise<SizeResponseDto> {
-    const size: ISize = await this.sizeModel.findById(id);
+    const size: ISize = await this.sizeModel.findById(id).populate('values');
     if (!size) {
       throw new SizeDoesNotExistsException();
     }
