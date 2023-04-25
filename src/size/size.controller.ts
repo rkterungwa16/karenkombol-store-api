@@ -22,14 +22,14 @@ import {
   ApiQuery,
   ApiBadRequestResponse,
 } from '@nestjs/swagger';
-import { extractPaginationDetails } from '@pagination';
+import { extractPaginationDetails, PaginationResponseDto } from '@pagination';
 import {
   AddSizeValueRequestDto,
   CreateSizeRequestDto,
   SizeResponseDto,
   UpdateSizeRequestDto,
 } from './dto';
-import { SizeQueryDto } from './dto/size-query.dto';
+import { SizeQueryDto, SizeQueryWithFilterDto } from './dto/size-query.dto';
 import { SizeService } from './size.service';
 
 @Controller('size')
@@ -66,10 +66,11 @@ export class SizeController {
   @UseGuards(PermissionGuard)
   @Get()
   public fetchSizes(
-    @Query(new ValidationPipe()) sizeQueryDto: SizeQueryDto,
-  ): Promise<SizeResponseDto[]> {
-    const pagination = extractPaginationDetails(sizeQueryDto);
-    return this.sizeService.fetchSizes(pagination);
+    @Query() sizeQueryDto: SizeQueryWithFilterDto,
+  ): Promise<PaginationResponseDto<SizeResponseDto[]>> {
+    const filter = sizeQueryDto.filter();
+    const { skip, limit } = sizeQueryDto;
+    return this.sizeService.fetchSizes({ limit, skip, filter });
   }
 
   @ApiOperation({ description: 'Update size by id' })
@@ -86,7 +87,6 @@ export class SizeController {
     @Param('id') id: string,
     @Body(new ValidationPipe()) sizeDto: UpdateSizeRequestDto,
   ): Promise<SizeResponseDto> {
-    console.log('size dto', sizeDto);
     return this.sizeService.update(id, sizeDto);
   }
 

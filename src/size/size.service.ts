@@ -1,17 +1,18 @@
-import { PaginationQueryDto } from '@common';
 import {
   SizeDoesNotExistsException,
   SizeExistsException,
 } from '@http/exceptions';
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { PaginationRequest } from '@pagination';
+import { PaginationRequest, PaginationResponseDto } from '@pagination';
 import { Model, Types } from 'mongoose';
+import { Pagination } from 'src/pagination/pagination-helper';
 import {
   CreateSizeRequestDto,
   AddSizeValueRequestDto,
   SizeResponseDto,
   UpdateSizeRequestDto,
+  SizeQueryWithFilterDto,
 } from './dto';
 
 import { ISize } from './interface/size.interface';
@@ -165,30 +166,23 @@ export class SizeService {
   }
 
   public async fetchSizes(
-    paginationQuery: PaginationRequest,
-  ): Promise<SizeResponseDto[]> {
-    let otherFilters;
-    const { limit, skip, params } = paginationQuery;
-
-    if (params) {
-      const dbFilter = Object.keys(params).map((key) => ({
-        [key]: params[key],
-      }));
-
-      otherFilters = dbFilter.filter((_filter) => !_filter.values);
-    }
+    paginationQuery,
+  ): Promise<PaginationResponseDto<SizeResponseDto[]>> {
+    let data = [];
+    const { limit, skip, filter } = paginationQuery;
+    const totalRecords = await this.sizeModel.count();
     const sizes = await this.sizeModel
       .find({
-        ...(otherFilters && { $or: otherFilters }),
+        ...(filter['$and'].length && { $and: filter['$and'] }),
       })
       .populate('values', {
-        ...(params?.values && { values: params?.values }),
+        ...(filter?.values && { values: filter?.values }),
       })
       .skip(skip)
       .limit(limit);
     if (sizes.length) {
-      return sizes.map((_size) => SizeMapper.toDto(_size));
+      data = sizes.map((_size) => SizeMapper.toDto(_size));
     }
-    return [];
+    return Pagination.of({ limit, skip }, totalRecords, data);
   }
 }

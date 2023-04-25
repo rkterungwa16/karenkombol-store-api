@@ -16,6 +16,8 @@ export interface PaginationRequest {
     search?: string;
     [param: string]: string | string[];
   };
+
+  filter?: () => [];
 }
 
 export type PaginationSortOrder = 'asc' | 'desc';
