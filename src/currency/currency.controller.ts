@@ -8,7 +8,6 @@ import {
   Put,
   Query,
   UseGuards,
-  ValidationPipe,
 } from '@nestjs/common';
 
 import {
@@ -83,7 +82,7 @@ export class CurrencyController {
   @UseGuards(PermissionGuard)
   @Post()
   public createCurrency(
-    @Body(ValidationPipe) currencyDto: CreateCurrencyRequestDto,
+    @Body() currencyDto: CreateCurrencyRequestDto,
   ): Promise<CurrencyResponseDto> {
     return this.currencyService.createCurrency(currencyDto);
   }
@@ -100,7 +99,7 @@ export class CurrencyController {
   @Put('/:id')
   public updateCurrency(
     @Param('id') id: string,
-    @Body(ValidationPipe) currencyDto: UpdateCurrencyRequestDto,
+    @Body() currencyDto: UpdateCurrencyRequestDto,
   ): Promise<CurrencyResponseDto> {
     return this.currencyService.update(id, currencyDto);
   }

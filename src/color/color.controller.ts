@@ -8,7 +8,6 @@ import {
   Put,
   Query,
   UseGuards,
-  ValidationPipe,
 } from '@nestjs/common';
 
 import {
@@ -82,7 +81,7 @@ export class ColorController {
   @UseGuards(PermissionGuard)
   @Post()
   public create(
-    @Body(ValidationPipe) colorDto: CreateColorRequestDto,
+    @Body() colorDto: CreateColorRequestDto,
   ): Promise<ColorResponseDto> {
     return this.colorService.createColor(colorDto);
   }
@@ -99,7 +98,7 @@ export class ColorController {
   @Put('/:id')
   public update(
     @Param('id') id: string,
-    @Body(ValidationPipe) colorDto: UpdateColorRequestDto,
+    @Body() colorDto: UpdateColorRequestDto,
   ): Promise<ColorResponseDto> {
     return this.colorService.update(id, colorDto);
   }

@@ -1,4 +1,4 @@
-import { Body, Controller, Post, ValidationPipe } from '@nestjs/common';
+import { Body, Controller, Post } from '@nestjs/common';
 import { UsersService } from './user.service';
 import { ApiConflictResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { UserResponseDto, CreateUserRequestDto } from './dto';
@@ -10,7 +10,7 @@ export class UsersController {
   @Post()
   // @Permission("users.create")
   public createUser(
-    @Body(ValidationPipe) UserDto: CreateUserRequestDto,
+    @Body() UserDto: CreateUserRequestDto,
   ): Promise<UserResponseDto> {
     return this.usersService.create(UserDto);
   }

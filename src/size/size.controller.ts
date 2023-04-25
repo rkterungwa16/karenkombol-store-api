@@ -14,7 +14,6 @@ import {
   Put,
   Query,
   UseGuards,
-  ValidationPipe,
 } from '@nestjs/common';
 import {
   ApiOperation,
@@ -22,14 +21,14 @@ import {
   ApiQuery,
   ApiBadRequestResponse,
 } from '@nestjs/swagger';
-import { extractPaginationDetails, PaginationResponseDto } from '@pagination';
+import { PaginationResponseDto } from '@pagination';
 import {
   AddSizeValueRequestDto,
   CreateSizeRequestDto,
   SizeResponseDto,
   UpdateSizeRequestDto,
 } from './dto';
-import { SizeQueryDto, SizeQueryWithFilterDto } from './dto/size-query.dto';
+import { SizeQueryWithFilterDto } from './dto/size-query.dto';
 import { SizeService } from './size.service';
 
 @Controller('size')
@@ -47,7 +46,7 @@ export class SizeController {
   @UseGuards(PermissionGuard)
   @Post()
   public createSize(
-    @Body(new ValidationPipe()) sizeDto: CreateSizeRequestDto,
+    @Body() sizeDto: CreateSizeRequestDto,
   ): Promise<SizeResponseDto> {
     return this.sizeService.createSize(sizeDto);
   }
@@ -85,7 +84,7 @@ export class SizeController {
   @Put('/:id')
   public updateSize(
     @Param('id') id: string,
-    @Body(new ValidationPipe()) sizeDto: UpdateSizeRequestDto,
+    @Body() sizeDto: UpdateSizeRequestDto,
   ): Promise<SizeResponseDto> {
     return this.sizeService.update(id, sizeDto);
   }
@@ -102,7 +101,7 @@ export class SizeController {
   @Patch('/:id/add')
   public addSizeValue(
     @Param('id') id: string,
-    @Body(new ValidationPipe()) sizeDto: AddSizeValueRequestDto,
+    @Body() sizeDto: AddSizeValueRequestDto,
   ): Promise<SizeResponseDto> {
     return this.sizeService.addValueToSize(id, sizeDto);
   }

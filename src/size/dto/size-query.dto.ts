@@ -1,11 +1,6 @@
 import { instanceToPlain, Type } from 'class-transformer';
-import {
-  IsNumber,
-  IsOptional,
-  IsString,
-  ValidateNested,
-} from 'class-validator';
-import { DateFilterDto, NumberFilterDto } from '@filter';
+import { IsOptional, IsString, ValidateNested } from 'class-validator';
+import { DateFilterDto } from '@filter';
 import { PaginationQuery } from '@pagination';
 import { SizeValueQueryDto } from './size-value-query.dto';
 
