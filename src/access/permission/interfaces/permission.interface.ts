@@ -30,4 +30,6 @@ export interface IPermission {
   readonly _id: string;
   readonly resource: string;
   readonly actions: PermissionActions[];
+  createdAt?: Date;
+  updatedAt?: Date;
 }

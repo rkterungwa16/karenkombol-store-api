@@ -1,8 +1,7 @@
 import { UserResponseDto } from './dto';
-import { User } from './schemas/user.schema';
 
 export class UserMapper {
-  public static async toDto(model: User): Promise<UserResponseDto> {
+  public static async toDto(model): Promise<UserResponseDto> {
     const dto = new UserResponseDto();
 
     dto.id = model._id;
@@ -13,6 +12,8 @@ export class UserMapper {
     dto.roles = model.roles;
     dto.status = model.status;
     dto.company = model.company;
+    dto.createdAt = model.createdAt;
+    dto.updatedAt = model.updatedAt;
     return dto;
   }
 }

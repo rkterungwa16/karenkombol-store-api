@@ -8,6 +8,8 @@ export class ColorMapper {
     dto.id = model._id;
     dto.hexCode = model.hexCode;
     dto.name = model.name;
+    dto.createdAt = model.createdAt;
+    dto.updatedAt = model.updatedAt;
     return dto;
   }
 }

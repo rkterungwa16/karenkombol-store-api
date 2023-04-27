@@ -4,6 +4,7 @@ import { SizeValueResponseDto } from './size-value-response.dto';
 export class SizeResponseDto {
   @ApiProperty()
   id: string;
+
   @ApiProperty({
     example: 'General size',
   })
@@ -13,4 +14,8 @@ export class SizeResponseDto {
     example: [{ value: 'XS', size: 'size_1234' }],
   })
   values: SizeValueResponseDto[];
+
+  createdAt?: Date;
+
+  updatedAt?: Date;
 }

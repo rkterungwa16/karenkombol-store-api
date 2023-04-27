@@ -3,4 +3,6 @@ export interface ICurrency {
   readonly code: string;
   readonly symbol: string;
   readonly rate: number;
+  createdAt?: Date;
+  updatedAt?: Date;
 }

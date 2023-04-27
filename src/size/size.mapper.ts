@@ -1,5 +1,4 @@
 import { SizeResponseDto } from './dto';
-import { ISize } from './interface/size.interface';
 
 export class SizeMapper {
   public static toDto(model): SizeResponseDto {
@@ -8,6 +7,8 @@ export class SizeMapper {
     dto.id = model._id;
     dto.type = model.type;
     dto.values = model.values;
+    dto.createdAt = model.createdAt;
+    dto.updatedAt = model.updatedAt;
     return dto;
   }
 }

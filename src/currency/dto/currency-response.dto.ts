@@ -17,4 +17,7 @@ export class CurrencyResponseDto {
     example: 1,
   })
   rate: number;
+
+  createdAt?: Date;
+  updatedAt?: Date;
 }

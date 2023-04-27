@@ -8,6 +8,8 @@ export class CurrencyMapper {
     dto.id = model._id;
     dto.code = model.code;
     dto.symbol = model.symbol;
+    dto.createdAt = model.createdAt;
+    dto.updatedAt = model.updatedAt;
     return dto;
   }
 }

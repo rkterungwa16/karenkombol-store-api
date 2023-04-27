@@ -13,6 +13,8 @@ export class CategoryMapper {
     if (model.imageUrl) {
       dto.imageUrl = model.imageUrl;
     }
+    dto.createdAt = model.createdAt;
+    dto.updatedAt = model.updatedAt;
     return dto;
   }
 }

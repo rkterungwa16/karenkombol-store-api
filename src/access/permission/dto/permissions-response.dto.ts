@@ -11,4 +11,7 @@ export class PermissionsResponseDto {
     example: ['create', 'update', 'read', 'delete'],
   })
   actions: string[];
+
+  createdAt?: Date;
+  updatedAt?: Date;
 }

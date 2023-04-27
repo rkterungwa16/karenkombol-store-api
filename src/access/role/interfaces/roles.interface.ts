@@ -6,4 +6,6 @@ export interface IRole {
   name: string;
   permissions: string[] | IPermission[];
   company: ICompany | string;
+  createdAt?: Date;
+  updatedAt?: Date;
 }

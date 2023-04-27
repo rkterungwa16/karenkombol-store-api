@@ -12,6 +12,8 @@ export class ProductMapper {
     dto.tags = model.tags;
     dto.status = model.status;
     dto.published = model.published;
+    dto.createdAt = model.createdAt;
+    dto.updatedAt = model.updatedAt;
     return dto;
   }
 }

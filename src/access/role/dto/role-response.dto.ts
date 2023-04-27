@@ -29,4 +29,7 @@ export class RoleResponseDto {
     ],
   })
   permissions: string[] | IPermission[];
+
+  createdAt?: Date;
+  updatedAt?: Date;
 }

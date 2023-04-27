@@ -8,6 +8,8 @@ export class PermissionMapper {
     dto.id = model._id;
     dto.actions = model.actions;
     dto.resource = model.resource;
+    dto.createdAt = model.createdAt;
+    dto.updatedAt = model.updatedAt;
     return dto;
   }
 }

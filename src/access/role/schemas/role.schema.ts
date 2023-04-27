@@ -1,7 +1,7 @@
 import { Schema, Prop, SchemaFactory } from '@nestjs/mongoose';
 import { Document, Types } from 'mongoose';
 
-@Schema()
+@Schema({ timestamps: true })
 export class Role extends Document {
   @Prop({ type: String })
   name: string;

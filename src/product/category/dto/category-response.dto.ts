@@ -19,4 +19,7 @@ export class CategoryResponseDto {
     example: 'list of women clothes',
   })
   description: string;
+
+  createdAt?: Date;
+  updatedAt?: Date;
 }
