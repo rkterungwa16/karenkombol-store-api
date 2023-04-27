@@ -9,6 +9,8 @@ export interface IProduct {
   published: boolean;
   status: ProductStatus;
   tags: string[];
+  createdAt?: Date;
+  updatedAt?: Date;
 }
 
 export enum ProductStatus {

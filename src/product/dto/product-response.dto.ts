@@ -43,4 +43,7 @@ export class ProductResponseDto {
     example: [],
   })
   tags: string[];
+
+  createdAt?: Date;
+  updatedAt?: Date;
 }
