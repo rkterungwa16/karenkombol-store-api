@@ -2,6 +2,7 @@ import { IsNotEmpty, IsString } from 'class-validator';
 
 import { ApiProperty } from '@nestjs/swagger';
 import { ProductStatus } from '@product/interface/product.interface';
+import { Transform } from 'class-transformer';
 
 export class CreateProductRequestDto {
   @ApiProperty({
@@ -19,6 +20,7 @@ export class CreateProductRequestDto {
   @ApiProperty({
     example: 'v-neck short-sleeve shirt',
   })
+  @Transform(({ value }) => value.toLowerCase())
   name: string;
 
   @IsNotEmpty()
