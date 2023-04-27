@@ -13,6 +13,7 @@ import { Size, SizeSchema } from '@size/schema/size.schema';
 import { setModelData } from '../../test/model';
 import { CategoryService } from './category.service';
 import { Category, CategorySchema } from './schema/category.schema';
+import { CategoryExistsException } from '@http/exceptions';
 
 describe('CategoryService', () => {
   let service: CategoryService;
@@ -61,6 +62,14 @@ describe('CategoryService', () => {
         name: 'female',
       });
       expect(result.name).toEqual('female');
+    });
+
+    it('should throw error if category already exists', async () => {
+      await expect(
+        service.create({
+          name: 'female',
+        }),
+      ).rejects.toThrow(new CategoryExistsException());
     });
   });
 });
