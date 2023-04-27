@@ -4,15 +4,14 @@ import {
 } from '@http/exceptions';
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { PaginationRequest, PaginationResponseDto } from '@pagination';
+import { PaginationResponseDto } from '@pagination';
 import { Model, Types } from 'mongoose';
-import { Pagination } from 'src/pagination/pagination-helper';
+import { Pagination } from '@pagination';
 import {
   CreateSizeRequestDto,
   AddSizeValueRequestDto,
   SizeResponseDto,
   UpdateSizeRequestDto,
-  SizeQueryWithFilterDto,
 } from './dto';
 
 import { ISize } from './interface/size.interface';

@@ -68,8 +68,8 @@ export class SizeController {
     @Query() sizeQueryDto: SizeQueryWithFilterDto,
   ): Promise<PaginationResponseDto<SizeResponseDto[]>> {
     const filter = sizeQueryDto.filter();
-    const { skip, limit } = sizeQueryDto;
-    return this.sizeService.fetchSizes({ limit, skip, filter });
+    const { skip, limit, page } = sizeQueryDto;
+    return this.sizeService.fetchSizes({ limit, skip, page, filter });
   }
 
   @ApiOperation({ description: 'Update size by id' })
