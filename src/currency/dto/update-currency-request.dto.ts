@@ -1,3 +1,4 @@
+import { CurrencyStatus } from '@currency/interface/currency.interface';
 import { ApiProperty } from '@nestjs/swagger';
 
 export class UpdateCurrencyRequestDto {
@@ -15,4 +16,6 @@ export class UpdateCurrencyRequestDto {
     example: 1,
   })
   rate: number;
+
+  status?: CurrencyStatus;
 }
