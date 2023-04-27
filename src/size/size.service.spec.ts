@@ -1,6 +1,6 @@
 import { DatabaseModule } from '@database/database.module';
 import { ConfigModule } from '@nestjs/config';
-import { Model, Connection, Types, ObjectId } from 'mongoose';
+import { Model, Connection } from 'mongoose';
 import {
   getModelToken,
   MongooseModule,

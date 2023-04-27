@@ -1,5 +1,4 @@
 import { Model } from 'mongoose';
-import { Size } from '@size/schema/size.schema';
 
 export const setModelData = <T>(model: Model<T>) => {
   return {

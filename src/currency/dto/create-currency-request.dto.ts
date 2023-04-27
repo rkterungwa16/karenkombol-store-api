@@ -1,6 +1,7 @@
 import { IsNotEmpty, IsString } from 'class-validator';
 
 import { ApiProperty } from '@nestjs/swagger';
+import { CurrencyStatus } from '@currency/interface/currency.interface';
 
 export class CreateCurrencyRequestDto {
   @IsString()
@@ -22,4 +23,6 @@ export class CreateCurrencyRequestDto {
     example: 1,
   })
   rate: number;
+
+  status?: CurrencyStatus;
 }

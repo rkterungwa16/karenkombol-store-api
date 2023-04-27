@@ -11,4 +11,7 @@ export class ColorResponseDto {
     example: '#000000',
   })
   hexCode: string;
+
+  createdAt?: Date;
+  updatedAt?: Date;
 }

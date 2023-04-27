@@ -1,7 +1,7 @@
 import { Schema, Prop, SchemaFactory } from '@nestjs/mongoose';
 import { Document, Types, Schema as MongooseSchema } from 'mongoose';
 
-@Schema()
+@Schema({ timestamps: true })
 export class SizeValue extends Document {
   @Prop({ type: Types.ObjectId, ref: 'Size' })
   size: string;

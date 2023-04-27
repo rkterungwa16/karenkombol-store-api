@@ -3,4 +3,12 @@ export interface ICurrency {
   readonly code: string;
   readonly symbol: string;
   readonly rate: number;
+  status?: CurrencyStatus;
+  createdAt?: Date;
+  updatedAt?: Date;
+}
+
+export enum CurrencyStatus {
+  Active = 'ACTIVE',
+  InActive = 'INACTIVE',
 }

@@ -1,18 +1,19 @@
-import { PaginationQueryDto } from '@common';
 import {
   SizeDoesNotExistsException,
   SizeExistsException,
 } from '@http/exceptions';
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { PaginationRequest } from '@pagination';
+import { PaginationResponseDto } from '@pagination';
 import { Model, Types } from 'mongoose';
+import { Pagination } from '@pagination';
 import {
   CreateSizeRequestDto,
+  AddSizeValueRequestDto,
   SizeResponseDto,
   UpdateSizeRequestDto,
 } from './dto';
-import { SizeQueryDto } from './dto/size-query.dto';
+
 import { ISize } from './interface/size.interface';
 import { SizeValue } from './schema/size-value.schema';
 import { Size } from './schema/size.schema';
@@ -50,17 +51,18 @@ export class SizeService {
     createSizeRequestDto: CreateSizeRequestDto,
   ): Promise<SizeResponseDto> {
     let newSize;
-    const type = createSizeRequestDto.type.toLowerCase();
+    const type = createSizeRequestDto.type;
     const value = createSizeRequestDto.value;
     const sizeExists: ISize = await this.sizeModel.findOne({
       type,
     });
+
     if (sizeExists) {
       throw new SizeExistsException(type);
     }
 
     newSize = await this.sizeModel.create({
-      type: createSizeRequestDto.type,
+      type,
     });
     if (value) {
       const newSizeValue = await this.sizeValueModel.create({
@@ -88,6 +90,38 @@ export class SizeService {
     return SizeMapper.toDto(newSize);
   }
 
+  public async addValueToSize(
+    id: string,
+    addSizeValueRequestDto: AddSizeValueRequestDto,
+  ): Promise<SizeResponseDto> {
+    const { value } = addSizeValueRequestDto;
+    const sizeExists = await this.sizeModel.findById(id);
+    if (!sizeExists) {
+      throw new Error();
+    }
+    const newSizeValue = await this.sizeValueModel.create({
+      size: id,
+      value,
+    });
+    let updatedSize = await this.sizeModel
+      .findByIdAndUpdate(
+        id,
+        {
+          $push: {
+            values: newSizeValue._id,
+          },
+        },
+        { new: true },
+      )
+      .populate('values');
+    updatedSize = updatedSize.toObject();
+    updatedSize.values = updatedSize?.values.map((_v: any) => ({
+      ...SizeValueMapper.toDto(_v),
+    })) as any;
+
+    return SizeMapper.toDto(updatedSize);
+  }
+
   public async update(
     id: string,
     updateSizeRequestDto: UpdateSizeRequestDto,
@@ -97,7 +131,7 @@ export class SizeService {
       const updatedSizeValue = await this.sizeValueModel.findOneAndUpdate(
         {
           _id: new Types.ObjectId(sizeValue.id),
-          size: id,
+          size: new Types.ObjectId(id),
         },
         {
           value: sizeValue.value,
@@ -111,7 +145,7 @@ export class SizeService {
       .findByIdAndUpdate(
         id,
         {
-          type,
+          ...(type && { type }),
         },
         { new: true },
       )
@@ -123,7 +157,7 @@ export class SizeService {
   }
 
   public async fetchSizeById(id: string): Promise<SizeResponseDto> {
-    const size: ISize = await this.sizeModel.findById(id);
+    const size: ISize = await this.sizeModel.findById(id).populate('values');
     if (!size) {
       throw new SizeDoesNotExistsException();
     }
@@ -131,26 +165,23 @@ export class SizeService {
   }
 
   public async fetchSizes(
-    paginationQuery: PaginationRequest,
-  ): Promise<SizeResponseDto[]> {
-    const { limit, skip, params } = paginationQuery;
-    const dbFilter = Object.keys(params).map((key) => ({
-      [key]: params[key],
-    }));
-
-    const otherFilters = dbFilter.filter((_filter) => !_filter.values);
+    paginationQuery,
+  ): Promise<PaginationResponseDto<SizeResponseDto[]>> {
+    let data = [];
+    const { limit, skip, filter } = paginationQuery;
+    const totalRecords = await this.sizeModel.count();
     const sizes = await this.sizeModel
       .find({
-        $or: otherFilters,
+        ...(filter['$and'].length && { $and: filter['$and'] }),
       })
       .populate('values', {
-        values: params.values,
+        ...(filter?.values && { values: filter?.values }),
       })
       .skip(skip)
       .limit(limit);
     if (sizes.length) {
-      return sizes.map((_size) => SizeMapper.toDto(_size));
+      data = sizes.map((_size) => SizeMapper.toDto(_size));
     }
-    return [];
+    return Pagination.of({ limit, skip }, totalRecords, data);
   }
 }

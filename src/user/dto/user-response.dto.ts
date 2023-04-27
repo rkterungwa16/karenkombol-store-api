@@ -4,6 +4,7 @@ import { UserStatus } from '@enums';
 export class UserResponseDto {
   @ApiProperty()
   id: string;
+
   @ApiProperty({
     example: 'karenkombol-ateliers',
   })
@@ -16,14 +17,22 @@ export class UserResponseDto {
 
   @ApiProperty()
   firstName: string;
+
   @ApiProperty()
   lastName: string;
+
   @ApiProperty()
   company: string;
+
   @ApiProperty()
   avatar: string;
+
   @ApiProperty()
   status: UserStatus;
+
   @ApiProperty()
   roles: string[];
+
+  createdAt?: Date;
+  updatedAt?: Date;
 }

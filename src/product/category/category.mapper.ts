@@ -7,8 +7,14 @@ export class CategoryMapper {
 
     dto.id = model._id;
     dto.name = model.name;
-    dto.description = model.description;
-    dto.imageUrl = model.imageUrl;
+    if (model?.description) {
+      dto.description = model.description;
+    }
+    if (model.imageUrl) {
+      dto.imageUrl = model.imageUrl;
+    }
+    dto.createdAt = model.createdAt;
+    dto.updatedAt = model.updatedAt;
     return dto;
   }
 }

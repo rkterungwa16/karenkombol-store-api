@@ -3,4 +3,6 @@ export interface ICategory {
   imageUrl: string;
   name: string;
   description: string;
+  createdAt?: Date;
+  updatedAt?: Date;
 }

@@ -1,10 +1,13 @@
-import { IsNotEmpty, IsString } from 'class-validator';
+import { IsNotEmpty, IsString, Validate } from 'class-validator';
 
 import { ApiProperty } from '@nestjs/swagger';
+import { Transform } from 'class-transformer';
+import { IsNumberOrString } from '@helpers';
 
 export class CreateSizeRequestDto {
-  @IsString()
   @IsNotEmpty()
+  @IsString()
+  @Transform(({ value }) => value.toLowerCase())
   @ApiProperty({
     example: 'General size',
   })
@@ -14,5 +17,6 @@ export class CreateSizeRequestDto {
   @ApiProperty({
     example: 'XS',
   })
+  @Validate(IsNumberOrString)
   value?: string | number;
 }

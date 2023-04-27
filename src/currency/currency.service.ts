@@ -36,6 +36,9 @@ export class CurrencyService {
       code,
       symbol: createCurrencyRequestDto.symbol,
       rate: createCurrencyRequestDto.rate,
+      ...(createCurrencyRequestDto?.status && {
+        status: createCurrencyRequestDto.status,
+      }),
     });
     return CurrencyMapper.toDto(newCurrency);
   }

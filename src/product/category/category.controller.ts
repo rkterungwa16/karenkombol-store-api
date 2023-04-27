@@ -8,7 +8,6 @@ import {
   Put,
   Query,
   UseGuards,
-  ValidationPipe,
 } from '@nestjs/common';
 
 import {
@@ -82,7 +81,7 @@ export class CategoryController {
   @UseGuards(PermissionGuard)
   @Post()
   public createCategory(
-    @Body(ValidationPipe) CategoryDto: CreateCategoryRequestDto,
+    @Body() CategoryDto: CreateCategoryRequestDto,
   ): Promise<CategoryResponseDto> {
     return this.categoryService.create(CategoryDto);
   }
@@ -99,8 +98,8 @@ export class CategoryController {
   @Put('/:id')
   public update(
     @Param('id') id: string,
-    @Body(ValidationPipe) CategoryDto: UpdateCategoryRequestDto,
+    @Body() categoryDto: UpdateCategoryRequestDto,
   ): Promise<CategoryResponseDto> {
-    return this.categoryService.update(id, CategoryDto);
+    return this.categoryService.update(id, categoryDto);
   }
 }

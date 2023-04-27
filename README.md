@@ -25,6 +25,12 @@ Generate resources
 nest generate <schematic> <name>
 # example
 nest generate service currency
+
+nest generate module product/product-size
+
+nest generate controller product/product-size
+
+nest generate service product/product-size 
 ```
 
 ## Running the app

@@ -2,7 +2,7 @@ import { Schema, Prop, SchemaFactory } from '@nestjs/mongoose';
 import { Document, Types } from 'mongoose';
 import { CompanyStatus } from '../interface/company.interface';
 
-@Schema()
+@Schema({ timestamps: true })
 export class Company extends Document {
   @Prop({ unique: true })
   name: string;

@@ -25,13 +25,22 @@ export class ProductService {
     @InjectModel(Category.name) private readonly categoryModel: Model<Category>,
     @InjectModel(Product.name) private readonly productModel: Model<Product>,
   ) {}
+
+  /**
+   * Product creation flow
+   * To create a product
+   * Select from a category list to determine product's category
+   * If the category does not exist create a category, add to the list and select it.
+   * upload product image.
+   */
   public async create(
     createProductRequestDto: CreateProductRequestDto,
   ): Promise<ProductResponseDto> {
     const name = createProductRequestDto.name.toLowerCase();
-    const categoryExists: ICategory = await this.categoryModel.findOne({
-      name,
-    });
+    const category = createProductRequestDto.category;
+    const categoryExists: ICategory = await this.categoryModel.findById(
+      category,
+    );
     if (!categoryExists) {
       throw new CategoryDoesNotExistsException();
     }

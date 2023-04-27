@@ -9,6 +9,8 @@ export class RoleMapper {
     dto.company = model.company;
     dto.name = model.name;
     dto.permissions = model.permissions;
+    dto.createdAt = model.createdAt;
+    dto.updatedAt = model.updatedAt;
     return dto;
   }
 }

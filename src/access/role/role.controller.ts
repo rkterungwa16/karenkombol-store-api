@@ -8,7 +8,6 @@ import {
   Put,
   Query,
   UseGuards,
-  ValidationPipe,
 } from '@nestjs/common';
 
 import {
@@ -80,7 +79,7 @@ export class RoleController {
   @UseGuards(PermissionGuard)
   @Post()
   public create(
-    @Body(ValidationPipe) roleDto: CreateRoleRequestDto,
+    @Body() roleDto: CreateRoleRequestDto,
   ): Promise<RoleResponseDto> {
     return this.roleService.create(roleDto);
   }
@@ -95,7 +94,7 @@ export class RoleController {
   @Put('/:id')
   public updateRole(
     @Param('id') id: string,
-    @Body(ValidationPipe) roleDto: UpdateRoleRequestDto,
+    @Body() roleDto: UpdateRoleRequestDto,
   ): Promise<RoleResponseDto> {
     return this.roleService.update(id, roleDto);
   }

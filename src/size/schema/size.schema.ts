@@ -7,7 +7,7 @@ export class Size extends Document {
   type: string;
 
   @Prop({ type: [Types.ObjectId], ref: 'SizeValue' })
-  values?: string[];
+  values?: (number | string)[];
 }
 
 export const SizeSchema = SchemaFactory.createForClass(Size);

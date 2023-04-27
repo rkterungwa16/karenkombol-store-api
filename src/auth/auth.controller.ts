@@ -1,13 +1,5 @@
 import { Request, Response } from 'express';
-import {
-  ValidationPipe,
-  Controller,
-  Post,
-  Body,
-  Res,
-  HttpStatus,
-  Req,
-} from '@nestjs/common';
+import { Controller, Post, Body, Res, HttpStatus, Req } from '@nestjs/common';
 import {
   ApiInternalServerErrorResponse,
   ApiUnauthorizedResponse,
@@ -20,7 +12,6 @@ import {
   AuthCredentialsRequestDto,
   ValidateTokenResponseDto,
   ValidateTokenRequestDto,
-  RefreshTokenRequestDto,
   LoginResponseDto,
 } from './dtos';
 import { TokenService } from './token.service';
@@ -41,7 +32,7 @@ export class AuthController {
   @ApiInternalServerErrorResponse({ description: 'Server error' })
   @Post('/login')
   async login(
-    @Body(ValidationPipe) authCredentialsDto: AuthCredentialsRequestDto,
+    @Body() authCredentialsDto: AuthCredentialsRequestDto,
     @Res({ passthrough: true }) response: Response,
   ): Promise<LoginResponseDto> {
     const token = await this.authService.login(authCredentialsDto);
@@ -77,7 +68,7 @@ export class AuthController {
   @ApiInternalServerErrorResponse({ description: 'Server error' })
   @Post('/token/validate')
   async validateToken(
-    @Body(ValidationPipe) validateToken: ValidateTokenRequestDto,
+    @Body() validateToken: ValidateTokenRequestDto,
   ): Promise<ValidateTokenResponseDto> {
     const { token } = validateToken;
     return this.tokenService.validateToken(token);
