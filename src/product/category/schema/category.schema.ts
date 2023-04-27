@@ -5,8 +5,10 @@ import { Document } from 'mongoose';
 export class Category extends Document {
   @Prop({ type: String, required: true, unique: true })
   name: string;
-  @Prop({ type: String, required: true })
+
+  @Prop({ type: String })
   description: string;
+
   @Prop({ type: String })
   imageUrl: string;
 }

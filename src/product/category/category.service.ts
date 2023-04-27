@@ -49,6 +49,7 @@ export class CategoryService {
         await this.categoryModel.findByIdAndUpdate(
           id,
           updateCategoryRequestDto,
+          { new: true },
         );
       return CategoryMapper.toDto(updatedCategory);
     } catch (e) {

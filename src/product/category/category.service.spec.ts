@@ -72,4 +72,13 @@ describe('CategoryService', () => {
       ).rejects.toThrow(new CategoryExistsException());
     });
   });
+
+  describe('update', () => {
+    it('should update existing category', async () => {
+      const result = await service.update(category._id, {
+        description: 'items for men',
+      });
+      expect(result.description).toEqual('items for men');
+    });
+  });
 });

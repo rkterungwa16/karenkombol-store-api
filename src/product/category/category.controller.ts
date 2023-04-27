@@ -98,8 +98,8 @@ export class CategoryController {
   @Put('/:id')
   public update(
     @Param('id') id: string,
-    @Body() CategoryDto: UpdateCategoryRequestDto,
+    @Body() categoryDto: UpdateCategoryRequestDto,
   ): Promise<CategoryResponseDto> {
-    return this.categoryService.update(id, CategoryDto);
+    return this.categoryService.update(id, categoryDto);
   }
 }

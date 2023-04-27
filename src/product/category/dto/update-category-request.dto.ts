@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsString } from 'class-validator';
+import { IsOptional, IsString } from 'class-validator';
 
 import { ApiProperty } from '@nestjs/swagger';
 
@@ -6,19 +6,19 @@ export class UpdateCategoryRequestDto {
   @ApiProperty({
     example: 'imgurl',
   })
-  imageUrl: string;
+  imageUrl?: string;
 
-  @IsNotEmpty()
+  @IsOptional()
   @IsString()
   @ApiProperty({
     example: 'women',
   })
-  name: string;
+  name?: string;
 
-  @IsNotEmpty()
+  @IsOptional()
   @IsString()
   @ApiProperty({
     example: 'women clothes',
   })
-  description: string;
+  description?: string;
 }

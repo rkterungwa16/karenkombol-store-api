@@ -17,7 +17,6 @@ export class CreateCategoryRequestDto {
   @Transform(({ value }) => value.toLowerCase())
   name: string;
 
-  @IsNotEmpty()
   @IsString()
   @ApiProperty({
     example: 'women clothes',
