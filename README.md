@@ -1,5 +1,7 @@
 # Karen Kombol Store Api
 
+[API URL](https://karenkombol-store-api-production.up.railway.app/api/v1)
+
 ## Getting Started
 
 Clone the repo:
