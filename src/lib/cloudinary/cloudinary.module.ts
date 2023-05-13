@@ -4,7 +4,7 @@ import { ConfigureCloudinaryModule } from './configure.cloudinary.service';
 
 @Module({
   imports: [ConfigureCloudinaryModule.register()],
-  exports: [ConfigureCloudinaryModule.register()],
+  exports: [...ConfigureCloudinaryModule.register().providers],
   // Register CloudinaryService, ConfigCloudinaryService and ConfigService
   // ConfigService will be used by ConfigCloudinaryService.
   // ConfigCloudinaryService will be used by CloudinaryService.

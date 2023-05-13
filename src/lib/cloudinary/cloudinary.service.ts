@@ -14,4 +14,8 @@ export class CloudinaryService {
   ): Promise<UploadApiResponse> {
     return await this.cloudinary.uploader.upload(file, options);
   }
+
+  async getImagesByContextKeyValuePairs(key: string, value: string) {
+    return await this.cloudinary.api.resources_by_context(key, value);
+  }
 }
