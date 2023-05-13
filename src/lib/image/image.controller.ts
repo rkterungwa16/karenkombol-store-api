@@ -14,15 +14,43 @@ export class ImageController {
   constructor(private imageService: ImageService) {}
   @UseInterceptors(FilesInterceptor('file', 1))
   @Post('upload/product')
-  async uploadFiles(
+  async uploadProduct(
     @Body() imageUploadDto: ImageUploadDto,
     @UploadedFiles()
     files: Express.Multer.File[],
   ) {
-    const { productName } = imageUploadDto;
+    const { name } = imageUploadDto;
     return await this.imageService.uploadProductImage({
       file: files[0],
-      productName,
+      name,
+    });
+  }
+
+  @UseInterceptors(FilesInterceptor('file', 1))
+  @Post('upload/category')
+  async uploadCategory(
+    @Body() imageUploadDto: ImageUploadDto,
+    @UploadedFiles()
+    files: Express.Multer.File[],
+  ) {
+    const { name } = imageUploadDto;
+    return await this.imageService.uploadCategoryImage({
+      file: files[0],
+      name,
+    });
+  }
+
+  @UseInterceptors(FilesInterceptor('files', 5))
+  @Post('upload/variants')
+  async uploadVariants(
+    @Body() imageUploadDto: ImageUploadDto,
+    @UploadedFiles()
+    files: Express.Multer.File[],
+  ) {
+    const { name } = imageUploadDto;
+    return await this.imageService.uploadVariantsImages({
+      files,
+      name,
     });
   }
 }
