@@ -45,11 +45,6 @@ export class CategoryController {
     required: false,
     example: 'admin',
   })
-  @Permission({
-    resource: PermissionResources.CURRENCIES,
-    action: PermissionActions.READ,
-  })
-  @UseGuards(PermissionGuard)
   @Get()
   public fetch(
     @Query() paginationQuery: PaginationQueryDto,
@@ -58,11 +53,6 @@ export class CategoryController {
   }
 
   @ApiOperation({ description: 'Get Category by id' })
-  @Permission({
-    resource: PermissionResources.CURRENCIES,
-    action: PermissionActions.READ,
-  })
-  @UseGuards(PermissionGuard)
   @Get('/:id')
   public getCategoryById(
     @Param('id', ParseIntPipe) id: string,
@@ -75,7 +65,7 @@ export class CategoryController {
   })
   @ApiConflictResponse({ description: 'Category exists' })
   @Permission({
-    resource: PermissionResources.CURRENCIES,
+    resource: PermissionResources.CATEGORY,
     action: PermissionActions.CREATE,
   })
   @UseGuards(PermissionGuard)

@@ -36,7 +36,7 @@ export class ProductService {
   public async create(
     createProductRequestDto: CreateProductRequestDto,
   ): Promise<ProductResponseDto> {
-    const name = createProductRequestDto.name.toLowerCase();
+    const name = createProductRequestDto.name;
     const category = createProductRequestDto.category;
     const categoryExists: ICategory = await this.categoryModel.findById(
       category,
@@ -83,7 +83,7 @@ export class ProductService {
     return ProductMapper.toDto(product);
   }
 
-  public async fetchCategories(
+  public async fetchProducts(
     paginationQuery: PaginationQueryDto,
   ): Promise<ProductResponseDto[]> {
     const { limit, offset } = paginationQuery;

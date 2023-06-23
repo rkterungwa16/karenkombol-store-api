@@ -24,6 +24,7 @@ export enum PermissionResources {
   INVOICE = 'invoice',
   COLORS = 'colors',
   SIZE = 'size',
+  CATEGORY = 'category',
 }
 
 export interface IPermission {

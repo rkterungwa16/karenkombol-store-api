@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsString } from 'class-validator';
+import { IsNotEmpty, IsString, IsOptional } from 'class-validator';
 
 import { ApiProperty } from '@nestjs/swagger';
 import { ProductStatus } from '@product/interface/product.interface';
@@ -13,6 +13,7 @@ export class CreateProductRequestDto {
   @ApiProperty({
     example: 'imgurl',
   })
+  @IsOptional()
   imageUrl: string;
 
   @IsNotEmpty()
@@ -28,20 +29,24 @@ export class CreateProductRequestDto {
   @ApiProperty({
     example: 'beautiful design for short sleeve shirt',
   })
+  @IsOptional()
   description: string;
 
   @ApiProperty({
     example: 'ACTIVE',
   })
+  @IsOptional()
   status: ProductStatus;
 
   @ApiProperty({
     example: true,
   })
+  @IsOptional()
   published: boolean;
 
   @ApiProperty({
     example: [],
   })
+  @IsOptional()
   tags: string[];
 }
