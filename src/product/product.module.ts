@@ -10,9 +10,11 @@ import { ProductController } from './product.controller';
 import { ProductService } from './product.service';
 import { ProductSchema, Product } from './schema/product.schema';
 import { VariantModule } from './variant/variant.module';
+import { TokenService } from '@auth/token.service';
+import { JwtService } from '@nestjs/jwt';
 
 @Module({
-  providers: [ProductService],
+  providers: [ProductService, TokenService, JwtService],
   controllers: [ProductController],
   imports: [
     MongooseModule.forFeature([{ name: Product.name, schema: ProductSchema }]),
