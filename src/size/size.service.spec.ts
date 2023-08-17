@@ -11,7 +11,7 @@ import { setModelData } from '../test/model';
 import { Size, SizeSchema } from './schema/size.schema';
 import { SizeService } from './size.service';
 import { createSize } from '../test/fixtures';
-import { SizeDoesNotExistsException } from '@http/exceptions';
+import { KKNotFoundException } from '@http/exceptions';
 import { SizeValue, SizeValueSchema } from './schema/size-value.schema';
 
 describe('SizeService', () => {
@@ -121,7 +121,7 @@ describe('SizeService', () => {
             value: 'XXL',
           },
         }),
-      ).rejects.toThrow(new SizeDoesNotExistsException());
+      ).rejects.toThrow(new KKNotFoundException('size'));
     });
   });
 });

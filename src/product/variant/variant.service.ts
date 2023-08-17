@@ -1,12 +1,14 @@
 import { Model } from 'mongoose';
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
+// import { nanoid } from 'nanoid';
 import { Product } from '@product/schema/product.schema';
 import { SizeValue } from '@size/schema/size-value.schema';
 import { Color } from '@color/schema/color.schema';
 import { ProductSize } from '@product/schema/product-size.schema';
 import { ProductColor } from '@product/schema/product-color.schema';
 import { CreateVariantRequestDto, VariantResponsetDto } from './dto';
+import { KKNotFoundException } from '@http/exceptions';
 
 /**
  * Scenario: Product A of size B, color C, and material D with 5 quantity in stock.
@@ -49,6 +51,20 @@ export class VariantService {
   public async create(
     createVariantRequestDto: CreateVariantRequestDto,
   ): Promise<VariantResponsetDto> {
+    const { product, productColor, productSize, price } =
+      createVariantRequestDto;
+
+    const productExists = await this.productModel.findById(product);
+    if (!productExists) {
+      throw new KKNotFoundException('product');
+    }
+
+    const productColorExist = await this.productColorModel.findById(
+      productColor,
+    );
+    if (!productColorExist) {
+    }
+    // const sku = nanoid(5).toUpperCase();
     // const name = createProductRequestDto.name.toLowerCase();
     // const category = createProductRequestDto.category;
     // const categoryExists: ICategory = await this.categoryModel.findById(

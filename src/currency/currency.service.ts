@@ -9,10 +9,7 @@ import {
   UpdateCurrencyRequestDto,
 } from './dto';
 import { CurrencyMapper } from './currency.mapper';
-import {
-  CurrencyDoesNotExistsException,
-  CurrencyExistsException,
-} from '@http/exceptions';
+import { KKConflictException, KKNotFoundException } from '@http/exceptions';
 import { PaginationQueryDto } from '@common';
 import { ICurrency } from './interface/currency.interface';
 
@@ -29,7 +26,7 @@ export class CurrencyService {
       code,
     });
     if (currencyExists) {
-      throw new CurrencyExistsException(code);
+      throw new KKConflictException('currency');
     }
 
     const newCurrency = await this.currencyModel.create({
@@ -55,14 +52,14 @@ export class CurrencyService {
         );
       return CurrencyMapper.toDto(updatedCurrency);
     } catch (e) {
-      throw new CurrencyDoesNotExistsException();
+      throw new KKNotFoundException('currency');
     }
   }
 
   public async fetchCurrencyById(id: string): Promise<CurrencyResponseDto> {
     const currency: ICurrency = await this.currencyModel.findById(id);
     if (!currency) {
-      throw new CurrencyDoesNotExistsException();
+      throw new KKNotFoundException('currency');
     }
     return CurrencyMapper.toDto(currency);
   }

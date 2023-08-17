@@ -1,12 +1,10 @@
-import {
-  SizeDoesNotExistsException,
-  SizeExistsException,
-} from '@http/exceptions';
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { PaginationResponseDto } from '@pagination';
 import { Model, Types } from 'mongoose';
+
 import { Pagination } from '@pagination';
+import { KKConflictException, KKNotFoundException } from '@http/exceptions';
 import {
   CreateSizeRequestDto,
   AddSizeValueRequestDto,
@@ -58,7 +56,7 @@ export class SizeService {
     });
 
     if (sizeExists) {
-      throw new SizeExistsException(type);
+      throw new KKConflictException('size');
     }
 
     newSize = await this.sizeModel.create({
@@ -138,7 +136,7 @@ export class SizeService {
         },
       );
       if (!updatedSizeValue) {
-        throw new SizeDoesNotExistsException();
+        throw new KKNotFoundException('size');
       }
     }
     const updatedSize: ISize = await this.sizeModel
@@ -151,7 +149,7 @@ export class SizeService {
       )
       .populate('values');
     if (!updatedSize) {
-      throw new SizeDoesNotExistsException();
+      throw new KKNotFoundException('size');
     }
     return SizeMapper.toDto(updatedSize);
   }
@@ -159,7 +157,7 @@ export class SizeService {
   public async fetchSizeById(id: string): Promise<SizeResponseDto> {
     const size: ISize = await this.sizeModel.findById(id).populate('values');
     if (!size) {
-      throw new SizeDoesNotExistsException();
+      throw new KKNotFoundException('size');
     }
     return SizeMapper.toDto(size);
   }

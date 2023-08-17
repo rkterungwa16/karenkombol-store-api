@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { Model } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
 import { HashHelper } from '@helpers';
@@ -8,7 +8,7 @@ import { Company } from '@company/schema/company.schema';
 import { UserMapper } from './user.mapper';
 import { Role } from '@access/role/schemas/role.schema';
 import { Permission } from '@access/permission/schema/permission.schema';
-import { UserExistsException, CompanyExistsException } from '@http/exceptions';
+import { KKConflictException } from '@http/exceptions';
 import {
   PermissionResources,
   PermissionActions,
@@ -33,7 +33,7 @@ export class UsersService {
       email: createUserRequestDto.email,
     });
     if (userExists) {
-      throw new UserExistsException(createUserRequestDto.email);
+      throw new KKConflictException('user');
     }
     const companyExists = await this.companyModel.findOne({
       name: createUserRequestDto.companyName,
@@ -44,7 +44,7 @@ export class UsersService {
     if (companyExists) {
       // Find the super-admin to send an invite
       // Super admin can assign invite roles to any other individual.
-      throw new CompanyExistsException(createUserRequestDto.companyName);
+      throw new KKConflictException('company');
     }
     const newCompany = await this.companyModel.create({
       name: createUserRequestDto.companyName,

@@ -7,10 +7,9 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { HashHelper } from '@helpers';
 import { DatabaseModule } from '@database/database.module';
 import {
-  InvalidCredentialsException,
-  DisabledUserException,
+  KKUnauthorizedException,
+  UnauthorizedErrorType,
 } from '@http/exceptions';
-import { ErrorType } from '@http/error-type';
 import { TestUserModel } from '../test/mocks';
 
 import { User } from '@user/schemas/user.schema';
@@ -93,7 +92,9 @@ describe('AuthService', () => {
       service.login({
         ...exampleLoggedInUser,
       }),
-    ).rejects.toThrow(new InvalidCredentialsException());
+    ).rejects.toThrow(
+      new KKUnauthorizedException(UnauthorizedErrorType.INVALID_CREDENTIALS),
+    );
   });
   it('should not login an inactive user', async () => {
     const exampleLoggedInUser = {
@@ -112,7 +113,9 @@ describe('AuthService', () => {
       service.login({
         ...exampleLoggedInUser,
       }),
-    ).rejects.toThrow(new DisabledUserException(ErrorType.InactiveUser));
+    ).rejects.toThrow(
+      new KKUnauthorizedException(UnauthorizedErrorType.DISABLED_USER),
+    );
   });
 
   it('should not login a blocked user', async () => {
@@ -132,6 +135,8 @@ describe('AuthService', () => {
       service.login({
         ...exampleLoggedInUser,
       }),
-    ).rejects.toThrow(new DisabledUserException(ErrorType.BlockedUser));
+    ).rejects.toThrow(
+      new KKUnauthorizedException(UnauthorizedErrorType.DISABLED_USER),
+    );
   });
 });

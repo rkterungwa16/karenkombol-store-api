@@ -9,10 +9,7 @@ import {
   UpdateCategoryRequestDto,
 } from './dto';
 import { CategoryMapper } from './category.mapper';
-import {
-  CategoryDoesNotExistsException,
-  CategoryExistsException,
-} from '@http/exceptions';
+import { KKConflictException, KKNotFoundException } from '@http/exceptions';
 import { PaginationQueryDto } from '@common';
 import { ICategory } from './interface/category.interface';
 
@@ -29,7 +26,7 @@ export class CategoryService {
       name,
     });
     if (categoryExists) {
-      throw new CategoryExistsException();
+      throw new KKConflictException('category');
     }
 
     const newCategory = await this.categoryModel.create({
@@ -53,14 +50,14 @@ export class CategoryService {
         );
       return CategoryMapper.toDto(updatedCategory);
     } catch (e) {
-      throw new CategoryDoesNotExistsException();
+      throw new KKNotFoundException('category');
     }
   }
 
   public async fetchCategoryById(id: string): Promise<CategoryResponseDto> {
     const category: ICategory = await this.categoryModel.findById(id);
     if (!category) {
-      throw new CategoryDoesNotExistsException();
+      throw new KKNotFoundException('category');
     }
     return CategoryMapper.toDto(category);
   }

@@ -13,7 +13,7 @@ import { Size, SizeSchema } from '@size/schema/size.schema';
 import { setModelData } from '../../test/model';
 import { CategoryService } from './category.service';
 import { Category, CategorySchema } from './schema/category.schema';
-import { CategoryExistsException } from '@http/exceptions';
+import { KKConflictException } from '@http/exceptions';
 
 describe('CategoryService', () => {
   let service: CategoryService;
@@ -69,7 +69,7 @@ describe('CategoryService', () => {
         service.create({
           name: 'female',
         }),
-      ).rejects.toThrow(new CategoryExistsException());
+      ).rejects.toThrow(new KKConflictException('category'));
     });
   });
 

@@ -10,11 +10,7 @@ import {
   UpdateProductRequestDto,
 } from './dto';
 import { ProductMapper } from './product.mapper';
-import {
-  CategoryDoesNotExistsException,
-  ProductDoesNotExistsException,
-  ProductExistsException,
-} from '@http/exceptions';
+import { KKConflictException, KKNotFoundException } from '@http/exceptions';
 import { PaginationQueryDto } from '@common';
 import { IProduct } from './interface/product.interface';
 import { ICategory } from './category/interface/category.interface';
@@ -42,13 +38,13 @@ export class ProductService {
       category,
     );
     if (!categoryExists) {
-      throw new CategoryDoesNotExistsException();
+      throw new KKNotFoundException('category');
     }
     const productExists: IProduct = await this.productModel.findOne({
       name,
     });
     if (productExists) {
-      throw new ProductExistsException();
+      throw new KKConflictException('product');
     }
 
     const newProduct = await this.productModel.create({
@@ -69,7 +65,7 @@ export class ProductService {
         await this.productModel.findByIdAndUpdate(id, updateProductRequestDto);
       return ProductMapper.toDto(updatedProduct);
     } catch (e) {
-      throw new ProductDoesNotExistsException();
+      throw new KKNotFoundException('product');
     }
   }
 
@@ -78,7 +74,7 @@ export class ProductService {
       await this.productModel.findById(id)
     ).populated('category');
     if (!product) {
-      throw new ProductDoesNotExistsException();
+      throw new KKNotFoundException('product');
     }
     return ProductMapper.toDto(product);
   }

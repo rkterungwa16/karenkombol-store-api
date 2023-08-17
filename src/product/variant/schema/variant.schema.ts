@@ -12,10 +12,10 @@ export class Variant extends Document {
   @Prop({ type: Types.ObjectId, ref: 'ProductSize', required: true })
   productSize: string;
 
-  @Prop({ type: Types.ObjectId, ref: 'Color', required: true })
-  color: string;
+  @Prop({ type: Types.ObjectId, ref: 'ProductColor', required: true })
+  productColor: string;
 
-  @Prop({ type: String, required: true })
+  @Prop({ type: String })
   sku: string;
 
   @Prop({ type: Number, default: 0 })

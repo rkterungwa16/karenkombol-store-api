@@ -10,10 +10,7 @@ import {
   UpdateRoleRequestDto,
 } from './dto';
 import { RoleMapper } from './role.mapper';
-import {
-  RoleDoesNotExistsException,
-  RoleExistsException,
-} from '@http/exceptions';
+import { KKConflictException, KKNotFoundException } from '@http/exceptions';
 import { PaginationQueryDto } from '@common';
 import { IRole } from './interfaces/roles.interface';
 import { ICompany } from '@company/interface/company.interface';
@@ -32,7 +29,7 @@ export class RoleService {
       name,
     });
     if (roleExists) {
-      throw new RoleExistsException(name);
+      throw new KKConflictException('role');
     }
     const newCompany: ICompany = await this.companyModel.findById(
       createRoleRequestDto.company,
@@ -57,7 +54,7 @@ export class RoleService {
       );
       return RoleMapper.toDto(updatedRole);
     } catch (e) {
-      throw new RoleDoesNotExistsException();
+      throw new KKNotFoundException('role');
     }
   }
 
@@ -66,7 +63,7 @@ export class RoleService {
       .findById(id)
       .populate('permissions');
     if (!role) {
-      throw new NotFoundException();
+      throw new KKNotFoundException('role');
     }
     return RoleMapper.toDto(role);
   }

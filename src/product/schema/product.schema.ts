@@ -23,7 +23,7 @@ export class Product extends Document {
   })
   status: ProductStatus;
 
-  @Prop({ type: Boolean })
+  @Prop({ type: Boolean, default: false })
   published: boolean;
 
   @Prop({ type: [String] })

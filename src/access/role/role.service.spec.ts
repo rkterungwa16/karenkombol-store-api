@@ -12,13 +12,8 @@ import {
 import { Role } from './schemas/role.schema';
 
 import { DatabaseModule } from '@database/database.module';
-import {
-  RoleExistsException,
-  RoleDoesNotExistsException,
-} from '@http/exceptions';
 import { RoleService } from './role.service';
 import { createdCompany, createdRole } from '../../test/fixtures';
-import { CreateRoleRequestDto } from './dto/create-role-request.dto';
 import { Company } from '@company/schema/company.schema';
 
 describe('RolesService', () => {

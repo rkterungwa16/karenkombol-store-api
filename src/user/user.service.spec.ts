@@ -13,7 +13,7 @@ import {
 import { User } from './schemas/user.schema';
 
 import { DatabaseModule } from '@database/database.module';
-import { UserExistsException } from '@http/exceptions';
+import { KKConflictException } from '@http/exceptions';
 
 describe('UsersService', () => {
   let service: UsersService;
@@ -87,6 +87,6 @@ describe('UsersService', () => {
       service.create({
         ...exampleCreatedUser,
       }),
-    ).rejects.toThrow(new UserExistsException(exampleCreatedUser.email));
+    ).rejects.toThrow(new KKConflictException('user'));
   });
 });

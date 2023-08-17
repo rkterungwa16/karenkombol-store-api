@@ -7,9 +7,8 @@ import { UserStatus } from '@enums';
 
 import { User } from '@user/schemas/user.schema';
 import {
-  RefreshTokenExpiredException,
-  AccessTokenExpiredException,
-  InvalidTokenException,
+  KKUnauthorizedException,
+  UnauthorizedErrorType,
 } from '@http/exceptions';
 import { ValidateTokenResponseDto, JwtPayload, TokenDto } from './dtos';
 import { TokenError, TokenType } from '@enums';
@@ -58,15 +57,19 @@ export class TokenService {
         name == TokenError.TokenExpiredError &&
         type == TokenType.AccessToken
       ) {
-        throw new AccessTokenExpiredException();
+        throw new KKUnauthorizedException(
+          UnauthorizedErrorType.EXPIRED_ACCESS_TOKEN,
+        );
       }
       if (
         name == TokenError.TokenExpiredError &&
         type == TokenType.RefreshToken
       ) {
-        throw new RefreshTokenExpiredException();
+        throw new KKUnauthorizedException(
+          UnauthorizedErrorType.EXPIRED_REFRESH_TOKEN,
+        );
       }
-      throw new InvalidTokenException();
+      throw new KKUnauthorizedException(UnauthorizedErrorType.INVALID_TOKEN);
     }
   }
 

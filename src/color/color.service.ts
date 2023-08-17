@@ -9,10 +9,7 @@ import {
   UpdateColorRequestDto,
 } from './dto';
 import { ColorMapper } from './color.mapper';
-import {
-  RoleDoesNotExistsException,
-  RoleExistsException,
-} from '@http/exceptions';
+import { KKConflictException, KKNotFoundException } from '@http/exceptions';
 import { PaginationQueryDto } from '@common';
 import { IColor } from './interface/color.interface';
 
@@ -30,7 +27,7 @@ export class ColorService {
       hexCode,
     });
     if (colorExists) {
-      throw new RoleExistsException(hexCode);
+      throw new KKConflictException('color');
     }
 
     const newColor: IColor = await this.colorModel.create({
@@ -51,7 +48,7 @@ export class ColorService {
       );
       return ColorMapper.toDto(updatedColor);
     } catch (e) {
-      throw new RoleDoesNotExistsException();
+      throw new KKNotFoundException('color');
     }
   }
 

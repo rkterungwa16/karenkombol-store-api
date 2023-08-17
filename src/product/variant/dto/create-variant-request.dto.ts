@@ -1,4 +1,9 @@
-import { IsNotEmpty, IsString, ValidateNested } from 'class-validator';
+import {
+  IsNotEmpty,
+  IsNumber,
+  IsString,
+  ValidateNested,
+} from 'class-validator';
 
 import { ApiProperty } from '@nestjs/swagger';
 import { Optional } from '@nestjs/common';
@@ -23,19 +28,26 @@ export class CreateVariantRequestDto {
   @ApiProperty({
     example: 'sizeId',
   })
-  size: string;
+  productSize: string;
 
   @IsNotEmpty()
   @IsString()
   @ApiProperty({
     example: 'colorId',
   })
-  color: string;
+  productColor: string;
+
+  // @IsNotEmpty()
+  // @IsString()
+  // @ApiProperty({
+  //   example: 'sku',
+  // })
+  // sku: string;
 
   @IsNotEmpty()
-  @IsString()
+  @IsNumber()
   @ApiProperty({
     example: 'sku',
   })
-  sku: string;
+  price: number;
 }
