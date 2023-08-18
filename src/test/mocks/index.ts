@@ -6,3 +6,4 @@ export * from './color.model';
 export * from './currency.model';
 export * from './category.model';
 export * from './product.model';
+export * from './image.model';

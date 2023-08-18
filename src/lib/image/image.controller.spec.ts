@@ -4,8 +4,14 @@ import { TokenService } from '@auth/token.service';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import { getModelToken } from '@nestjs/mongoose';
-import { TestCategoryModel, TestUserModel } from '../../test/mocks';
+import {
+  TestCategoryModel,
+  TestImageModel,
+  TestUserModel,
+} from '../../test/mocks';
 import { ImageService } from './image.service';
+import { CloudinaryService } from '../cloudinary/cloudinary.service';
+import { ConfigureCloudinaryModule } from '../cloudinary/configure.cloudinary.service';
 
 describe('ImageController', () => {
   let controller: ImageController;
@@ -18,6 +24,7 @@ describe('ImageController', () => {
         JwtService,
         ConfigService,
         ImageService,
+        CloudinaryService,
         {
           provide: getModelToken('User'),
           useClass: TestUserModel,
@@ -26,6 +33,11 @@ describe('ImageController', () => {
           provide: getModelToken('Category'),
           useClass: TestCategoryModel,
         },
+        {
+          provide: getModelToken('Image'),
+          useClass: TestImageModel,
+        },
+        ...ConfigureCloudinaryModule.register().providers,
       ],
     }).compile();
 
