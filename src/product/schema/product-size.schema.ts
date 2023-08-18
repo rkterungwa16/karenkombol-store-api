@@ -5,7 +5,7 @@ import { Document, Types } from 'mongoose';
 export class ProductSize extends Document {
   @Prop({
     type: Types.ObjectId,
-    ref: 'SizeValue',
+    ref: 'Size',
     required: true,
   })
   size: string;

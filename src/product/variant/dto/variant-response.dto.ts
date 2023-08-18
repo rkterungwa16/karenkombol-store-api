@@ -1,4 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { IProductColor } from '@product/interface/product-color.interface';
+import { IProductSize } from '@product/interface/product-size.interface';
+import { IProduct } from '@product/interface/product.interface';
 
 export class VariantResponsetDto {
   @ApiProperty({
@@ -11,22 +14,28 @@ export class VariantResponsetDto {
   imageUrls: string[];
 
   @ApiProperty({
-    example: 'productId',
+    example: {
+      id: 'product__1234',
+    },
   })
-  product: string;
+  product: IProduct;
 
   @ApiProperty({
-    example: 'variantSizeId',
+    example: {
+      id: 'productSizeId',
+    },
   })
-  variantSize: string;
+  productSize: IProductSize;
 
   @ApiProperty({
     example: 'colorId',
   })
-  color: string;
+  productColor: IProductColor;
 
   @ApiProperty({
     example: 'sku',
   })
   sku: string;
+  createdAt?: Date;
+  updatedAt?: Date;
 }
