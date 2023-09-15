@@ -17,6 +17,7 @@ import { SizeValue, SizeValueSchema } from '@size/schema/size-value.schema';
 import { User, UserSchema } from '@user/schemas/user.schema';
 import { VariantController } from './variant.controller';
 import { VariantService } from './variant.service';
+import { Variant, VariantSchema } from './schema/variant.schema';
 
 @Module({
   providers: [VariantService],
@@ -38,6 +39,7 @@ import { VariantService } from './variant.service';
       { name: Permission.name, schema: PermissionSchema },
     ]),
     MongooseModule.forFeature([{ name: Role.name, schema: RoleSchema }]),
+    MongooseModule.forFeature([{ name: Variant.name, schema: VariantSchema }]),
   ],
 })
 export class VariantModule {}

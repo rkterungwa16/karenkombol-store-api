@@ -1,7 +1,7 @@
 export enum ImageTypes {
-  PRODUCT = 'products',
-  VARIANT = 'variants',
-  CATEGORY = 'categories',
+  PRODUCT = 'product',
+  VARIANT = 'variant',
+  CATEGORY = 'category',
 }
 
 // Fold paths

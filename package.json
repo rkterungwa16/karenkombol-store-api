@@ -37,7 +37,7 @@
     "cloudinary": "^1.32.0",
     "cookie-parser": "^1.4.6",
     "mime-types": "^2.1.35",
-    "nanoid": "^4.0.2",
+    "nanoid": "^3.3.4",
     "node-mailjet": "^5.1.1",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",

@@ -1,6 +1,7 @@
-import { IsString } from 'class-validator';
+import { IsEnum } from 'class-validator';
+import { ImageTypes } from '../constants';
 
 export class ImageUploadDto {
-  @IsString()
-  name: string;
+  @IsEnum(ImageTypes)
+  type: ImageTypes;
 }
