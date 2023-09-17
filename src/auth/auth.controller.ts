@@ -28,7 +28,7 @@ export class AuthController {
     private tokenService: TokenService,
   ) {}
 
-  @ApiOperation({ description: 'Create new user' })
+  @ApiOperation({ description: 'Register new user' })
   @ApiConflictResponse({ description: 'User already exists' })
   @Post('/register')
   public createUser(
