@@ -54,16 +54,16 @@ export class TokenService {
       });
     } catch ({ name }) {
       if (
-        name == TokenError.TokenExpiredError &&
-        type == TokenType.AccessToken
+        name === TokenError.TokenExpiredError &&
+        type === TokenType.AccessToken
       ) {
         throw new KKUnauthorizedException(
           UnauthorizedErrorType.EXPIRED_ACCESS_TOKEN,
         );
       }
       if (
-        name == TokenError.TokenExpiredError &&
-        type == TokenType.RefreshToken
+        name === TokenError.TokenExpiredError &&
+        type === TokenType.RefreshToken
       ) {
         throw new KKUnauthorizedException(
           UnauthorizedErrorType.EXPIRED_REFRESH_TOKEN,
@@ -81,8 +81,8 @@ export class TokenService {
       const user = await this.userModel.findById(id);
       if (
         !user ||
-        user.status == UserStatus.BLOCKED ||
-        user.status == UserStatus.INACTIVE
+        user.status === UserStatus.BLOCKED ||
+        user.status === UserStatus.INACTIVE
       ) {
         return { valid: false };
       }

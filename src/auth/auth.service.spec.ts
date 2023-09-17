@@ -10,7 +10,12 @@ import {
   KKUnauthorizedException,
   UnauthorizedErrorType,
 } from '@http/exceptions';
-import { TestUserModel } from '../test/mocks';
+import {
+  TestCompanyModel,
+  TestPermissionModel,
+  TestRoleModel,
+  TestUserModel,
+} from '../test/mocks';
 
 import { User } from '@user/schemas/user.schema';
 
@@ -33,6 +38,18 @@ describe('AuthService', () => {
         {
           provide: getModelToken('User'),
           useClass: TestUserModel,
+        },
+        {
+          provide: getModelToken('Company'),
+          useClass: TestCompanyModel,
+        },
+        {
+          provide: getModelToken('Role'),
+          useClass: TestRoleModel,
+        },
+        {
+          provide: getModelToken('Permission'),
+          useClass: TestPermissionModel,
         },
       ],
       imports: [

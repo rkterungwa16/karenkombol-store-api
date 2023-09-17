@@ -6,6 +6,7 @@ import {
   ApiOkResponse,
   ApiOperation,
   ApiTags,
+  ApiConflictResponse,
 } from '@nestjs/swagger';
 
 import {
@@ -17,6 +18,7 @@ import {
 import { TokenService } from './token.service';
 import { AuthService } from './auth.service';
 import { CookieNames } from '@enums';
+import { CreateUserRequestDto, UserResponseDto } from '@user/dto';
 
 @ApiTags('Auth')
 @Controller('auth')
@@ -25,6 +27,15 @@ export class AuthController {
     private authService: AuthService,
     private tokenService: TokenService,
   ) {}
+
+  @ApiOperation({ description: 'Create new user' })
+  @ApiConflictResponse({ description: 'User already exists' })
+  @Post('/register')
+  public createUser(
+    @Body() UserDto: CreateUserRequestDto,
+  ): Promise<UserResponseDto> {
+    return this.authService.register(UserDto);
+  }
 
   @ApiOperation({ description: 'User authentication' })
   @ApiOkResponse({ description: 'Successfully authenticated user' })
