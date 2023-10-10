@@ -14,6 +14,7 @@ import { KKConflictException, KKNotFoundException } from '@http/exceptions';
 import { PaginationQueryDto } from '@common';
 import { IProduct } from './interface/product.interface';
 import { ICategory } from './category/interface/category.interface';
+import { Pagination, PaginationResponseDto } from '@pagination';
 
 @Injectable()
 export class ProductService {
@@ -80,17 +81,23 @@ export class ProductService {
   }
 
   public async fetchProducts(
-    paginationQuery: PaginationQueryDto,
-  ): Promise<ProductResponseDto[]> {
-    const { limit, offset } = paginationQuery;
-    const products: IProduct[] = await this.productModel
-      .find()
-      .populate('category')
-      .skip(offset)
+    paginationQuery,
+  ): Promise<PaginationResponseDto<ProductResponseDto[]>> {
+    let data = [];
+    const { limit, skip, filter } = paginationQuery;
+    const totalRecords = await this.productModel.count();
+    const products = await this.productModel
+      .find({
+        ...(filter['$and'].length && { $and: filter['$and'] }),
+      })
+      .populate('categories', {
+        ...(filter?.category && { values: filter?.category }),
+      })
+      .skip(skip)
       .limit(limit);
     if (products.length) {
-      return products.map((_product) => ProductMapper.toDto(_product));
+      data = products.map((_product) => ProductMapper.toDto(_product));
     }
-    return [];
+    return Pagination.of({ limit, skip }, totalRecords, data);
   }
 }

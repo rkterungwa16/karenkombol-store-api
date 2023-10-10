@@ -33,6 +33,8 @@ import { PaginationQueryDto } from '@common';
 import { JwtGuard } from '@auth/guards';
 import { PermissionGuard } from '@auth/guards/permissions.guard';
 import { ProductService } from './product.service';
+import { PaginationResponseDto } from '@pagination';
+import { ProductQueryWithFilterDto } from './dto/product-query.dto';
 
 @Controller('product')
 @UseGuards(JwtGuard)
@@ -47,8 +49,8 @@ export class ProductController {
   })
   @Get()
   public fetch(
-    @Query() paginationQuery: PaginationQueryDto,
-  ): Promise<ProductResponseDto[]> {
+    @Query() paginationQuery: ProductQueryWithFilterDto,
+  ): Promise<PaginationResponseDto<ProductResponseDto[]>> {
     return this.productService.fetchProducts(paginationQuery);
   }
 
