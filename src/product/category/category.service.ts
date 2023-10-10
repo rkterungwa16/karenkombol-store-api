@@ -10,7 +10,6 @@ import {
 } from './dto';
 import { CategoryMapper } from './category.mapper';
 import { KKConflictException, KKNotFoundException } from '@http/exceptions';
-import { PaginationQueryDto } from '@common';
 import { Pagination, PaginationResponseDto } from '@pagination';
 
 @Injectable()
