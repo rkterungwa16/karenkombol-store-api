@@ -12,7 +12,6 @@ import {
 import { ProductMapper } from './product.mapper';
 import { KKConflictException, KKNotFoundException } from '@http/exceptions';
 import { IProduct } from './interface/product.interface';
-import { ICategory } from './category/interface/category.interface';
 import { Pagination, PaginationResponseDto } from '@pagination';
 import { Image } from 'src/lib/image/schema/image.schema';
 
