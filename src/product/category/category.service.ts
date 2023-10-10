@@ -11,7 +11,6 @@ import {
 import { CategoryMapper } from './category.mapper';
 import { KKConflictException, KKNotFoundException } from '@http/exceptions';
 import { PaginationQueryDto } from '@common';
-import { ICategory } from './interface/category.interface';
 
 @Injectable()
 export class CategoryService {
@@ -22,7 +21,7 @@ export class CategoryService {
     createCategoryRequestDto: CreateCategoryRequestDto,
   ): Promise<CategoryResponseDto> {
     const name = createCategoryRequestDto.name.toLowerCase();
-    const categoryExists: ICategory = await this.categoryModel.findOne({
+    const categoryExists = await this.categoryModel.findOne({
       name,
     });
     if (categoryExists) {
@@ -42,12 +41,11 @@ export class CategoryService {
     updateCategoryRequestDto: UpdateCategoryRequestDto,
   ): Promise<CategoryResponseDto> {
     try {
-      const updatedCategory: ICategory =
-        await this.categoryModel.findByIdAndUpdate(
-          id,
-          updateCategoryRequestDto,
-          { new: true },
-        );
+      const updatedCategory = await this.categoryModel.findByIdAndUpdate(
+        id,
+        updateCategoryRequestDto,
+        { new: true },
+      );
       return CategoryMapper.toDto(updatedCategory);
     } catch (e) {
       throw new KKNotFoundException('category');
@@ -55,7 +53,7 @@ export class CategoryService {
   }
 
   public async fetchCategoryById(id: string): Promise<CategoryResponseDto> {
-    const category: ICategory = await this.categoryModel.findById(id);
+    const category = await this.categoryModel.findById(id);
     if (!category) {
       throw new KKNotFoundException('category');
     }
@@ -66,7 +64,7 @@ export class CategoryService {
     paginationQuery: PaginationQueryDto,
   ): Promise<CategoryResponseDto[]> {
     const { limit, offset } = paginationQuery;
-    const categories: ICategory[] = await this.categoryModel
+    const categories = await this.categoryModel
       .find()
       .skip(offset)
       .limit(limit);

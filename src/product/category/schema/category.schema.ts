@@ -1,5 +1,5 @@
 import { Schema, Prop, SchemaFactory } from '@nestjs/mongoose';
-import { Document } from 'mongoose';
+import { Document, Types } from 'mongoose';
 
 @Schema({ timestamps: true })
 export class Category extends Document {
@@ -7,10 +7,13 @@ export class Category extends Document {
   name: string;
 
   @Prop({ type: String })
-  description: string;
+  description?: string;
 
-  @Prop({ type: String })
-  imageUrl: string;
+  @Prop({ type: Types.ObjectId, ref: 'Image' })
+  image?: string;
+
+  createdAt?: Date;
+  updatedAt?: Date;
 }
 
 export const CategorySchema = SchemaFactory.createForClass(Category);

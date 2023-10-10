@@ -1,18 +1,19 @@
+import { ImageMapper } from 'src/lib/image/image.mapper';
 import { CategoryResponseDto } from './dto';
-import { ICategory } from './interface/category.interface';
+import { Category } from './schema/category.schema';
 
 export class CategoryMapper {
-  public static toDto(model: ICategory): CategoryResponseDto {
+  public static toDto(model: Category): CategoryResponseDto {
     const dto = new CategoryResponseDto();
 
     dto.id = model._id;
     dto.name = model.name;
-    if (model?.description) {
-      dto.description = model.description;
-    }
-    if (model.imageUrl) {
-      dto.imageUrl = model.imageUrl;
-    }
+    dto.description = model.description;
+    dto.image =
+      model?.image &&
+      (typeof model?.image === 'string'
+        ? model?.image
+        : ImageMapper.toDto(model?.image));
     dto.createdAt = model.createdAt;
     dto.updatedAt = model.updatedAt;
     return dto;

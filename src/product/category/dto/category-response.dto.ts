@@ -1,4 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { ImageResponseDto } from 'src/lib/image/dto';
 
 export class CategoryResponseDto {
   @ApiProperty({
@@ -6,9 +7,9 @@ export class CategoryResponseDto {
   })
   id: string;
   @ApiProperty({
-    example: 'imgurl',
+    example: 'imageId',
   })
-  imageUrl: string;
+  image: string | ImageResponseDto;
 
   @ApiProperty({
     example: 'women',
