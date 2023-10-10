@@ -3,32 +3,27 @@ import { RoleService } from './role.service';
 import { RoleController } from './role.controller';
 import { MongooseModule } from '@nestjs/mongoose';
 import { Role, RoleSchema } from './schemas/role.schema';
-import { Company, CompanySchema } from '@company/schema/company.schema';
-import { TokenService } from '@auth/token.service';
-import { User, UserSchema } from '@user/schemas/user.schema';
-import { JwtService } from '@nestjs/jwt';
-import {
-  Permission,
-  PermissionSchema,
-} from '@access/permission/schema/permission.schema';
+import { JwtModule } from '@nestjs/jwt';
+import { UsersModule } from '@user/user.module';
+import { TokenModule } from '@auth/token.module';
+import { PermissionModule } from '@access/permission/permission.module';
+import { CompanyModule } from '@company/company.module';
 
 @Module({
   imports: [
+    PermissionModule,
     MongooseModule.forFeature([{ name: Role.name, schema: RoleSchema }]),
-    MongooseModule.forFeature([{ name: Company.name, schema: CompanySchema }]),
-    MongooseModule.forFeature([{ name: User.name, schema: UserSchema }]),
-    MongooseModule.forFeature([
-      { name: Permission.name, schema: PermissionSchema },
-    ]),
+    UsersModule,
+    TokenModule,
+    JwtModule,
+    CompanyModule,
   ],
-  providers: [RoleService, TokenService, JwtService],
+  providers: [RoleService],
   controllers: [RoleController],
   // TODO: The idea is to make these components available to all modules that depend on it in the application.
-  // exports: [
-  //   MongooseModule.forFeature([{ name: Role.name, schema: RoleSchema }]),
-  //   MongooseModule.forFeature([
-  //     { name: Permission.name, schema: PermissionSchema },
-  //   ]),
-  // ],
+  exports: [
+    MongooseModule.forFeature([{ name: Role.name, schema: RoleSchema }]),
+    RoleService,
+  ],
 })
 export class RoleModule {}

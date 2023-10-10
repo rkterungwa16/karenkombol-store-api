@@ -1,34 +1,47 @@
-import { PermissionSchema } from '@access/permission/schema/permission.schema';
-import { Role, RoleSchema } from '@access/role/schemas/role.schema';
-import { Permission } from '@decorators';
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
-import { User, UserSchema } from '@user/schemas/user.schema';
 import { CategoryModule } from './category/category.module';
-import { Category, CategorySchema } from './category/schema/category.schema';
 import { ProductController } from './product.controller';
 import { ProductService } from './product.service';
 import { ProductSchema, Product } from './schema/product.schema';
-import { VariantModule } from './variant/variant.module';
-import { TokenService } from '@auth/token.service';
-import { JwtService } from '@nestjs/jwt';
+import { JwtModule } from '@nestjs/jwt';
+import { ImageModule } from 'src/lib/image/image.module';
+import { UsersModule } from '@user/user.module';
+import {
+  ProductColor,
+  ProductColorSchema,
+} from './schema/product-color.schema';
+import { ProductSize, ProductSizeSchema } from './schema/product-size.schema';
+import { TokenModule } from '@auth/token.module';
+import { AccessModule } from '@access/access.module';
 
 @Module({
-  providers: [ProductService, TokenService, JwtService],
+  providers: [ProductService],
   controllers: [ProductController],
   imports: [
     MongooseModule.forFeature([{ name: Product.name, schema: ProductSchema }]),
     MongooseModule.forFeature([
-      { name: Category.name, schema: CategorySchema },
+      { name: ProductSize.name, schema: ProductSizeSchema },
     ]),
-    MongooseModule.forFeature([{ name: User.name, schema: UserSchema }]),
     MongooseModule.forFeature([
-      { name: Permission.name, schema: PermissionSchema },
+      { name: ProductColor.name, schema: ProductColorSchema },
     ]),
-    MongooseModule.forFeature([{ name: Role.name, schema: RoleSchema }]),
     CategoryModule,
-    VariantModule,
+    ImageModule,
+    UsersModule,
+    TokenModule,
+    JwtModule,
+    AccessModule,
   ],
-  exports: [CategoryModule, VariantModule],
+  exports: [
+    ProductService,
+    MongooseModule.forFeature([{ name: Product.name, schema: ProductSchema }]),
+    MongooseModule.forFeature([
+      { name: ProductSize.name, schema: ProductSizeSchema },
+    ]),
+    MongooseModule.forFeature([
+      { name: ProductColor.name, schema: ProductColorSchema },
+    ]),
+  ],
 })
 export class ProductModule {}

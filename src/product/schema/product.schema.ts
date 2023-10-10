@@ -13,8 +13,8 @@ export class Product extends Document {
   @Prop({ type: Types.ObjectId, ref: 'Category', required: true })
   category: string;
 
-  @Prop({ type: String })
-  imageUrl: string;
+  @Prop({ type: Types.ObjectId, ref: 'Image' })
+  image: string;
 
   @Prop({
     type: String,
@@ -27,7 +27,10 @@ export class Product extends Document {
   published: boolean;
 
   @Prop({ type: [String] })
-  tags: string[];
+  tags?: string[];
+
+  createdAt?: Date;
+  updatedAt?: Date;
 }
 
 export const ProductSchema = SchemaFactory.createForClass(Product);

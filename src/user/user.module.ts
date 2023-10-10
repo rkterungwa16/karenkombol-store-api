@@ -19,6 +19,9 @@ import {
       { name: Permission.name, schema: PermissionSchema },
     ]),
   ],
+  exports: [
+    MongooseModule.forFeature([{ name: User.name, schema: UserSchema }]),
+  ],
   providers: [UsersService],
   controllers: [UsersController],
 })

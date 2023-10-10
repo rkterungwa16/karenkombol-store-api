@@ -18,28 +18,25 @@ import { User, UserSchema } from '@user/schemas/user.schema';
 import { VariantController } from './variant.controller';
 import { VariantService } from './variant.service';
 import { Variant, VariantSchema } from './schema/variant.schema';
+import { ProductModule } from '@product/product.module';
+import { UsersModule } from '@user/user.module';
+import { AccessModule } from '@access/access.module';
 
 @Module({
   providers: [VariantService],
   controllers: [VariantController],
-  imports: [
-    MongooseModule.forFeature([{ name: Product.name, schema: ProductSchema }]),
+  exports: [
+    MongooseModule.forFeature([{ name: Variant.name, schema: VariantSchema }]),
+    VariantService,
     MongooseModule.forFeature([
       { name: SizeValue.name, schema: SizeValueSchema },
     ]),
-    MongooseModule.forFeature([
-      { name: ProductSize.name, schema: ProductSizeSchema },
-    ]),
-    MongooseModule.forFeature([
-      { name: ProductColor.name, schema: ProductColorSchema },
-    ]),
+  ],
+  imports: [
+    ProductModule,
+    UsersModule,
+    AccessModule,
     MongooseModule.forFeature([{ name: Color.name, schema: ColorSchema }]),
-    MongooseModule.forFeature([{ name: User.name, schema: UserSchema }]),
-    MongooseModule.forFeature([
-      { name: Permission.name, schema: PermissionSchema },
-    ]),
-    MongooseModule.forFeature([{ name: Role.name, schema: RoleSchema }]),
-    MongooseModule.forFeature([{ name: Variant.name, schema: VariantSchema }]),
   ],
 })
 export class VariantModule {}

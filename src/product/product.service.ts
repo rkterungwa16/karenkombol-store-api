@@ -11,16 +11,17 @@ import {
 } from './dto';
 import { ProductMapper } from './product.mapper';
 import { KKConflictException, KKNotFoundException } from '@http/exceptions';
-import { PaginationQueryDto } from '@common';
 import { IProduct } from './interface/product.interface';
 import { ICategory } from './category/interface/category.interface';
 import { Pagination, PaginationResponseDto } from '@pagination';
+import { Image } from 'src/lib/image/schema/image.schema';
 
 @Injectable()
 export class ProductService {
   constructor(
     @InjectModel(Category.name) private readonly categoryModel: Model<Category>,
     @InjectModel(Product.name) private readonly productModel: Model<Product>,
+    @InjectModel(Image.name) private readonly imageModel: Model<Image>,
   ) {}
 
   /**
@@ -51,7 +52,7 @@ export class ProductService {
     const newProduct = await this.productModel.create({
       name,
       description: createProductRequestDto.description,
-      imageUrl: createProductRequestDto.imageUrl,
+      image: createProductRequestDto.image,
       category: categoryExists._id,
     });
     return ProductMapper.toDto(newProduct);
@@ -62,8 +63,10 @@ export class ProductService {
     updateProductRequestDto: UpdateProductRequestDto,
   ): Promise<ProductResponseDto> {
     try {
-      const updatedProduct: IProduct =
-        await this.productModel.findByIdAndUpdate(id, updateProductRequestDto);
+      const updatedProduct: Product = await this.productModel.findByIdAndUpdate(
+        id,
+        updateProductRequestDto,
+      );
       return ProductMapper.toDto(updatedProduct);
     } catch (e) {
       throw new KKNotFoundException('product');
@@ -71,7 +74,7 @@ export class ProductService {
   }
 
   public async fetchProductById(id: string): Promise<ProductResponseDto> {
-    const product: IProduct = await (
+    const product: Product = await (
       await this.productModel.findById(id)
     ).populated('category');
     if (!product) {

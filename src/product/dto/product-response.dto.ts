@@ -1,7 +1,8 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { ICategory } from '@product/category/interface/category.interface';
 import { ProductStatus } from '@product/interface/product.interface';
 import { createdCategory } from '../../test/fixtures';
+import { CategoryResponseDto } from '@product/category/dto';
+import { ImageResponseDto } from 'src/lib/image/dto';
 
 export class ProductResponseDto {
   @ApiProperty({
@@ -12,12 +13,12 @@ export class ProductResponseDto {
   @ApiProperty({
     example: createdCategory,
   })
-  category: ICategory;
+  category: string | CategoryResponseDto;
 
   @ApiProperty({
-    example: 'imgurl',
+    example: 'img_id_1234',
   })
-  imageUrl: string;
+  image: string | ImageResponseDto;
 
   @ApiProperty({
     example: 'women',

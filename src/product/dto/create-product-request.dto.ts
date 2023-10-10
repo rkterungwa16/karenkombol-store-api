@@ -3,18 +3,20 @@ import { IsNotEmpty, IsString, IsOptional } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 import { ProductStatus } from '@product/interface/product.interface';
 import { Transform } from 'class-transformer';
+import { Image } from 'src/lib/image/schema/image.schema';
+import { Category } from '@product/category/schema/category.schema';
 
 export class CreateProductRequestDto {
   @ApiProperty({
     example: 'categoryId',
   })
-  category: string;
+  category: string | Category;
 
   @ApiProperty({
-    example: 'imgurl',
+    example: 'image_id_1234',
   })
   @IsOptional()
-  imageUrl: string;
+  image?: string | Image;
 
   @IsNotEmpty()
   @IsString()
