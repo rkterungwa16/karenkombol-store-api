@@ -34,13 +34,17 @@ export class ProductService {
   public async create(
     createProductRequestDto: CreateProductRequestDto,
   ): Promise<ProductResponseDto> {
+    let product;
     const name = createProductRequestDto.name;
     const category = createProductRequestDto.category;
-    const categoryExists: ICategory = await this.categoryModel.findById(
-      category,
-    );
+    const image = createProductRequestDto.image;
+    const categoryExists = await this.categoryModel.findById(category);
     if (!categoryExists) {
       throw new KKNotFoundException('category');
+    }
+    const imageExists = await this.imageModel.findById(image);
+    if (!imageExists) {
+      throw new KKNotFoundException('image');
     }
     const productExists: IProduct = await this.productModel.findOne({
       name,
@@ -49,13 +53,15 @@ export class ProductService {
       throw new KKConflictException('product');
     }
 
-    const newProduct = await this.productModel.create({
+    product = await this.productModel.create({
       name,
       description: createProductRequestDto.description,
       image: createProductRequestDto.image,
       category: categoryExists._id,
     });
-    return ProductMapper.toDto(newProduct);
+    product = await product.populate('image');
+    product = await product.populate('category');
+    return ProductMapper.toDto(product);
   }
 
   public async update(
