@@ -11,6 +11,7 @@ import {
 import { CategoryMapper } from './category.mapper';
 import { KKConflictException, KKNotFoundException } from '@http/exceptions';
 import { PaginationQueryDto } from '@common';
+import { Pagination, PaginationResponseDto } from '@pagination';
 
 @Injectable()
 export class CategoryService {
@@ -61,16 +62,21 @@ export class CategoryService {
   }
 
   public async fetchCategories(
-    paginationQuery: PaginationQueryDto,
-  ): Promise<CategoryResponseDto[]> {
-    const { limit, offset } = paginationQuery;
+    paginationQuery,
+  ): Promise<PaginationResponseDto<CategoryResponseDto[]>> {
+    let data = [];
+    const { limit, skip, filter } = paginationQuery;
+    const totalRecords = await this.categoryModel.count();
     const categories = await this.categoryModel
-      .find()
-      .skip(offset)
+      .find({
+        ...(filter['$and'].length && { $and: filter['$and'] }),
+      })
+      .populate('image')
+      .skip(skip)
       .limit(limit);
     if (categories.length) {
-      return categories.map((_category) => CategoryMapper.toDto(_category));
+      data = categories.map((_category) => CategoryMapper.toDto(_category));
     }
-    return [];
+    return Pagination.of({ limit, skip }, totalRecords, data);
   }
 }

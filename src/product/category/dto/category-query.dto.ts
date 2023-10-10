@@ -1,8 +1,13 @@
-import { Type } from 'class-transformer';
+import { instanceToPlain, Type } from 'class-transformer';
 import { IsOptional, IsString, ValidateNested } from 'class-validator';
 import { DateFilterDto } from '@filter';
+import { PaginationQuery } from '@pagination';
 
-export class CategoryQueryDto {
+export class CategoryQueryDto extends PaginationQuery {
+  @IsOptional()
+  @IsString()
+  name?: string;
+
   @IsOptional()
   @ValidateNested()
   @Type(() => DateFilterDto)
@@ -12,8 +17,20 @@ export class CategoryQueryDto {
   @ValidateNested()
   @Type(() => DateFilterDto)
   updatedAt?: DateFilterDto;
+}
 
-  @IsOptional()
-  @IsString()
-  name?: string;
+export class CategoryQueryWithFilterDto extends CategoryQueryDto {
+  filter() {
+    return {
+      $and: [
+        ...(this.name ? [{ type: this.name }] : []),
+        ...(this.createdAt
+          ? [{ createdAt: instanceToPlain(this.createdAt) }]
+          : []),
+        ...(this.updatedAt
+          ? [{ updatedAt: instanceToPlain(this.updatedAt) }]
+          : []),
+      ],
+    };
+  }
 }

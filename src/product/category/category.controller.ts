@@ -33,6 +33,8 @@ import {
 import { PaginationQueryDto } from '@common';
 import { JwtGuard } from '@auth/guards';
 import { PermissionGuard } from '@auth/guards/permissions.guard';
+import { PaginationResponseDto } from '@pagination';
+import { CategoryQueryWithFilterDto } from './dto/category-query.dto';
 
 @Controller('category')
 @UseGuards(JwtGuard)
@@ -47,8 +49,8 @@ export class CategoryController {
   })
   @Get()
   public fetch(
-    @Query() paginationQuery: PaginationQueryDto,
-  ): Promise<CategoryResponseDto[]> {
+    @Query() paginationQuery: CategoryQueryWithFilterDto,
+  ): Promise<PaginationResponseDto<CategoryResponseDto[]>> {
     return this.categoryService.fetchCategories(paginationQuery);
   }
 
