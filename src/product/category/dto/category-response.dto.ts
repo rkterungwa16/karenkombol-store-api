@@ -1,5 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { ImageResponseDto } from 'src/lib/image/dto';
+import { CategoryTypeResponseDto } from './category-type-response.dto';
+import { ShirtCategoryResponseDto } from './shirt-category-response.dto';
 
 export class CategoryResponseDto {
   @ApiProperty({
@@ -7,19 +8,14 @@ export class CategoryResponseDto {
   })
   id: string;
   @ApiProperty({
-    example: 'imageId',
+    example: 'categoryTypeId',
   })
-  image: string | ImageResponseDto;
+  categoryType: string | CategoryTypeResponseDto;
 
   @ApiProperty({
-    example: 'women',
+    example: '[shirtCategoryId]',
   })
-  name: string;
-
-  @ApiProperty({
-    example: 'list of women clothes',
-  })
-  description: string;
+  shirts?: (string | ShirtCategoryResponseDto)[];
 
   createdAt?: Date;
   updatedAt?: Date;

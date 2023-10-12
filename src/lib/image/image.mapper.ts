@@ -1,8 +1,8 @@
 import { ImageResponseDto } from './dto';
-import { IMage } from './interface/image.interface';
+import { Image } from './schema/image.schema';
 
 export class ImageMapper {
-  public static toDto(model: IMage): ImageResponseDto {
+  public static toDto(model: Image): ImageResponseDto {
     const dto = new ImageResponseDto();
 
     dto.id = model._id;

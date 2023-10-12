@@ -1,7 +1,7 @@
 import { ImageMapper } from 'src/lib/image/image.mapper';
 import { ProductResponseDto } from './dto';
 import { Product } from './schema/product.schema';
-import { CategoryMapper } from './category/category.mapper';
+import { CategoryMapper } from './category/mappers';
 
 export class ProductMapper {
   public static toDto(model: Product): ProductResponseDto {

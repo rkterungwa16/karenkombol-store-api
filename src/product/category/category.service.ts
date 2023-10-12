@@ -8,7 +8,7 @@ import {
   CategoryResponseDto,
   UpdateCategoryRequestDto,
 } from './dto';
-import { CategoryMapper } from './category.mapper';
+import { CategoryMapper } from './mappers';
 import { KKConflictException, KKNotFoundException } from '@http/exceptions';
 import { Pagination, PaginationResponseDto } from '@pagination';
 

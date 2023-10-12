@@ -18,6 +18,9 @@ export class Image extends Document {
     enum: [...Object.values(ImageTypes)],
   })
   imageType?: ImageTypes;
+
+  createdAt?: Date;
+  updatedAt?: Date;
 }
 
 export const ImageSchema = SchemaFactory.createForClass(Image);
