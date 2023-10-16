@@ -1,25 +1,20 @@
-import { IsNotEmpty, IsString } from 'class-validator';
+import { IsOptional, IsString, ValidateNested } from 'class-validator';
 
 import { ApiProperty } from '@nestjs/swagger';
-import { Transform } from 'class-transformer';
+import { Transform, Type } from 'class-transformer';
+import { CreateShirtDto } from './create-shirt.dto';
+import { ClothingTypes } from '../interface/category.interface';
 
 export class CreateCategoryRequestDto {
-  @ApiProperty({
-    example: 'imgurl',
-  })
-  imageUrl?: string;
-
-  @IsNotEmpty()
   @IsString()
   @ApiProperty({
     example: 'women',
   })
   @Transform(({ value }) => value.toLowerCase())
-  name: string;
+  name: ClothingTypes;
 
-  @IsString()
-  @ApiProperty({
-    example: 'women clothes',
-  })
-  description?: string;
+  @IsOptional()
+  @ValidateNested()
+  @Type(() => CreateShirtDto)
+  shirt?: CreateShirtDto;
 }

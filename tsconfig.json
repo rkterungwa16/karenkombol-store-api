@@ -34,7 +34,8 @@
       "@pagination": ["src/pagination"],
       "@company/*": ["src/company/*"],
       "@decorators": ["src/decorators"],
-      "@common": ["src/common"]
+      "@common": ["src/common"],
+      "@lib/*": ["src/lib/*"]
     }
   }
 }

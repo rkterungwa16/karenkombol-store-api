@@ -1,23 +1,29 @@
 import { Schema, Prop, SchemaFactory } from '@nestjs/mongoose';
 import { Document, Types } from 'mongoose';
-import { CategoryType } from './category-type.schema';
-import { ShirtCategory } from './shirt-category.schema';
+import { Clothing } from './clothing.schema';
+import { Shirt } from './shirt.schema';
 
+/**
+ * A category has one unique type associated with it.
+ * This type is gotten from the list of types created.
+ * Example of types include shirts, skirts, dress etc.
+ * Each of this type as subtypes. Example, shirt
+ */
 @Schema({ timestamps: true })
 export class Category extends Document {
   @Prop({
     type: Types.ObjectId,
-    ref: 'CategoryType',
+    ref: 'Clothing',
     required: true,
     unique: true,
   })
-  categoryType: string | CategoryType;
+  clothing: string | Clothing;
 
   @Prop({
     type: [Types.ObjectId],
-    ref: 'ShirtCategory',
+    ref: 'Shirt',
   })
-  shirts?: (string | ShirtCategory)[];
+  shirts?: (string | Shirt)[];
 
   createdAt?: Date;
   updatedAt?: Date;

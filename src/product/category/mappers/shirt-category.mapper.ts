@@ -1,11 +1,11 @@
 import { ImageMapper } from 'src/lib/image/image.mapper';
 import { CategoryMapper } from './category.mapper';
-import { ShirtCategoryResponseDto } from '../dto/shirt-category-response.dto';
-import { ShirtCategory } from '../schema/shirt-category.schema';
+import { ShirtResponseDto } from '../dto/shirt-response.dto';
+import { Shirt } from '../schema/shirt.schema';
 
 export class ShirtCategoryMapper {
-  public static toDto(model: ShirtCategory): ShirtCategoryResponseDto {
-    const dto = new ShirtCategoryResponseDto();
+  public static toDto(model: Shirt): ShirtResponseDto {
+    const dto = new ShirtResponseDto();
 
     dto.id = model._id;
     dto.description = model.description;

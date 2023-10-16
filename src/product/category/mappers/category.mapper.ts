@@ -1,6 +1,6 @@
 import { CategoryResponseDto } from '../dto';
 import { Category } from '../schema/category.schema';
-import { CategoryTypeMapper } from './category-type.mapper';
+import { ClothingMapper } from './clothing.mapper';
 import { ShirtCategoryMapper } from './shirt-category.mapper';
 
 export class CategoryMapper {
@@ -15,11 +15,11 @@ export class CategoryMapper {
           : ShirtCategoryMapper.toDto(_shirt);
       }
     });
-    dto.categoryType =
-      model?.categoryType &&
-      (typeof model?.categoryType === 'string'
-        ? model?.categoryType
-        : CategoryTypeMapper.toDto(model?.categoryType));
+    dto.clothing =
+      model?.clothing &&
+      (typeof model?.clothing === 'string'
+        ? model?.clothing
+        : ClothingMapper.toDto(model?.clothing));
     dto.createdAt = model.createdAt;
     dto.updatedAt = model.updatedAt;
     return dto;

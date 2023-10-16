@@ -7,37 +7,37 @@ export interface ICategory {
   updatedAt?: Date;
 }
 
-export enum CategoryTypes {
-  JEANS_AND_DENIM = 'JEANS & DENIM',
-  ATHLETIC_AND_ATHLEISURE = 'ATHLETIC & ATHLEISURE',
-  DRESSES = 'DRESSES',
-  SKIRTS = 'DRESSES',
-  LOUNGEWEAR = 'LOUNGEWEAR',
-  OUTERWEAR = 'OUTERWEAR',
-  TROUSERS = 'TROUSERS',
-  SHIRTS = 'SHIRTS',
+export enum ClothingTypes {
+  JEANS_AND_DENIM = 'jeans & denim',
+  ATHLETIC_AND_ATHLEISURE = 'athletic & athleisure',
+  DRESSES = 'dress',
+  SKIRT = 'skirt',
+  LOUNGEWEAR = 'loungewear',
+  OUTERWEAR = 'outerwear',
+  TROUSERS = 'trousers',
+  SHIRT = 'shirt',
   // TOPS_BLOUSES = 'TOPS & BLOUSES',
-  SWIMWEAR = 'SWIMWEAR',
-  UNDERWEAR_LINGERIE_SHAPEWEAR = 'UNDERWEAR, LINGERIE, & SHAPEWEAR',
+  SWIMWEAR = 'swimwear',
+  UNDERWEAR_LINGERIE_SHAPEWEAR = 'underwear, lingerie, & shapewear',
 }
 
-export enum ShirtCategoryStyles {
-  BODYSUIT = 'Bodysuit',
-  TUNIC = 'Tunic',
-  DRESS_SHIRT = 'Dress shirt',
-  BLOUSE = 'Blouse',
-  JACET_SHIRT = 'Jacket shirt',
-  SHIRT_COAT = 'Shirt-coat',
-  CHEMIZIER = 'Chemizier',
-  SWEATSHIRT = 'Sweatshirt',
-  WRAPOVER = 'Wrapover',
-  NIGHT_SHIRT = 'Night shirt',
+export enum ShirtStyles {
+  BODYSUIT = 'bodysuit',
+  TUNIC = 'tunic',
+  DRESS_SHIRT = 'dress shirt',
+  BLOUSE = 'blouse',
+  JACET_SHIRT = 'jacket shirt',
+  SHIRT_COAT = 'shirt-coat',
+  CHEMIZIER = 'chemizier',
+  SWEATSHIRT = 'sweatshirt',
+  WRAPOVER = 'wrapover',
+  NIGHT_SHIRT = 'night shirt',
 }
 
-export enum ShirtCategoryFit {
-  CLASSIC_FIT = 'Classic',
-  SLIM_FIT = 'Slim',
-  LOOSE_FIT = 'Loose',
-  OVERSIZE = 'Oversize',
-  ASYMMETRIC = 'Asymmetric',
+export enum ShirtFits {
+  CLASSIC_FIT = 'classic',
+  SLIM_FIT = 'slim',
+  LOOSE_FIT = 'loose',
+  OVERSIZE = 'oversize',
+  ASYMMETRIC = 'asymmetric',
 }

@@ -1,14 +1,11 @@
 import { Schema, Prop, SchemaFactory } from '@nestjs/mongoose';
 import { Document, Types } from 'mongoose';
-import {
-  ShirtCategoryFit,
-  ShirtCategoryStyles,
-} from '../interface/category.interface';
+import { ShirtFits, ShirtStyles } from '../interface/category.interface';
 import { Category } from './category.schema';
 import { Image } from '../../../lib/image/schema/image.schema';
 
 @Schema({ timestamps: true })
-export class ShirtCategory extends Document {
+export class Shirt extends Document {
   @Prop({ type: Types.ObjectId, ref: 'Category', unique: true, required: true })
   category?: string | Category;
 
@@ -19,23 +16,23 @@ export class ShirtCategory extends Document {
 
   @Prop({
     type: String,
-    enum: [...Object.values(ShirtCategoryStyles)],
+    enum: [...Object.values(ShirtStyles)],
     required: true,
   })
-  style: ShirtCategoryStyles;
+  style: ShirtStyles;
 
   @Prop({ type: Types.ObjectId, ref: 'Image' })
   image?: string | Image;
 
   @Prop({
     type: String,
-    enum: [...Object.values(ShirtCategoryFit)],
+    enum: [...Object.values(ShirtFits)],
     required: true,
   })
-  fit: ShirtCategoryFit;
+  fit: ShirtFits;
 
   createdAt?: Date;
   updatedAt?: Date;
 }
 
-export const ShirtCategorySchema = SchemaFactory.createForClass(ShirtCategory);
+export const ShirtSchema = SchemaFactory.createForClass(Shirt);
