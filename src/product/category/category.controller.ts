@@ -3,7 +3,6 @@ import {
   Controller,
   Get,
   Param,
-  ParseIntPipe,
   Post,
   Put,
   Query,
@@ -22,7 +21,7 @@ import { Permission } from '@decorators';
 import {
   CategoryResponseDto,
   CreateCategoryRequestDto,
-  UpdateCategoryRequestDto,
+  UpdateCategoryDto,
 } from './dto';
 
 import { CategoryService } from './category.service';
@@ -56,7 +55,7 @@ export class CategoryController {
   @ApiOperation({ description: 'Get Category by id' })
   @Get('/:id')
   public getCategoryById(
-    @Param('id', ParseIntPipe) id: string,
+    @Param('id') id: string,
   ): Promise<CategoryResponseDto> {
     return this.categoryService.fetchCategoryById(id);
   }
@@ -89,7 +88,7 @@ export class CategoryController {
   @Put('/:id')
   public update(
     @Param('id') id: string,
-    @Body() categoryDto: UpdateCategoryRequestDto,
+    @Body() categoryDto: UpdateCategoryDto,
   ): Promise<CategoryResponseDto> {
     return this.categoryService.update(id, categoryDto);
   }

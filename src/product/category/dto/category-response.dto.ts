@@ -13,9 +13,9 @@ export class CategoryResponseDto {
   clothing: string | ClothingResponseDto;
 
   @ApiProperty({
-    example: '[shirtId]',
+    example: 'shirtId',
   })
-  shirts?: (string | ShirtResponseDto)[];
+  shirt?: string | ShirtResponseDto;
 
   createdAt?: Date;
   updatedAt?: Date;

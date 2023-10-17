@@ -3,7 +3,7 @@ import { CategoryMapper } from './category.mapper';
 import { ShirtResponseDto } from '../dto/shirt-response.dto';
 import { Shirt } from '../schema/shirt.schema';
 
-export class ShirtCategoryMapper {
+export class ShirtMapper {
   public static toDto(model: Shirt): ShirtResponseDto {
     const dto = new ShirtResponseDto();
 

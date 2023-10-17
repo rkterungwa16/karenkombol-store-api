@@ -8,12 +8,12 @@ export const categories = [
   {
     name: '',
     description: '',
-    clothing: ClothingTypes.SHIRTS,
+    clothing: ClothingTypes.SHIRT,
     style: ShirtStyles.TUNIC,
     fit: ShirtFits.LOOSE_FIT,
   },
   {
-    clothing: ClothingTypes.SHIRTS,
+    clothing: ClothingTypes.SHIRT,
     style: ShirtStyles.TUNIC,
     fit: ShirtFits.CLASSIC_FIT,
   },

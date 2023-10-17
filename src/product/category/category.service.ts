@@ -6,7 +6,7 @@ import { Category } from './schema/category.schema';
 import {
   CreateCategoryRequestDto,
   CategoryResponseDto,
-  UpdateCategoryRequestDto,
+  UpdateCategoryDto,
 } from './dto';
 import { CategoryMapper } from './mappers';
 import { KKConflictException, KKNotFoundException } from '@http/exceptions';
@@ -70,12 +70,12 @@ export class CategoryService {
           if (!image) {
             throw new KKNotFoundException('image');
           }
+          shirt = await this.shirtModel.create({
+            category: category._id,
+            ...createCategoryRequestDto.shirt,
+            image: image._id,
+          });
         }
-        shirt = await this.shirtModel.create({
-          category: category._id,
-          ...createCategoryRequestDto.shirt,
-          image: image._id,
-        });
       }
     }
 
@@ -83,14 +83,12 @@ export class CategoryService {
       .findByIdAndUpdate(
         category._id,
         {
-          $push: {
-            shirts: shirt._id,
-          },
+          shirt: shirt._id,
         },
         { new: true },
       )
       .populate({
-        path: 'shirts',
+        path: 'shirt',
         model: 'Shirt',
         populate: {
           path: 'image',
@@ -103,14 +101,20 @@ export class CategoryService {
 
   public async update(
     id: string,
-    updateCategoryRequestDto: UpdateCategoryRequestDto,
+    updateCategoryRequestDto: UpdateCategoryDto,
   ): Promise<CategoryResponseDto> {
     try {
-      const updatedCategory = await this.categoryModel.findByIdAndUpdate(
-        id,
-        updateCategoryRequestDto,
-        { new: true },
-      );
+      const updatedCategory = await this.categoryModel
+        .findByIdAndUpdate(id, updateCategoryRequestDto, { new: true })
+        .populate({
+          path: 'shirts',
+          model: 'Shirt',
+          populate: {
+            path: 'image',
+            model: 'Image',
+          },
+        })
+        .populate('clothing');
       return CategoryMapper.toDto(updatedCategory);
     } catch (e) {
       throw new KKNotFoundException('category');
@@ -118,7 +122,17 @@ export class CategoryService {
   }
 
   public async fetchCategoryById(id: string): Promise<CategoryResponseDto> {
-    const category = await this.categoryModel.findById(id);
+    const category = await this.categoryModel
+      .findById(id)
+      .populate({
+        path: 'shirt',
+        model: 'Shirt',
+        populate: {
+          path: 'image',
+          model: 'Image',
+        },
+      })
+      .populate('clothing');
     if (!category) {
       throw new KKNotFoundException('category');
     }

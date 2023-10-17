@@ -21,6 +21,11 @@ import { Image, ImageSchema } from '@lib/image/schema/image.schema';
     MongooseModule.forFeature([
       { name: Category.name, schema: CategorySchema },
     ]),
+    MongooseModule.forFeature([
+      { name: Clothing.name, schema: ClothingSchema },
+    ]),
+    MongooseModule.forFeature([{ name: Shirt.name, schema: ShirtSchema }]),
+    MongooseModule.forFeature([{ name: Image.name, schema: ImageSchema }]),
     UsersModule,
     AccessModule,
     TokenModule,

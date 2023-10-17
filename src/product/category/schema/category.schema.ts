@@ -8,6 +8,8 @@ import { Shirt } from './shirt.schema';
  * This type is gotten from the list of types created.
  * Example of types include shirts, skirts, dress etc.
  * Each of this type as subtypes. Example, shirt
+ *
+ * Example category description: A shirt category that is a tunic
  */
 @Schema({ timestamps: true })
 export class Category extends Document {
@@ -20,10 +22,10 @@ export class Category extends Document {
   clothing: string | Clothing;
 
   @Prop({
-    type: [Types.ObjectId],
+    type: Types.ObjectId,
     ref: 'Shirt',
   })
-  shirts?: (string | Shirt)[];
+  shirt?: string | Shirt;
 
   createdAt?: Date;
   updatedAt?: Date;
