@@ -10,12 +10,14 @@ import { ColorModule } from './color/color.module';
 import { ProductModule } from './product/product.module';
 import { LibModule } from './lib/lib.module';
 import { SizeModule } from './size/size.module';
+import { DBConnectionModule } from '@database/db-connection.module';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
     }),
+    DBConnectionModule.register(),
     DatabaseModule,
     UsersModule,
     AccessModule,

@@ -30,9 +30,9 @@ export class CreateUserRequestDto {
 
   @Matches(passwordRegex, { message: 'Password too weak' })
   @IsNotEmpty()
-  @Matches(specialCharacters, {
-    message: 'password must contain special characters',
-  })
+  // @Matches(specialCharacters, {
+  //   message: 'password must contain special characters',
+  // })
   @Length(6, 20)
   @ApiProperty({
     example: 'Hello123',

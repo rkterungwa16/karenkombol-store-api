@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { JwtModule } from '@nestjs/jwt';
 import { MongooseModule } from '@nestjs/mongoose';
+import { Connection } from 'mongoose';
 import { CategoryController } from './category.controller';
 import { CategoryService } from './category.service';
 import {
@@ -15,6 +16,7 @@ import { UsersModule } from '@user/user.module';
 import { AccessModule } from '@access/access.module';
 import { TokenModule } from '@auth/token.module';
 import { Image, ImageSchema } from '@lib/image/schema/image.schema';
+import { DBConnectionModule } from '@database/db-connection.module';
 
 @Module({
   imports: [
@@ -26,6 +28,7 @@ import { Image, ImageSchema } from '@lib/image/schema/image.schema';
     ]),
     MongooseModule.forFeature([{ name: Shirt.name, schema: ShirtSchema }]),
     MongooseModule.forFeature([{ name: Image.name, schema: ImageSchema }]),
+    DBConnectionModule.register(),
     UsersModule,
     AccessModule,
     TokenModule,
