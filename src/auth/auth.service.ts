@@ -20,6 +20,7 @@ import { UserMapper } from '@user/user.mapper';
 import { Permission } from '@access/permission/schema/permission.schema';
 import { Role } from '@access/role/schemas/role.schema';
 import { Company } from '@company/schema/company.schema';
+import { ResponseDto } from '@pagination';
 
 @Injectable()
 export class AuthService {
@@ -71,7 +72,7 @@ export class AuthService {
   }
   public async register(
     createUserRequestDto: CreateUserRequestDto,
-  ): Promise<UserResponseDto> {
+  ): Promise<ResponseDto<UserResponseDto>> {
     const createUserDto = new CreateUserDto();
     const userExists = await this.userModel.findOne({
       email: createUserRequestDto.email,
@@ -111,7 +112,7 @@ export class AuthService {
     createUserDto.status = UserStatus.ACTIVE;
     const newUser = await this.userModel.create(createUserDto);
 
-    return UserMapper.toDto(
+    const data = await UserMapper.toDto(
       await (
         await newUser.populate('company')
       ).populate({
@@ -123,5 +124,11 @@ export class AuthService {
         },
       }),
     );
+
+    return {
+      status: 201,
+      data,
+      message: 'success',
+    };
   }
 }

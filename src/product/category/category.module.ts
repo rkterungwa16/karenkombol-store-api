@@ -1,7 +1,6 @@
 import { Module } from '@nestjs/common';
 import { JwtModule } from '@nestjs/jwt';
 import { MongooseModule } from '@nestjs/mongoose';
-import { Connection } from 'mongoose';
 import { CategoryController } from './category.controller';
 import { CategoryService } from './category.service';
 import {

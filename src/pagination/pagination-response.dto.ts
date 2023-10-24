@@ -10,3 +10,9 @@ export type PaginationMetaType = {
   totalRecords: number;
   hasNext: boolean;
 };
+
+export class ResponseDto<T> {
+  data: T;
+  status?: number;
+  message?: string;
+}

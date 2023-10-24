@@ -19,6 +19,7 @@ import { TokenService } from './token.service';
 import { AuthService } from './auth.service';
 import { CookieNames } from '@enums';
 import { CreateUserRequestDto, UserResponseDto } from '@user/dto';
+import { ResponseDto } from '@pagination';
 
 @ApiTags('Auth')
 @Controller('auth')
@@ -33,7 +34,7 @@ export class AuthController {
   @Post('/register')
   public createUser(
     @Body() UserDto: CreateUserRequestDto,
-  ): Promise<UserResponseDto> {
+  ): Promise<ResponseDto<UserResponseDto>> {
     return this.authService.register(UserDto);
   }
 
