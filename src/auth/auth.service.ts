@@ -20,8 +20,10 @@ import { UserMapper } from '@user/user.mapper';
 import { Permission } from '@access/permission/schema/permission.schema';
 import { Role } from '@access/role/schemas/role.schema';
 import { Company } from '@company/schema/company.schema';
-import { ResponseDto } from '@pagination';
 
+// TODO: User registration transaction
+// TODO: User invite registration
+// TODO: Google auth
 @Injectable()
 export class AuthService {
   constructor(
