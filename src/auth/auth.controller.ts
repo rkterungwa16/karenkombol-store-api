@@ -32,10 +32,15 @@ export class AuthController {
   @ApiOperation({ description: 'Register new user' })
   @ApiConflictResponse({ description: 'User already exists' })
   @Post('/register')
-  public createUser(
+  public async createUser(
     @Body() UserDto: CreateUserRequestDto,
   ): Promise<ResponseDto<UserResponseDto>> {
-    return this.authService.register(UserDto);
+    const data = await this.authService.register(UserDto);
+    return {
+      status: 200,
+      data,
+      message: 'success',
+    };
   }
 
   @ApiOperation({ description: 'User authentication' })
@@ -46,7 +51,7 @@ export class AuthController {
   async login(
     @Body() authCredentialsDto: AuthCredentialsRequestDto,
     @Res({ passthrough: true }) response: Response,
-  ): Promise<LoginResponseDto> {
+  ): Promise<ResponseDto<LoginResponseDto>> {
     const token = await this.authService.login(authCredentialsDto);
     response
       .cookie(CookieNames.REFRESH_TOKEN, token.refreshToken, {
@@ -57,8 +62,13 @@ export class AuthController {
         sameSite: 'strict',
       })
       .status(HttpStatus.OK);
+
     return {
-      accessToken: token.accessToken,
+      status: 201,
+      data: {
+        accessToken: token.accessToken,
+      },
+      message: 'success',
     };
   }
 

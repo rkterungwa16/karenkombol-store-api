@@ -61,18 +61,14 @@ export class AuthService {
       throw new KKUnauthorizedException(UnauthorizedErrorType.DISABLED_USER);
     }
 
-    const userDto = await UserMapper.toDto(
-      await (await user.populate('company')).populate('roles'),
-    );
-
-    const payload: JwtPayload = { id: userDto.id, email };
+    const payload: JwtPayload = { id: user._id, email };
     const token = await this.tokenService.generateAuthToken(payload);
 
     return token;
   }
   public async register(
     createUserRequestDto: CreateUserRequestDto,
-  ): Promise<ResponseDto<UserResponseDto>> {
+  ): Promise<UserResponseDto> {
     const createUserDto = new CreateUserDto();
     const userExists = await this.userModel.findOne({
       email: createUserRequestDto.email,
@@ -112,7 +108,7 @@ export class AuthService {
     createUserDto.status = UserStatus.ACTIVE;
     const newUser = await this.userModel.create(createUserDto);
 
-    const data = await UserMapper.toDto(
+    return UserMapper.toDto(
       await (
         await newUser.populate('company')
       ).populate({
@@ -124,11 +120,5 @@ export class AuthService {
         },
       }),
     );
-
-    return {
-      status: 201,
-      data,
-      message: 'success',
-    };
   }
 }
