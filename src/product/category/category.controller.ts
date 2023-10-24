@@ -26,7 +26,7 @@ import {
 
 import { CategoryService } from './category.service';
 import {
-  PermissionActions,
+  PermissionActionsTypes,
   PermissionResources,
 } from '@access/permission/interfaces/permission.interface';
 import { JwtGuard } from '@auth/guards';
@@ -66,7 +66,7 @@ export class CategoryController {
   @ApiConflictResponse({ description: 'Category exists' })
   @Permission({
     resource: PermissionResources.CATEGORY,
-    action: PermissionActions.CREATE,
+    action: PermissionActionsTypes.CREATE,
   })
   @UseGuards(PermissionGuard)
   @Post()
@@ -82,7 +82,7 @@ export class CategoryController {
   })
   @Permission({
     resource: PermissionResources.CURRENCIES,
-    action: PermissionActions.UPDATE,
+    action: PermissionActionsTypes.UPDATE,
   })
   @UseGuards(PermissionGuard)
   @Put('/:id')

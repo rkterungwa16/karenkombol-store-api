@@ -27,7 +27,7 @@ import {
 
 import { ColorService } from './color.service';
 import {
-  PermissionActions,
+  PermissionActionsTypes,
   PermissionResources,
 } from '@access/permission/interfaces/permission.interface';
 import { PaginationQueryDto } from '@common';
@@ -47,7 +47,7 @@ export class ColorController {
   })
   @Permission({
     resource: PermissionResources.COLORS,
-    action: PermissionActions.READ,
+    action: PermissionActionsTypes.READ,
   })
   @UseGuards(PermissionGuard)
   @Get()
@@ -60,7 +60,7 @@ export class ColorController {
   @ApiOperation({ description: 'Get color by id' })
   @Permission({
     resource: PermissionResources.COLORS,
-    action: PermissionActions.READ,
+    action: PermissionActionsTypes.READ,
   })
   @UseGuards(PermissionGuard)
   @Get('/:id')
@@ -76,7 +76,7 @@ export class ColorController {
   @ApiConflictResponse({ description: 'Color already exists' })
   @Permission({
     resource: PermissionResources.COLORS,
-    action: PermissionActions.CREATE,
+    action: PermissionActionsTypes.CREATE,
   })
   @UseGuards(PermissionGuard)
   @Post()
@@ -92,7 +92,7 @@ export class ColorController {
   })
   @Permission({
     resource: PermissionResources.COLORS,
-    action: PermissionActions.UPDATE,
+    action: PermissionActionsTypes.UPDATE,
   })
   @UseGuards(PermissionGuard)
   @Put('/:id')

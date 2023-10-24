@@ -1,8 +1,9 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { UserStatus } from '@enums';
+import { RoleResponseDto } from '@access/role/dto';
+import { PermissionsResponseDto } from '@access/permission/dto';
 
 export class UserResponseDto {
-  @ApiProperty()
   id: string;
 
   @ApiProperty({
@@ -15,23 +16,19 @@ export class UserResponseDto {
   })
   email: string;
 
-  @ApiProperty()
-  firstName: string;
+  firstName?: string;
 
-  @ApiProperty()
-  lastName: string;
+  lastName?: string;
 
-  @ApiProperty()
-  company: string;
+  company?: string;
 
-  @ApiProperty()
-  avatar: string;
+  avatar?: string;
 
-  @ApiProperty()
   status: UserStatus;
 
-  @ApiProperty()
-  roles: string[];
+  role?: string | RoleResponseDto;
+
+  permissions?: (string | PermissionsResponseDto)[];
 
   createdAt?: Date;
   updatedAt?: Date;

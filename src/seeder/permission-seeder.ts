@@ -1,6 +1,6 @@
 import {
   PermissionResources,
-  PermissionActions,
+  PermissionActionsTypes,
 } from '@access/permission/interfaces/permission.interface';
 import { Permission } from '@access/permission/schema/permission.schema';
 import { Injectable } from '@nestjs/common';
@@ -16,10 +16,16 @@ export class PermissionsSeeder implements Seeder {
   ) {}
 
   async seed(): Promise<any> {
-    const permissions = Object.values(PermissionResources).map((_resource) => ({
-      resource: _resource,
-      actions: [...Object.values(PermissionActions)],
-    }));
+    let permissions;
+    permissions = Object.values(PermissionResources).map((_resource) => {
+      return Object.values(PermissionActionsTypes).map((_action) => {
+        return {
+          resource: _resource,
+          action: _action,
+        };
+      });
+    });
+    permissions = permissions.flat();
     return this.permission.insertMany(permissions);
   }
 

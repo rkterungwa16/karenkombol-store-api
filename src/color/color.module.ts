@@ -9,9 +9,10 @@ import { PermissionSchema } from '@access/permission/schema/permission.schema';
 import { Role, RoleSchema } from '@access/role/schemas/role.schema';
 import { Permission } from '@decorators';
 import { User, UserSchema } from '@user/schemas/user.schema';
+import { UsersService } from '@user/user.service';
 
 @Module({
-  providers: [ColorService, TokenService, JwtService],
+  providers: [ColorService, TokenService, JwtService, UsersService],
   controllers: [ColorController],
   imports: [
     MongooseModule.forFeature([{ name: Role.name, schema: RoleSchema }]),

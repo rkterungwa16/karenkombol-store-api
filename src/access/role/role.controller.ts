@@ -27,7 +27,7 @@ import {
 
 import { RoleService } from './role.service';
 import {
-  PermissionActions,
+  PermissionActionsTypes,
   PermissionResources,
 } from '@access/permission/interfaces/permission.interface';
 import { PaginationQueryDto } from '@common';
@@ -47,7 +47,7 @@ export class RoleController {
   })
   @Permission({
     resource: PermissionResources.ROLES,
-    action: PermissionActions.READ,
+    action: PermissionActionsTypes.READ,
   })
   @UseGuards(PermissionGuard)
   @Get()
@@ -60,7 +60,7 @@ export class RoleController {
   @ApiOperation({ description: 'Get role by id' })
   @Permission({
     resource: PermissionResources.ROLES,
-    action: PermissionActions.READ,
+    action: PermissionActionsTypes.READ,
   })
   @UseGuards(PermissionGuard)
   @Get('/:id')
@@ -74,7 +74,7 @@ export class RoleController {
   @ApiConflictResponse({ description: "There's a role with name admin" })
   @Permission({
     resource: PermissionResources.ROLES,
-    action: PermissionActions.CREATE,
+    action: PermissionActionsTypes.CREATE,
   })
   @UseGuards(PermissionGuard)
   @Post()
@@ -88,7 +88,7 @@ export class RoleController {
   @ApiBadRequestResponse({ description: "There's no role with specified id" })
   @Permission({
     resource: PermissionResources.ROLES,
-    action: PermissionActions.UPDATE,
+    action: PermissionActionsTypes.UPDATE,
   })
   @UseGuards(PermissionGuard)
   @Put('/:id')

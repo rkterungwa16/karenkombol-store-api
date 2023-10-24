@@ -27,7 +27,7 @@ import {
 
 import { CurrencyService } from './currency.service';
 import {
-  PermissionActions,
+  PermissionActionsTypes,
   PermissionResources,
 } from '@access/permission/interfaces/permission.interface';
 import { PaginationQueryDto } from '@common';
@@ -47,7 +47,7 @@ export class CurrencyController {
   })
   @Permission({
     resource: PermissionResources.CURRENCIES,
-    action: PermissionActions.READ,
+    action: PermissionActionsTypes.READ,
   })
   @UseGuards(PermissionGuard)
   @Get()
@@ -60,7 +60,7 @@ export class CurrencyController {
   @ApiOperation({ description: 'Get currency by id' })
   @Permission({
     resource: PermissionResources.CURRENCIES,
-    action: PermissionActions.READ,
+    action: PermissionActionsTypes.READ,
   })
   @UseGuards(PermissionGuard)
   @Get('/:id')
@@ -77,7 +77,7 @@ export class CurrencyController {
   @ApiConflictResponse({ description: "There's a currency with code NGN" })
   @Permission({
     resource: PermissionResources.CURRENCIES,
-    action: PermissionActions.CREATE,
+    action: PermissionActionsTypes.CREATE,
   })
   @UseGuards(PermissionGuard)
   @Post()
@@ -93,7 +93,7 @@ export class CurrencyController {
   })
   @Permission({
     resource: PermissionResources.CURRENCIES,
-    action: PermissionActions.UPDATE,
+    action: PermissionActionsTypes.UPDATE,
   })
   @UseGuards(PermissionGuard)
   @Put('/:id')

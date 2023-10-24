@@ -26,7 +26,7 @@ import {
 } from './dto';
 
 import {
-  PermissionActions,
+  PermissionActionsTypes,
   PermissionResources,
 } from '@access/permission/interfaces/permission.interface';
 import { JwtGuard } from '@auth/guards';
@@ -67,7 +67,7 @@ export class ProductController {
   @ApiConflictResponse({ description: 'Product exists' })
   @Permission({
     resource: PermissionResources.PRODUCTS,
-    action: PermissionActions.CREATE,
+    action: PermissionActionsTypes.CREATE,
   })
   @UseGuards(PermissionGuard)
   @Post()
@@ -83,7 +83,7 @@ export class ProductController {
   })
   @Permission({
     resource: PermissionResources.CURRENCIES,
-    action: PermissionActions.UPDATE,
+    action: PermissionActionsTypes.UPDATE,
   })
   @UseGuards(PermissionGuard)
   @Put('/:id')

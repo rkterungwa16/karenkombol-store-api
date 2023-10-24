@@ -1,11 +1,10 @@
 import {
   PermissionResources,
-  PermissionActions,
-  IPermission,
+  PermissionActionsTypes,
 } from '@access/permission/interfaces/permission.interface';
 
-export const createdPermission: IPermission = {
+export const createdPermission = {
   _id: 'permission_123456',
-  resource: PermissionResources.ALL,
-  actions: [...Object.values(PermissionActions)],
+  resource: PermissionResources.ORDERS,
+  action: PermissionActionsTypes.CREATE,
 };

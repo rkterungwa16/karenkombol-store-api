@@ -13,6 +13,7 @@ import { Role, RoleSchema } from '@access/role/schemas/role.schema';
 import { SizeService } from './size.service';
 import { SizeController } from './size.controller';
 import { SizeValue, SizeValueSchema } from './schema/size-value.schema';
+import { UsersService } from '@user/user.service';
 
 @Module({
   imports: [
@@ -26,7 +27,7 @@ import { SizeValue, SizeValueSchema } from './schema/size-value.schema';
     ]),
     MongooseModule.forFeature([{ name: Role.name, schema: RoleSchema }]),
   ],
-  providers: [SizeService, TokenService, JwtService],
+  providers: [SizeService, TokenService, JwtService, UsersService],
   controllers: [SizeController],
 })
 export class SizeModule {}

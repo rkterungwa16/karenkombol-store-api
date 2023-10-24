@@ -28,7 +28,7 @@ import { Company } from '@company/schema/company.schema';
 import {
   IPermission,
   PermissionResources,
-  PermissionActions,
+  PermissionActionsTypes,
 } from '@access/permission/interfaces/permission.interface';
 
 @Injectable()
@@ -103,15 +103,12 @@ export class AuthService {
     const newCompany = await this.companyModel.create({
       name: createUserRequestDto.companyName,
     });
-    const newPermission: IPermission = await this.permissionModel.create({
-      resource: PermissionResources.ALL,
-      actions: [...Object.values(PermissionActions)],
-      company: newCompany._id,
-    });
+
+    const permissions = await this.permissionModel.find();
     const newRole = await this.roleModel.create({
       name: UserRoles.SUPER_ADMIN,
       company: newCompany._id,
-      permissions: [newPermission._id],
+      permissions: [permissions.map((_permission) => _permission._id)],
     });
 
     createUserDto.password = await HashHelper.encrypt(

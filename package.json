@@ -20,7 +20,8 @@
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
     "seed:build": "tsc --project tsconfig.seed.json && tsc-alias -p tsconfig.seed.json",
-    "seed": "npm run seed:build && node seeder-dist/src/seeder/index.js && rimraf seeder-dist"
+    "seed": "npm run seed:build && node seeder-dist/seeder/index.js && rimraf seeder-dist",
+    "seed:refresh": "npm run seed:build && node seeder-dist/seeder/index.js -r && rimraf seeder-dist"
   },
   "dependencies": {
     "@nestjs/common": "^9.0.0",

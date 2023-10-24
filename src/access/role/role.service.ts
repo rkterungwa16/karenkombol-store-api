@@ -35,7 +35,7 @@ export class RoleService {
       createRoleRequestDto.company,
     );
 
-    const newRole: IRole = await this.roleModel.create({
+    const newRole: Role = await this.roleModel.create({
       name,
       company: newCompany._id,
       permissions: createRoleRequestDto.permissions,
@@ -48,7 +48,7 @@ export class RoleService {
     updateRoleRequestDto: UpdateRoleRequestDto,
   ): Promise<RoleResponseDto> {
     try {
-      const updatedRole: IRole = await this.roleModel.findByIdAndUpdate(
+      const updatedRole: Role = await this.roleModel.findByIdAndUpdate(
         id,
         updateRoleRequestDto,
       );
@@ -59,7 +59,7 @@ export class RoleService {
   }
 
   public async fetchRoleById(id: string): Promise<RoleResponseDto> {
-    const role: IRole = await this.roleModel
+    const role: Role = await this.roleModel
       .findById(id)
       .populate('permissions');
     if (!role) {
@@ -72,7 +72,7 @@ export class RoleService {
     paginationQuery: PaginationQueryDto,
   ): Promise<RoleResponseDto[]> {
     const { limit, offset } = paginationQuery;
-    const roles: IRole[] = await this.roleModel
+    const roles: Role[] = await this.roleModel
       .find()
       .skip(offset)
       .limit(limit)

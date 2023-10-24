@@ -1,13 +1,13 @@
 import {
   PermissionResources,
-  PermissionActions,
+  PermissionActionsTypes,
 } from '@access/permission/interfaces/permission.interface';
 
 import { createdPermission } from '../../fixtures';
 
 export type CreatePermissionProps = {
   resource: PermissionResources;
-  actions: PermissionActions[];
+  actions: PermissionActionsTypes[];
   company: any;
 };
 

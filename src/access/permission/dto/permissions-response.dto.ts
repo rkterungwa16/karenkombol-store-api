@@ -8,9 +8,9 @@ export class PermissionsResponseDto {
   resource: string;
 
   @ApiProperty({
-    example: ['create', 'update', 'read', 'delete'],
+    example: 'create',
   })
-  actions: string[];
+  action: string;
 
   createdAt?: Date;
   updatedAt?: Date;

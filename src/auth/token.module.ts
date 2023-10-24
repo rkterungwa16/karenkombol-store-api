@@ -4,6 +4,8 @@ import { JwtModule } from '@nestjs/jwt';
 import { TokenService } from './token.service';
 import { User, UserSchema } from '@user/schemas/user.schema';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import { UsersService } from '@user/user.service';
+import { UsersModule } from '@user/user.module';
 
 @Module({
   imports: [
@@ -20,7 +22,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
       inject: [ConfigService],
     }),
   ],
-  providers: [TokenService],
+  providers: [TokenService, UsersService],
   exports: [TokenService],
 })
 export class TokenModule {}

@@ -4,7 +4,7 @@ import { JwtGuard } from '@auth/guards';
 import { PermissionGuard } from '@auth/guards/permissions.guard';
 import {
   PermissionResources,
-  PermissionActions,
+  PermissionActionsTypes,
 } from './interfaces/permission.interface';
 import { Permission } from '@decorators';
 import { PermissionService } from './permission.service';
@@ -17,7 +17,7 @@ export class PermissionController {
   @ApiOperation({ description: 'Get list of permissions' })
   @Permission({
     resource: PermissionResources.ROLES,
-    action: PermissionActions.READ,
+    action: PermissionActionsTypes.READ,
   })
   @UseGuards(PermissionGuard)
   @Get()

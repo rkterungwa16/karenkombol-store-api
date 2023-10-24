@@ -1,6 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { ICompany } from '@company/interface/company.interface';
 import { IPermission } from '@access/permission/interfaces/permission.interface';
+import { PermissionsResponseDto } from '@access/permission/dto';
 
 export class RoleResponseDto {
   @ApiProperty({
@@ -24,11 +25,11 @@ export class RoleResponseDto {
     example: [
       {
         resource: 'order',
-        actions: ['create', 'update', 'read'],
+        actions: 'create',
       },
     ],
   })
-  permissions: string[] | IPermission[];
+  permissions: (string | PermissionsResponseDto)[];
 
   createdAt?: Date;
   updatedAt?: Date;

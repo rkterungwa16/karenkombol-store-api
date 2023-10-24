@@ -14,5 +14,5 @@ export class CreatePermissionsDto {
   @ApiProperty({
     example: ['create', 'update', 'read', 'delete'],
   })
-  readonly actions: string;
+  readonly action: string;
 }

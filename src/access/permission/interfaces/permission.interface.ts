@@ -1,6 +1,4 @@
-import { Document, Types } from 'mongoose';
-
-export enum PermissionActions {
+export enum PermissionActionsTypes {
   CREATE = 'create',
   READ = 'read',
   UPDATE = 'update',
@@ -9,7 +7,6 @@ export enum PermissionActions {
 }
 
 export enum PermissionResources {
-  ALL = 'all',
   ORDERS = 'orders',
   PRODUCTS = 'products',
   VARIANTS = 'variants',
@@ -30,7 +27,7 @@ export enum PermissionResources {
 export interface IPermission {
   readonly _id: string;
   readonly resource: string;
-  readonly actions: PermissionActions[];
+  readonly actions: PermissionActionsTypes[];
   createdAt?: Date;
   updatedAt?: Date;
 }

@@ -11,6 +11,7 @@ import {
   PermissionSchema,
 } from '@access/permission/schema/permission.schema';
 import { Role, RoleSchema } from '@access/role/schemas/role.schema';
+import { UsersService } from '@user/user.service';
 // TODO: understand the scope of injected components. How to make some component components global.
 // Do you need to label them global, or if they are exported as parents they are automatically injected in child modules.
 @Module({
@@ -24,7 +25,7 @@ import { Role, RoleSchema } from '@access/role/schemas/role.schema';
     ]),
     MongooseModule.forFeature([{ name: Role.name, schema: RoleSchema }]),
   ],
-  providers: [CurrencyService, TokenService, JwtService],
+  providers: [CurrencyService, TokenService, JwtService, UsersService],
   controllers: [CurrencyController],
 })
 export class CurrencyModule {}

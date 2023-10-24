@@ -1,3 +1,4 @@
+import { Permission } from '@access/permission/schema/permission.schema';
 import { Schema, Prop, SchemaFactory } from '@nestjs/mongoose';
 import { Document, Types } from 'mongoose';
 
@@ -10,7 +11,10 @@ export class Role extends Document {
   company: string;
 
   @Prop({ type: [Types.ObjectId], ref: 'Permission' })
-  permissions: string[];
+  permissions: (string | Permission)[];
+
+  createdAt?: Date;
+  updatedAt?: Date;
 }
 
 export const RoleSchema = SchemaFactory.createForClass(Role);

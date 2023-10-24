@@ -13,7 +13,7 @@ export class PermissionService {
     private readonly permissionModel: Model<Permission>,
   ) {}
   public async fetchPermissions(): Promise<PermissionsResponseDto[]> {
-    const permissions: IPermission[] = await this.permissionModel.find();
+    const permissions: Permission[] = await this.permissionModel.find();
     if (permissions.length) {
       return permissions.map((_permission) =>
         PermissionMapper.toDto(_permission),

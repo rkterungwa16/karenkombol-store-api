@@ -1,6 +1,6 @@
 import {
   PermissionResources,
-  PermissionActions,
+  PermissionActionsTypes,
 } from '@access/permission/interfaces/permission.interface';
 import { PermissionGuard } from '@auth/guards/permissions.guard';
 import { Permission } from '@decorators';
@@ -41,7 +41,7 @@ export class SizeController {
   @ApiConflictResponse({ description: "There's a size of type" })
   @Permission({
     resource: PermissionResources.CURRENCIES,
-    action: PermissionActions.CREATE,
+    action: PermissionActionsTypes.CREATE,
   })
   @UseGuards(PermissionGuard)
   @Post()
@@ -60,7 +60,7 @@ export class SizeController {
   })
   @Permission({
     resource: PermissionResources.CURRENCIES,
-    action: PermissionActions.READ,
+    action: PermissionActionsTypes.READ,
   })
   @UseGuards(PermissionGuard)
   @Get()
@@ -78,7 +78,7 @@ export class SizeController {
   })
   @Permission({
     resource: PermissionResources.CURRENCIES,
-    action: PermissionActions.UPDATE,
+    action: PermissionActionsTypes.UPDATE,
   })
   @UseGuards(PermissionGuard)
   @Put('/:id')
@@ -95,7 +95,7 @@ export class SizeController {
   })
   @Permission({
     resource: PermissionResources.CURRENCIES,
-    action: PermissionActions.UPDATE,
+    action: PermissionActionsTypes.UPDATE,
   })
   @UseGuards(PermissionGuard)
   @Patch('/:id/add')

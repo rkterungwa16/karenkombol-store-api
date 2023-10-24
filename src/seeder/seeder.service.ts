@@ -26,6 +26,7 @@ export class SeederService {
 
   shouldRefresh(): boolean {
     const argv = process.argv;
+    console.log('argv', argv);
     return argv.includes('-r') || argv.includes('--refresh');
   }
 }
