@@ -25,11 +25,6 @@ import { UserMapper } from '@user/user.mapper';
 import { Permission } from '@access/permission/schema/permission.schema';
 import { Role } from '@access/role/schemas/role.schema';
 import { Company } from '@company/schema/company.schema';
-import {
-  IPermission,
-  PermissionResources,
-  PermissionActionsTypes,
-} from '@access/permission/interfaces/permission.interface';
 
 @Injectable()
 export class AuthService {
@@ -105,10 +100,11 @@ export class AuthService {
     });
 
     const permissions = await this.permissionModel.find();
+    const permissionIds = permissions.map((_permission) => _permission._id);
     const newRole = await this.roleModel.create({
       name: UserRoles.SUPER_ADMIN,
       company: newCompany._id,
-      permissions: [permissions.map((_permission) => _permission._id)],
+      permissions: [...permissionIds],
     });
 
     createUserDto.password = await HashHelper.encrypt(
@@ -116,12 +112,21 @@ export class AuthService {
     );
     createUserDto.company = newCompany._id;
     createUserDto.email = createUserRequestDto.email;
-    createUserDto.roles = [newRole._id];
+    createUserDto.role = newRole._id;
     createUserDto.status = UserStatus.ACTIVE;
     const newUser = await this.userModel.create(createUserDto);
 
     return UserMapper.toDto(
-      await (await newUser.populate('company')).populate('roles'),
+      await (
+        await newUser.populate('company')
+      ).populate({
+        path: 'role',
+        model: 'Role',
+        populate: {
+          path: 'permissions',
+          model: 'Permission',
+        },
+      }),
     );
   }
 }

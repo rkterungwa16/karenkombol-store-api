@@ -2,7 +2,6 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { PermissionsResponseDto } from './dto';
-import { IPermission } from './interfaces/permission.interface';
 import { PermissionMapper } from './permission.mapper';
 import { Permission } from './schema/permission.schema';
 

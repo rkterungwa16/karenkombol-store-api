@@ -17,7 +17,7 @@ export class UsersService {
       model: 'Role',
       populate: {
         path: 'permissions',
-        model: 'Permissions',
+        model: 'Permission',
       },
     });
     if (!user) {
