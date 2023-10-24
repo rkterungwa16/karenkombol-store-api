@@ -12,15 +12,12 @@ import {
 } from '@http/exceptions';
 import { ValidateTokenResponseDto, JwtPayload, TokenDto } from './dtos';
 import { TokenError, TokenType } from '@enums';
-import { UsersService } from '@user/user.service';
-import { UserResponseDto } from '@user/dto';
 @Injectable()
 export class TokenService {
   constructor(
     @InjectModel(User.name) private readonly userModel: Model<User>,
     private jwtService: JwtService,
     private configService: ConfigService,
-    private userService: UsersService,
   ) {}
 
   public generateAuthToken(payload: JwtPayload): TokenDto {
@@ -104,9 +101,5 @@ export class TokenService {
       algorithm: 'HS256',
     });
     return token;
-  }
-
-  public async fetchUserById(id: string): Promise<UserResponseDto> {
-    return await this.userService.fetchUserById(id);
   }
 }

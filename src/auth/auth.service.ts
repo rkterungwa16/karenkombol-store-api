@@ -12,12 +12,7 @@ import {
   KKUnauthorizedException,
   UnauthorizedErrorType,
 } from '@http/exceptions';
-import {
-  AuthCredentialsRequestDto,
-  JwtPayload,
-  LoginResponseDto,
-  TokenDto,
-} from './dtos';
+import { AuthCredentialsRequestDto, JwtPayload, TokenDto } from './dtos';
 import { User } from '@user/schemas/user.schema';
 import { TokenService } from './token.service';
 import { UserRoles, UserStatus } from '@enums';
