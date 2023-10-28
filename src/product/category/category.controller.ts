@@ -45,6 +45,11 @@ export class CategoryController {
     required: false,
     example: 'admin',
   })
+  @Permission({
+    resource: PermissionResources.CATEGORY,
+    action: PermissionActionsTypes.CREATE,
+  })
+  @UseGuards(PermissionGuard)
   @Get()
   public fetch(
     @Query() paginationQuery: CategoryQueryWithFilterDto,
@@ -53,6 +58,11 @@ export class CategoryController {
   }
 
   @ApiOperation({ description: 'Get Category by id' })
+  @Permission({
+    resource: PermissionResources.CATEGORY,
+    action: PermissionActionsTypes.CREATE,
+  })
+  @UseGuards(PermissionGuard)
   @Get('/:id')
   public getCategoryById(
     @Param('id') id: string,
