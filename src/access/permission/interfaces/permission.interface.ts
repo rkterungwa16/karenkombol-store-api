@@ -22,6 +22,7 @@ export enum PermissionResources {
   COLORS = 'colors',
   SIZE = 'size',
   CATEGORY = 'category',
+  SHIRT = 'shirt',
 }
 
 export interface IPermission {
