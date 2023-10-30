@@ -20,7 +20,7 @@ import { Permission } from '@decorators';
 
 import {
   CategoryResponseDto,
-  CreateCategoryRequestDto,
+  CreateCategoryDto,
   UpdateCategoryDto,
 } from './dto';
 
@@ -81,7 +81,7 @@ export class CategoryController {
   @UseGuards(PermissionGuard)
   @Post()
   public createCategory(
-    @Body() CategoryDto: CreateCategoryRequestDto,
+    @Body() CategoryDto: CreateCategoryDto,
   ): Promise<CategoryResponseDto> {
     return this.categoryService.create(CategoryDto);
   }

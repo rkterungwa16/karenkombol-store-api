@@ -2,6 +2,7 @@ import { Schema, Prop, SchemaFactory } from '@nestjs/mongoose';
 import { Document, Types } from 'mongoose';
 import { Clothing } from './clothing.schema';
 import { Shirt } from './shirt.schema';
+import { ClothingTypes } from '../interface/category.interface';
 
 /**
  * A category has one unique type associated with it.
@@ -33,18 +34,18 @@ import { Shirt } from './shirt.schema';
 @Schema({ timestamps: true })
 export class Category extends Document {
   @Prop({
-    type: Types.ObjectId,
-    ref: 'Clothing',
+    type: String,
+    enum: [...Object.values(ClothingTypes)],
     required: true,
     unique: true,
   })
-  clothing: string | Clothing;
+  name: ClothingTypes;
 
   @Prop({
     type: Types.ObjectId,
     ref: 'Shirt',
   })
-  shirt?: string | Shirt;
+  shirts?: (string | Shirt)[];
 
   createdAt?: Date;
   updatedAt?: Date;

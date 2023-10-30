@@ -1,11 +1,10 @@
-import { IsOptional, IsString, ValidateNested } from 'class-validator';
+import { IsOptional, IsString } from 'class-validator';
 
 import { ApiProperty } from '@nestjs/swagger';
 import { Transform, Type } from 'class-transformer';
-import { CreateShirtDto } from './create-shirt.dto';
 import { ClothingTypes } from '../interface/category.interface';
 
-export class CreateCategoryRequestDto {
+export class CreateCategoryDto {
   @IsString()
   @ApiProperty({
     example: 'women',
@@ -14,7 +13,9 @@ export class CreateCategoryRequestDto {
   name: ClothingTypes;
 
   @IsOptional()
-  @ValidateNested()
-  @Type(() => CreateShirtDto)
-  shirt?: CreateShirtDto;
+  @IsString()
+  @ApiProperty({
+    example: 'women',
+  })
+  shirt?: string;
 }

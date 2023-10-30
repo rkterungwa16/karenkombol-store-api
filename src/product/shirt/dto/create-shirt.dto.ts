@@ -6,6 +6,9 @@ import { ShirtFits, ShirtStyles } from '@product/interface/shirt.interface';
 
 export class CreateShirtDto {
   @IsString()
+  category: string;
+
+  @IsString()
   @Transform(({ value }) => value.toLowerCase())
   style: ShirtStyles;
 

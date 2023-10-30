@@ -1,6 +1,5 @@
 import { CategoryResponseDto } from '../dto';
 import { Category } from '../schema/category.schema';
-import { ClothingMapper } from './clothing.mapper';
 import { ShirtMapper } from './shirt.mapper';
 
 export class CategoryMapper {
@@ -8,16 +7,12 @@ export class CategoryMapper {
     const dto = new CategoryResponseDto();
 
     dto.id = model._id;
-    dto.shirt =
-      model?.shirt &&
-      (typeof model?.shirt === 'string'
-        ? model?.shirt
-        : ShirtMapper.toDto(model?.shirt));
-    dto.clothing =
-      model?.clothing &&
-      (typeof model?.clothing === 'string'
-        ? model?.clothing
-        : ClothingMapper.toDto(model?.clothing));
+    dto.name = model.name;
+    dto.shirts = model?.shirts.map((_shirt) => {
+      if (_shirt) {
+        return typeof _shirt === 'string' ? _shirt : ShirtMapper.toDto(_shirt);
+      }
+    });
     dto.createdAt = model.createdAt;
     dto.updatedAt = model.updatedAt;
     return dto;

@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { ClothingResponseDto } from './clothing-response.dto';
 import { ShirtResponseDto } from './shirt-response.dto';
+import { ClothingTypes } from '../interface/category.interface';
 
 export class CategoryResponseDto {
   @ApiProperty({
@@ -10,12 +10,12 @@ export class CategoryResponseDto {
   @ApiProperty({
     example: 'clothingId',
   })
-  clothing: string | ClothingResponseDto;
+  name: ClothingTypes;
 
   @ApiProperty({
     example: 'shirtId',
   })
-  shirt?: string | ShirtResponseDto;
+  shirts?: (string | ShirtResponseDto)[];
 
   createdAt?: Date;
   updatedAt?: Date;
