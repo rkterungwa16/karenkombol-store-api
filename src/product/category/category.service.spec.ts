@@ -14,6 +14,7 @@ import { setModelData } from '../../test/model';
 import { CategoryService } from './category.service';
 import { Category, CategorySchema } from './schema/category.schema';
 import { KKConflictException } from '@http/exceptions';
+import { ClothingTypes } from './interface/category.interface';
 
 describe('CategoryService', () => {
   let service: CategoryService;
@@ -59,7 +60,7 @@ describe('CategoryService', () => {
   describe('create', () => {
     it('should create a new category', async () => {
       const result = await service.create({
-        name: 'female',
+        name: ClothingTypes.SHIRT,
       });
       expect(result.name).toEqual('female');
     });
@@ -67,7 +68,7 @@ describe('CategoryService', () => {
     it('should throw error if category already exists', async () => {
       await expect(
         service.create({
-          name: 'female',
+          name: ClothingTypes.SHIRT,
         }),
       ).rejects.toThrow(new KKConflictException('category'));
     });

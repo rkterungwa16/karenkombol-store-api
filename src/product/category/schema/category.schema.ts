@@ -1,8 +1,7 @@
 import { Schema, Prop, SchemaFactory } from '@nestjs/mongoose';
 import { Document, Types } from 'mongoose';
-import { Clothing } from './clothing.schema';
-import { Shirt } from './shirt.schema';
 import { ClothingTypes } from '../interface/category.interface';
+import { Shirt } from '@product/shirt/schema/shirt.schema';
 
 /**
  * A category has one unique type associated with it.
@@ -40,6 +39,9 @@ export class Category extends Document {
     unique: true,
   })
   name: ClothingTypes;
+
+  @Prop({ type: String })
+  description?: string;
 
   @Prop({
     type: Types.ObjectId,

@@ -12,6 +12,12 @@ export class CreateCategoryDto {
   @Transform(({ value }) => value.toLowerCase())
   name: ClothingTypes;
 
+  @IsString()
+  @ApiProperty({
+    example: 'category description',
+  })
+  description?: string;
+
   @IsOptional()
   @IsString()
   @ApiProperty({

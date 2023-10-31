@@ -32,7 +32,7 @@ import { UpdateShirtDto } from './dto/update-shirt.dto';
 import { ShirtResponseDto } from './dto/shirt-response.dto';
 import { ShirtQueryWithFilterDto } from './dto/shirt-query.dto';
 
-@Controller('shirt')
+@Controller('shirts')
 @UseGuards(JwtGuard)
 export class CategoryController {
   constructor(private shirtService: ShirtService) {}

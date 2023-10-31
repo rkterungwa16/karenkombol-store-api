@@ -35,7 +35,7 @@ import { ProductService } from './product.service';
 import { PaginationResponseDto } from '@pagination';
 import { ProductQueryWithFilterDto } from './dto/product-query.dto';
 
-@Controller('product')
+@Controller('products')
 @UseGuards(JwtGuard)
 export class ProductController {
   constructor(private productService: ProductService) {}

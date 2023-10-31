@@ -9,6 +9,10 @@ export class CategoryQueryDto extends PaginationQuery {
   name?: string;
 
   @IsOptional()
+  @IsString()
+  description?: string;
+
+  @IsOptional()
   @ValidateNested()
   @Type(() => DateFilterDto)
   createdAt?: DateFilterDto;

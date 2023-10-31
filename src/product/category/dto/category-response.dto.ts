@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { ShirtResponseDto } from './shirt-response.dto';
 import { ClothingTypes } from '../interface/category.interface';
+import { ShirtResponseDto } from '@product/shirt/dto';
 
 export class CategoryResponseDto {
   @ApiProperty({
@@ -11,6 +11,11 @@ export class CategoryResponseDto {
     example: 'clothingId',
   })
   name: ClothingTypes;
+
+  @ApiProperty({
+    example: 'shirt description',
+  })
+  description?: string;
 
   @ApiProperty({
     example: 'shirtId',

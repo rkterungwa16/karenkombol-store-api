@@ -126,8 +126,7 @@ export class CategoryService {
             path: 'image',
             model: 'Image',
           },
-        })
-        .populate('clothing');
+        });
       return CategoryMapper.toDto(updatedCategory);
     } catch (e) {
       throw new KKNotFoundException('category');

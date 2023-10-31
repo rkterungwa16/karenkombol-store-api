@@ -34,7 +34,7 @@ import { PermissionGuard } from '@auth/guards/permissions.guard';
 import { PaginationResponseDto } from '@pagination';
 import { CategoryQueryWithFilterDto } from './dto/category-query.dto';
 
-@Controller('category')
+@Controller('categories')
 @UseGuards(JwtGuard)
 export class CategoryController {
   constructor(private categoryService: CategoryService) {}

@@ -1,6 +1,6 @@
+import { ShirtMapper } from '@product/shirt/shirt.mapper';
 import { CategoryResponseDto } from '../dto';
 import { Category } from '../schema/category.schema';
-import { ShirtMapper } from './shirt.mapper';
 
 export class CategoryMapper {
   public static toDto(model: Category): CategoryResponseDto {
@@ -8,6 +8,7 @@ export class CategoryMapper {
 
     dto.id = model._id;
     dto.name = model.name;
+    dto.description = model.description;
     dto.shirts = model?.shirts.map((_shirt) => {
       if (_shirt) {
         return typeof _shirt === 'string' ? _shirt : ShirtMapper.toDto(_shirt);
