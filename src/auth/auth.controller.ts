@@ -64,7 +64,7 @@ export class AuthController {
       .status(HttpStatus.OK);
 
     return {
-      status: 201,
+      status: 200,
       data: {
         accessToken: token.accessToken,
       },
@@ -77,11 +77,17 @@ export class AuthController {
   @ApiUnauthorizedResponse({ description: 'Refresh token invalid or expired' })
   @ApiInternalServerErrorResponse({ description: 'Server error' })
   @Post('/token/refresh')
-  async getNewToken(@Req() request: Request): Promise<LoginResponseDto> {
+  async getNewToken(
+    @Req() request: Request,
+  ): Promise<ResponseDto<LoginResponseDto>> {
     const refreshToken = request.cookies(CookieNames.REFRESH_TOKEN);
     const token = await this.tokenService.generateRefreshToken(refreshToken);
     return {
-      accessToken: token.accessToken,
+      status: 200,
+      data: {
+        accessToken: token.accessToken,
+      },
+      message: 'success',
     };
   }
 
@@ -91,8 +97,15 @@ export class AuthController {
   @Post('/token/validate')
   async validateToken(
     @Body() validateToken: ValidateTokenRequestDto,
-  ): Promise<ValidateTokenResponseDto> {
+  ): Promise<ResponseDto<ValidateTokenResponseDto>> {
     const { token } = validateToken;
-    return this.tokenService.validateToken(token);
+    const { valid } = await this.tokenService.validateToken(token);
+    return {
+      status: 200,
+      data: {
+        valid,
+      },
+      message: 'success',
+    };
   }
 }

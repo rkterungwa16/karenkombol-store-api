@@ -1,4 +1,5 @@
 import { Module } from '@nestjs/common';
+import { APP_FILTER } from '@nestjs/core';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { DatabaseModule } from './database/database.module';
 import { UsersModule } from './user/user.module';
@@ -11,6 +12,7 @@ import { ProductModule } from './product/product.module';
 import { LibModule } from './lib/lib.module';
 import { SizeModule } from './size/size.module';
 import { DBConnectionModule } from '@database/db-connection.module';
+import { HttpExceptionFilter } from '@http/http-exception.filter';
 
 @Module({
   imports: [
@@ -28,6 +30,12 @@ import { DBConnectionModule } from '@database/db-connection.module';
     ProductModule,
     LibModule,
     SizeModule,
+  ],
+  providers: [
+    {
+      provide: APP_FILTER,
+      useClass: HttpExceptionFilter,
+    },
   ],
 })
 export class AppModule {
