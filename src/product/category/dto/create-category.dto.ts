@@ -1,7 +1,7 @@
 import { IsOptional, IsString } from 'class-validator';
 
 import { ApiProperty } from '@nestjs/swagger';
-import { Transform, Type } from 'class-transformer';
+import { Transform } from 'class-transformer';
 import { ClothingTypes } from '../interface/category.interface';
 
 export class CreateCategoryDto {
