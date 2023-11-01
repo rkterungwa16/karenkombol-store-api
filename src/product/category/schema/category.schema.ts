@@ -34,11 +34,11 @@ import { Shirt } from '@product/shirt/schema/shirt.schema';
 export class Category extends Document {
   @Prop({
     type: String,
-    enum: [...Object.values(ClothingTypes)],
+    lowercase: true,
     required: true,
     unique: true,
   })
-  name: ClothingTypes;
+  name: string | ClothingTypes;
 
   @Prop({ type: String })
   description?: string;

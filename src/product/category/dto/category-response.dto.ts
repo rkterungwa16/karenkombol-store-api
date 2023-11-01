@@ -10,7 +10,7 @@ export class CategoryResponseDto {
   @ApiProperty({
     example: 'clothingId',
   })
-  name: ClothingTypes;
+  name: string | ClothingTypes;
 
   @ApiProperty({
     example: 'shirt description',
