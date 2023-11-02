@@ -109,7 +109,7 @@ export const shirtFabrics = [
     `,
   },
   {
-    name: 'Lace',
+    name: 'lace',
     description: '',
   },
 ];
