@@ -61,3 +61,9 @@ export enum SleeveLengths {
   '3/4_SLEEVE' = '3/4 sleeve',
   LONG_SLEEVE = 'long sleeve',
 }
+
+export enum ShirtLength {
+  SHORT = 'short',
+  LONG = 'long',
+  STANDARD = 'standard',
+}

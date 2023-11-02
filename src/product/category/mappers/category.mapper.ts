@@ -1,4 +1,4 @@
-import { ShirtMapper } from '@product/shirt/shirt.mapper';
+import { ShirtMapper } from '@product/shirt/mapper';
 import { CategoryResponseDto } from '../dto';
 import { Category } from '../schema/category.schema';
 

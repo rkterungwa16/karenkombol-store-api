@@ -1,15 +1,16 @@
 import { Module } from '@nestjs/common';
 import { JwtModule } from '@nestjs/jwt';
 import { MongooseModule } from '@nestjs/mongoose';
-import { CategoryController } from './category.controller';
-import { CategoryService } from './category.service';
-import { Category, CategorySchema } from './schema';
 import { UsersModule } from '@user/user.module';
 import { AccessModule } from '@access/access.module';
 import { TokenModule } from '@auth/token.module';
 import { Image, ImageSchema } from '@lib/image/schema/image.schema';
 import { DBConnectionModule } from '@database/db-connection.module';
 import { Shirt, ShirtSchema } from '@product/shirt/schema/shirt.schema';
+import { ShirtStyle, ShirtStyleSchema } from './schema/shirt-style.schema';
+import { ShirtController } from './shirt.controller';
+import { ShirtService } from './shirt.service';
+import { Category, CategorySchema } from '@product/category/schema';
 
 @Module({
   imports: [
@@ -17,6 +18,9 @@ import { Shirt, ShirtSchema } from '@product/shirt/schema/shirt.schema';
       { name: Category.name, schema: CategorySchema },
     ]),
     MongooseModule.forFeature([{ name: Shirt.name, schema: ShirtSchema }]),
+    MongooseModule.forFeature([
+      { name: ShirtStyle.name, schema: ShirtStyleSchema },
+    ]),
     MongooseModule.forFeature([{ name: Image.name, schema: ImageSchema }]),
     DBConnectionModule.register(),
     UsersModule,
@@ -24,13 +28,14 @@ import { Shirt, ShirtSchema } from '@product/shirt/schema/shirt.schema';
     TokenModule,
     JwtModule,
   ],
-  providers: [CategoryService],
+  providers: [ShirtService],
   exports: [
+    MongooseModule.forFeature([{ name: Shirt.name, schema: ShirtSchema }]),
     MongooseModule.forFeature([
-      { name: Category.name, schema: CategorySchema },
+      { name: ShirtStyle.name, schema: ShirtStyleSchema },
     ]),
-    CategoryService,
+    ShirtService,
   ],
-  controllers: [CategoryController],
+  controllers: [ShirtController],
 })
-export class CategoryModule {}
+export class ShirtModule {}

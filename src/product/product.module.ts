@@ -14,6 +14,7 @@ import {
 import { ProductSize, ProductSizeSchema } from './schema/product-size.schema';
 import { TokenModule } from '@auth/token.module';
 import { AccessModule } from '@access/access.module';
+import { ShirtModule } from './shirt/shirt.module';
 
 @Module({
   providers: [ProductService],
@@ -27,6 +28,7 @@ import { AccessModule } from '@access/access.module';
       { name: ProductColor.name, schema: ProductColorSchema },
     ]),
     CategoryModule,
+    ShirtModule,
     ImageModule,
     UsersModule,
     TokenModule,
@@ -42,6 +44,8 @@ import { AccessModule } from '@access/access.module';
     MongooseModule.forFeature([
       { name: ProductColor.name, schema: ProductColorSchema },
     ]),
+    CategoryModule,
+    ShirtModule,
   ],
 })
 export class ProductModule {}

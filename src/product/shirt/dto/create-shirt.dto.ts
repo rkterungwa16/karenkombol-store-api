@@ -2,15 +2,11 @@ import { IsOptional, IsString } from 'class-validator';
 
 import { ApiProperty } from '@nestjs/swagger';
 import { Transform } from 'class-transformer';
-import { ShirtFits, ShirtStyles } from '@product/interface/shirt.interface';
+import { ShirtFits } from '@product/interface/shirt.interface';
 
 export class CreateShirtDto {
   @IsString()
-  category: string;
-
-  @IsString()
-  @Transform(({ value }) => value.toLowerCase())
-  style: ShirtStyles;
+  style: string;
 
   @IsOptional()
   @IsString()

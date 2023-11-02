@@ -7,11 +7,12 @@ import { Pagination, PaginationResponseDto } from '@pagination';
 import { Shirt } from './schema/shirt.schema';
 import { Image } from '@lib/image/schema/image.schema';
 import { CreateShirtDto } from './dto/create-shirt.dto';
-import { ShirtMapper } from './shirt.mapper';
+import { ShirtMapper } from './mapper';
 import { UpdateShirtDto } from './dto/update-shirt.dto';
 import { ShirtResponseDto } from './dto/shirt-response.dto';
 import { Category } from '@product/category/schema';
 import { ClothingTypes } from '@product/interface/category.interface';
+import { ShirtStyle } from './schema/shirt-style.schema';
 
 @Injectable()
 export class ShirtService {
@@ -19,6 +20,8 @@ export class ShirtService {
     @InjectModel(Shirt.name) private readonly shirtModel: Model<Shirt>,
     @InjectModel(Image.name) private readonly imageModel: Model<Image>,
     @InjectModel(Category.name) private readonly categoryModel: Model<Category>,
+    @InjectModel(ShirtStyle.name)
+    private readonly shirtStyleModel: Model<ShirtStyle>,
   ) {}
   public async create(
     createShirtDto: CreateShirtDto,
@@ -29,25 +32,42 @@ export class ShirtService {
     let shirt: Shirt & {
       _id: Types.ObjectId;
     };
+    let style: ShirtStyle & {
+      _id: Types.ObjectId;
+    };
+
+    let image: Image & {
+      _id: Types.ObjectId;
+    };
+
     category = await this.categoryModel.findOne({
       name: ClothingTypes.SHIRT,
     });
+
     if (!category) {
       category = await this.categoryModel.create({
         name: ClothingTypes.SHIRT,
       });
     }
-    let image;
-    if (createShirtDto.image) {
+
+    if (createShirtDto?.image) {
       image = await this.imageModel.findById(createShirtDto.image);
       if (!image) {
         throw new KKNotFoundException('image');
       }
     }
 
+    if (createShirtDto.style) {
+      style = await this.shirtStyleModel.findById(createShirtDto.style);
+      if (!style) {
+        throw new KKNotFoundException('shirt style');
+      }
+    }
+
     // TODO: collar, sleeve
+    // Check if shirt exists with these properties.
     shirt = await this.shirtModel.findOne({
-      style: createShirtDto.style,
+      style: style._id,
       fit: createShirtDto.fit,
       'category.name': ClothingTypes.SHIRT,
     });
@@ -89,7 +109,9 @@ export class ShirtService {
       }
       const shirt = await this.shirtModel
         .findByIdAndUpdate(id, updateShirtDto, { new: true })
-        .populate('image');
+        .populate('image')
+        .populate('category')
+        .populate('style');
       return ShirtMapper.toDto(shirt);
     } catch (e) {
       throw new KKNotFoundException('shirt');
@@ -115,6 +137,8 @@ export class ShirtService {
         ...(filter['$and'].length && { $and: filter['$and'] }),
       })
       .populate('image')
+      .populate('category')
+      .populate('style')
       .skip(skip)
       .limit(limit);
     if (shirts.length) {

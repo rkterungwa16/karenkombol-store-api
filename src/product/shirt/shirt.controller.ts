@@ -34,7 +34,7 @@ import { ShirtQueryWithFilterDto } from './dto/shirt-query.dto';
 
 @Controller('shirts')
 @UseGuards(JwtGuard)
-export class CategoryController {
+export class ShirtController {
   constructor(private shirtService: ShirtService) {}
   @ApiOperation({ description: 'Get a paginated Shirt list' })
   @ApiQuery({
