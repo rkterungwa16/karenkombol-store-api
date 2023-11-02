@@ -74,4 +74,84 @@ export const shirtStyle = [
       Color ranges from sand to dark khaki.
     `,
   },
+  {
+    name: 'bodysuit',
+    description: `
+      A shirt that can be secured at the crotch with buttons or hooks.
+    `,
+  },
+  {
+    name: 'tunic',
+    description: `
+      An elongated shirt up to mid-thigh. Usually worn with jeans or leggings, as it is not long enough to be used as a dress.
+    `,
+  },
+  {
+    name: 'dress-shirt',
+    description: `
+      A dress shirt or dress shirt is a long shirt that is worn without a "bottom," but as an independent product.
+    `,
+  },
+  {
+    name: 'blouse',
+    description: `
+      A hybrid cut of a classic shirt and a blouse made of a light fabric of any color and with any print.
+    `,
+  },
+  {
+    name: 'jacket & shirt',
+    description: `
+      Another name is shacket. Dense, warm shirt with chest pockets,
+      combining the look of a classic shirt and the density and angularity of a jacket.
+    `,
+    tags: ['shacket'],
+  },
+  {
+    name: 'shirt-coat',
+    description: `
+      Dense coat of drape or fleece shirt cut - with stand-up collar and chest pockets.
+    `,
+  },
+  {
+    name: 'polo',
+    description: `
+      Other names are tenska, polo shirt. Knit shirt with a short 2-4 button fastener and stand-up collar.
+      The classic design has short sleeves.
+    `,
+    tags: ['tenska', 'polo shirt'],
+    common_sleeves: ['short'],
+    common_fabric: ['cotton'],
+  },
+  {
+    name: 'chemizier',
+    description: `
+      Free cut shirt dress up to mid-thigh and below.
+    `,
+  },
+  {
+    name: 'Sweatshirt',
+    description: `
+      Sweatshirt made of thick, warm fabric with a hood, but externally decorated as a shirt - has a patch pocket, cuffs.
+    `,
+  },
+  {
+    name: 'jacket',
+    description: `
+      Warm shirt made of jacket fabric - nylon or cloak, with a layer of insulation. Most often quilted - with external quilting around the perimeter.
+    `,
+  },
+  {
+    name: 'wrapover',
+    description: `
+      A shirt in which the left and right sides overlap each other.
+      This shirt is usually fastened with a belt.
+    `,
+  },
+  {
+    name: 'night-shirt',
+    description: `
+      A nightgown or shirt is a type of underwear designed for sleeping.
+      The classic version is knee-length and below.
+    `,
+  },
 ];
