@@ -40,6 +40,8 @@ export class ShirtService {
       _id: Types.ObjectId;
     };
 
+    const { image_id, style_id, fit } = createShirtDto;
+
     category = await this.categoryModel.findOne({
       name: ClothingTypes.SHIRT,
     });
@@ -50,15 +52,15 @@ export class ShirtService {
       });
     }
 
-    if (createShirtDto?.image) {
-      image = await this.imageModel.findById(createShirtDto.image);
+    if (image_id) {
+      image = await this.imageModel.findById(image_id);
       if (!image) {
         throw new KKNotFoundException('image');
       }
     }
 
-    if (createShirtDto.style) {
-      style = await this.shirtStyleModel.findById(createShirtDto.style);
+    if (style_id) {
+      style = await this.shirtStyleModel.findById(style_id);
       if (!style) {
         throw new KKNotFoundException('shirt style');
       }
@@ -67,8 +69,8 @@ export class ShirtService {
     // TODO: collar, sleeve
     // Check if shirt exists with these properties.
     shirt = await this.shirtModel.findOne({
-      style: style._id,
-      fit: createShirtDto.fit,
+      style: style_id,
+      fit,
       'category.name': ClothingTypes.SHIRT,
     });
 
@@ -76,22 +78,23 @@ export class ShirtService {
       shirt = await this.shirtModel.create({
         category: category._id,
         ...createShirtDto,
-        image: image._id,
+        image: image_id,
+        style: style_id,
+        fit,
       });
+      shirt = await shirt.populate('image');
+      shirt = await shirt.populate('category');
+      shirt = await shirt.populate('style');
     } else {
       throw new KKConflictException('shirt');
     }
 
-    category = await this.categoryModel.findByIdAndUpdate(
-      category._id,
-      {
-        $push: {
-          shirts: shirt._id,
-        },
+    category = await this.categoryModel.findByIdAndUpdate(category._id, {
+      $push: {
+        shirts: shirt._id,
       },
-      { new: true },
-    );
-    shirt = await shirt.populate('image');
+    });
+
     return ShirtMapper.toDto(shirt);
   }
 

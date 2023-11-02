@@ -6,14 +6,14 @@ import { ShirtFits } from '@product/interface/shirt.interface';
 
 export class CreateShirtDto {
   @IsString()
-  style: string;
+  style_id: string;
 
   @IsOptional()
   @IsString()
   @ApiProperty({
     example: 'imgId',
   })
-  image?: string;
+  image_id?: string;
 
   @IsString()
   @Transform(({ value }) => value.toLowerCase())
