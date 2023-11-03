@@ -9,6 +9,7 @@ import {
 import { Permission } from '@decorators';
 import { PermissionService } from './permission.service';
 import { PermissionsResponseDto } from './dto';
+import { ResponseDto } from '@pagination';
 
 @Controller('permission')
 @UseGuards(JwtGuard)
@@ -16,12 +17,17 @@ export class PermissionController {
   constructor(private permissionService: PermissionService) {}
   @ApiOperation({ description: 'Get list of permissions' })
   @Permission({
-    resource: PermissionResources.ROLES,
+    resource: PermissionResources.PERMISSIONS,
     action: PermissionActionsTypes.READ,
   })
   @UseGuards(PermissionGuard)
   @Get()
-  public fetchRoles(): Promise<PermissionsResponseDto[]> {
-    return this.permissionService.fetchPermissions();
+  public async fetchRoles(): Promise<ResponseDto<PermissionsResponseDto[]>> {
+    const data = await this.permissionService.fetchPermissions();
+    return {
+      status: 200,
+      data,
+      message: 'success',
+    };
   }
 }
