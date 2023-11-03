@@ -82,12 +82,12 @@ export class ShirtController {
     return this.shirtService.create(shirtDto);
   }
 
-  @ApiOperation({ description: 'Update Category by id' })
+  @ApiOperation({ description: 'Update shirt by id' })
   @ApiBadRequestResponse({
     description: "There's no Shirt with specified id",
   })
   @Permission({
-    resource: PermissionResources.CURRENCIES,
+    resource: PermissionResources.SHIRT,
     action: PermissionActionsTypes.UPDATE,
   })
   @UseGuards(PermissionGuard)
