@@ -16,14 +16,14 @@ import {
   ApiBadRequestResponse,
 } from '@nestjs/swagger';
 
-// import { Permission } from '@decorators';
+import { Permission } from '@decorators';
 
-// import {
-//   PermissionActionsTypes,
-//   PermissionResources,
-// } from '@access/permission/interfaces/permission.interface';
+import {
+  PermissionActionsTypes,
+  PermissionResources,
+} from '@access/permission/interfaces/permission.interface';
 import { JwtGuard } from '@auth/guards';
-// import { PermissionGuard } from '@auth/guards/permissions.guard';
+import { PermissionGuard } from '@auth/guards/permissions.guard';
 import { PaginationResponseDto, ResponseDto } from '@pagination';
 import { ShirtQueryWithFilterDto } from './dto/shirt-query.dto';
 import { ShirtStyleService } from './shirt-style.service';
@@ -42,11 +42,11 @@ export class ShirtStyleController {
     required: false,
     example: 'admin',
   })
-  // @Permission({
-  //   resource: PermissionResources.SHIRT,
-  //   action: PermissionActionsTypes.CREATE,
-  // })
-  // @UseGuards(PermissionGuard)
+  @Permission({
+    resource: PermissionResources.SHIRT,
+    action: PermissionActionsTypes.READ,
+  })
+  @UseGuards(PermissionGuard)
   @Get()
   public fetch(
     @Query() paginationQuery: ShirtQueryWithFilterDto,
@@ -55,11 +55,11 @@ export class ShirtStyleController {
   }
 
   @ApiOperation({ description: 'Get ShirtStyle by id' })
-  // @Permission({
-  //   resource: PermissionResources.SHIRT,
-  //   action: PermissionActionsTypes.CREATE,
-  // })
-  // @UseGuards(PermissionGuard)
+  @Permission({
+    resource: PermissionResources.SHIRT,
+    action: PermissionActionsTypes.READ,
+  })
+  @UseGuards(PermissionGuard)
   @Get('/:id')
   public getShirtStyleById(
     @Param('id') id: string,
@@ -71,11 +71,11 @@ export class ShirtStyleController {
     description: 'Create new Shirt',
   })
   @ApiConflictResponse({ description: 'Shirt exists' })
-  // @Permission({
-  //   resource: PermissionResources.SHIRT,
-  //   action: PermissionActionsTypes.CREATE,
-  // })
-  // @UseGuards(PermissionGuard)
+  @Permission({
+    resource: PermissionResources.SHIRT,
+    action: PermissionActionsTypes.CREATE,
+  })
+  @UseGuards(PermissionGuard)
   @Post()
   public async create(
     @Body() shirtStyleDto: CreateShirtStyleDto,
@@ -92,11 +92,11 @@ export class ShirtStyleController {
   @ApiBadRequestResponse({
     description: "There's no Shirt style with specified id",
   })
-  // @Permission({
-  //   resource: PermissionResources.SHIRT,
-  //   action: PermissionActionsTypes.UPDATE,
-  // })
-  // @UseGuards(PermissionGuard)
+  @Permission({
+    resource: PermissionResources.SHIRT,
+    action: PermissionActionsTypes.UPDATE,
+  })
+  @UseGuards(PermissionGuard)
   @Put('/:id')
   public update(
     @Param('id') id: string,
