@@ -1,6 +1,6 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model, Types } from 'mongoose';
+import { Model, Types, Connection } from 'mongoose';
 
 import { KKConflictException, KKNotFoundException } from '@http/exceptions';
 import { Pagination, PaginationResponseDto } from '@pagination';
@@ -22,6 +22,8 @@ export class ShirtService {
     @InjectModel(Category.name) private readonly categoryModel: Model<Category>,
     @InjectModel(ShirtStyle.name)
     private readonly shirtStyleModel: Model<ShirtStyle>,
+    @Inject('DATABASE_CONNECTION')
+    private dbConnection: Connection,
   ) {}
   public async create(
     createShirtDto: CreateShirtDto,
@@ -40,62 +42,82 @@ export class ShirtService {
       _id: Types.ObjectId;
     };
 
-    const { image_id, style_id, fit } = createShirtDto;
+    const session = await this.dbConnection.startSession();
+    session.startTransaction();
+    try {
+      const { image_id, style_id, fit } = createShirtDto;
 
-    category = await this.categoryModel.findOne({
-      name: ClothingTypes.SHIRT,
-    });
-
-    if (!category) {
-      category = await this.categoryModel.create({
+      category = await this.categoryModel.findOne({
         name: ClothingTypes.SHIRT,
       });
-    }
 
-    if (image_id) {
-      image = await this.imageModel.findById(image_id);
-      if (!image) {
-        throw new KKNotFoundException('image');
+      if (!category) {
+        const categories = await this.categoryModel.create(
+          [
+            {
+              name: ClothingTypes.SHIRT,
+            },
+          ],
+          { session },
+        );
+        category = categories[0];
       }
-    }
 
-    if (style_id) {
-      style = await this.shirtStyleModel.findById(style_id);
-      if (!style) {
-        throw new KKNotFoundException('shirt style');
+      if (image_id) {
+        image = await this.imageModel.findById(image_id);
+        if (!image) {
+          throw new KKNotFoundException('image');
+        }
       }
-    }
 
-    // TODO: collar, sleeve
-    // Check if shirt exists with these properties.
-    shirt = await this.shirtModel.findOne({
-      style: style_id,
-      fit,
-      'category.name': ClothingTypes.SHIRT,
-    });
+      if (style_id) {
+        style = await this.shirtStyleModel.findById(style_id);
+        if (!style) {
+          throw new KKNotFoundException('shirt style');
+        }
+      }
 
-    if (!shirt) {
-      shirt = await this.shirtModel.create({
-        category: category._id,
-        ...createShirtDto,
-        image: image_id,
+      // TODO: collar, sleeve
+      // Check if shirt exists with these properties.
+      shirt = await this.shirtModel.findOne({
         style: style_id,
         fit,
+        'category.name': ClothingTypes.SHIRT,
       });
-      shirt = await shirt.populate('image');
-      shirt = await shirt.populate('category');
-      shirt = await shirt.populate('style');
-    } else {
-      throw new KKConflictException('shirt');
-    }
 
-    category = await this.categoryModel.findByIdAndUpdate(category._id, {
-      $push: {
-        shirts: shirt._id,
-      },
-    });
+      if (!shirt) {
+        const shirts = await this.shirtModel.create(
+          [
+            {
+              category: category._id,
+              ...createShirtDto,
+              image: image_id,
+              style: style_id,
+              fit,
+            },
+          ],
+          { session },
+        );
+        shirt = shirts[0];
+        shirt = await shirt.populate('image');
+        shirt = await shirt.populate('category');
+        shirt = await shirt.populate('style');
+      } else {
+        throw new KKConflictException('shirt');
+      }
 
-    return ShirtMapper.toDto(shirt);
+      await this.categoryModel.findByIdAndUpdate(
+        category._id,
+        {
+          $push: {
+            shirts: shirt._id,
+          },
+        },
+        { session },
+      );
+      await session.commitTransaction();
+      return ShirtMapper.toDto(shirt);
+    } catch (e) {}
   }
 
   public async update(
