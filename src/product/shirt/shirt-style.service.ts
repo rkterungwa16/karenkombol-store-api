@@ -11,7 +11,7 @@ import { ShirtStyleMapper } from './mapper/shirt-style.mapper';
 import { UpdateShirtStyleDto } from './dto/update-shirt-style.dto';
 
 @Injectable()
-export class CategoryService {
+export class ShirtStyleService {
   constructor(
     @InjectModel(ShirtStyle.name)
     private readonly shirtStyleModel: Model<ShirtStyle>,

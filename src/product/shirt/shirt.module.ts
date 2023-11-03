@@ -11,6 +11,8 @@ import { ShirtStyle, ShirtStyleSchema } from './schema/shirt-style.schema';
 import { ShirtController } from './shirt.controller';
 import { ShirtService } from './shirt.service';
 import { Category, CategorySchema } from '@product/category/schema';
+import { ShirtStyleService } from './shirt-style.service';
+import { ShirtStyleController } from './shirt-style.controller';
 
 @Module({
   imports: [
@@ -28,14 +30,15 @@ import { Category, CategorySchema } from '@product/category/schema';
     TokenModule,
     JwtModule,
   ],
-  providers: [ShirtService],
+  providers: [ShirtService, ShirtStyleService],
   exports: [
     MongooseModule.forFeature([{ name: Shirt.name, schema: ShirtSchema }]),
     MongooseModule.forFeature([
       { name: ShirtStyle.name, schema: ShirtStyleSchema },
     ]),
     ShirtService,
+    ShirtStyleService,
   ],
-  controllers: [ShirtController],
+  controllers: [ShirtController, ShirtStyleController],
 })
 export class ShirtModule {}
