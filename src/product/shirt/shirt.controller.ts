@@ -27,7 +27,7 @@ import {
 } from '@access/permission/interfaces/permission.interface';
 import { JwtGuard } from '@auth/guards';
 import { PermissionGuard } from '@auth/guards/permissions.guard';
-import { PaginationResponseDto } from '@pagination';
+import { PaginationResponseDto, ResponseDto } from '@pagination';
 import { UpdateShirtDto } from './dto/update-shirt.dto';
 import { ShirtResponseDto } from './dto/shirt-response.dto';
 import { ShirtQueryWithFilterDto } from './dto/shirt-query.dto';
@@ -45,7 +45,7 @@ export class ShirtController {
   })
   @Permission({
     resource: PermissionResources.SHIRT,
-    action: PermissionActionsTypes.CREATE,
+    action: PermissionActionsTypes.READ,
   })
   @UseGuards(PermissionGuard)
   @Get()
@@ -58,7 +58,7 @@ export class ShirtController {
   @ApiOperation({ description: 'Get Shirt by id' })
   @Permission({
     resource: PermissionResources.SHIRT,
-    action: PermissionActionsTypes.CREATE,
+    action: PermissionActionsTypes.READ,
   })
   @UseGuards(PermissionGuard)
   @Get('/:id')
@@ -76,10 +76,15 @@ export class ShirtController {
   })
   @UseGuards(PermissionGuard)
   @Post()
-  public createShirt(
+  public async createShirt(
     @Body() shirtDto: CreateShirtDto,
-  ): Promise<ShirtResponseDto> {
-    return this.shirtService.create(shirtDto);
+  ): Promise<ResponseDto<ShirtResponseDto>> {
+    const data = await this.shirtService.create(shirtDto);
+    return {
+      status: 201,
+      data,
+      message: 'success',
+    };
   }
 
   @ApiOperation({ description: 'Update shirt by id' })

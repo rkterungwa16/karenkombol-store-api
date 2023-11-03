@@ -1,4 +1,4 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { BadRequestException, Inject, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, Types, Connection } from 'mongoose';
 
@@ -115,9 +115,18 @@ export class ShirtService {
         },
         { session },
       );
+      const res = ShirtMapper.toDto(shirt);
       await session.commitTransaction();
-      return ShirtMapper.toDto(shirt);
-    } catch (e) {}
+      return res;
+    } catch (e) {
+      await session.abortTransaction();
+      if (e?.message) {
+        throw e;
+      }
+      throw new BadRequestException('category could not be created');
+    } finally {
+      await session.endSession();
+    }
   }
 
   public async update(
