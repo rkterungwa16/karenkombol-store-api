@@ -103,15 +103,38 @@ export class ShirtService {
     updateShirtDto: UpdateShirtDto,
   ): Promise<ShirtResponseDto> {
     try {
-      let image;
-      if (updateShirtDto.image) {
-        image = await this.imageModel.findById(updateShirtDto.image);
+      const { image_id, style_id, category_id, ...others } = updateShirtDto;
+      if (category_id) {
+        const category = await this.imageModel.findById(category_id);
+        if (!category) {
+          throw new KKNotFoundException('category');
+        }
+      }
+
+      if (image_id) {
+        const image = await this.imageModel.findById(image_id);
         if (!image) {
           throw new KKNotFoundException('image');
         }
       }
+
+      if (style_id) {
+        const style = await this.shirtStyleModel.findById(style_id);
+        if (!style) {
+          throw new KKNotFoundException('shirt style');
+        }
+      }
       const shirt = await this.shirtModel
-        .findByIdAndUpdate(id, updateShirtDto, { new: true })
+        .findByIdAndUpdate(
+          id,
+          {
+            image: image_id,
+            style: style_id,
+            category: category_id,
+            ...others,
+          },
+          { new: true },
+        )
         .populate('image')
         .populate('category')
         .populate('style');
@@ -122,7 +145,11 @@ export class ShirtService {
   }
 
   public async fetchShirtById(id: string): Promise<ShirtResponseDto> {
-    const shirt = await this.shirtModel.findById(id).populate('image');
+    const shirt = await this.shirtModel
+      .findById(id)
+      .populate('image')
+      .populate('category')
+      .populate('style');
     if (!shirt) {
       throw new KKNotFoundException('shirt');
     }

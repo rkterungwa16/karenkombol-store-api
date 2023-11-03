@@ -9,8 +9,9 @@ export class ShirtMapper {
     const dto = new ShirtResponseDto();
 
     dto.id = model._id;
-    dto.description = model.description;
+    dto.description = model?.description;
     dto.fit = model?.fit;
+    dto.name = model?.name;
     dto.style =
       model?.style &&
       (typeof model?.style === 'string'

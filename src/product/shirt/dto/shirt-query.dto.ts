@@ -7,7 +7,7 @@ import { ShirtFits, ShirtStyles } from '@product/interface/shirt.interface';
 export class ShirtQueryDto extends PaginationQuery {
   @IsOptional()
   @IsString()
-  style: ShirtStyles;
+  style: string | ShirtStyles;
 
   @IsOptional()
   @IsString()
@@ -28,8 +28,8 @@ export class ShirtQueryWithFilterDto extends ShirtQueryDto {
   filter() {
     return {
       $and: [
-        ...(this.style ? [{ type: this.style }] : []),
-        ...(this.fit ? [{ type: this.fit }] : []),
+        ...(this.style ? [{ 'style.name': this.style }] : []),
+        ...(this.fit ? [{ fit: this.fit }] : []),
         ...(this.createdAt
           ? [{ createdAt: instanceToPlain(this.createdAt) }]
           : []),

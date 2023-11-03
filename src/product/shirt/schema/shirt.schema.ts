@@ -30,6 +30,11 @@ export class Shirt extends Document {
   description: string;
 
   @Prop({
+    type: String,
+  })
+  name: string;
+
+  @Prop({
     type: Types.ObjectId,
     ref: 'ShirtStyle',
     required: true,

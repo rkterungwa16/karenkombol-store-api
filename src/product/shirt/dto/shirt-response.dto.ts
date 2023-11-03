@@ -6,9 +6,14 @@ import { ShirtStyleResponseDto } from './shirt-style-response.dto';
 
 export class ShirtResponseDto {
   @ApiProperty({
-    example: 'shirtId',
+    example: 'shirt_id',
   })
   id: string;
+
+  @ApiProperty({
+    example: 'custom tunic shirt',
+  })
+  name: string;
 
   @ApiProperty({
     example: 'categoryId',

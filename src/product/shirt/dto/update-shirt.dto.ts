@@ -2,25 +2,28 @@ import { IsOptional, IsString } from 'class-validator';
 
 import { ApiProperty } from '@nestjs/swagger';
 import { Transform } from 'class-transformer';
-import { ShirtFits, ShirtStyles } from '@product/interface/shirt.interface';
+import { ShirtFits } from '@product/interface/shirt.interface';
 
 export class UpdateShirtDto {
   @IsOptional()
   @IsString()
-  @Transform(({ value }) => value.toLowerCase())
-  style?: ShirtStyles;
+  category_id: string;
+
+  @IsOptional()
+  @IsString()
+  style_id: string;
 
   @IsOptional()
   @IsString()
   @ApiProperty({
-    example: 'imgId',
+    example: 'img_id',
   })
-  image?: string;
+  image_id?: string;
 
   @IsOptional()
   @IsString()
   @Transform(({ value }) => value.toLowerCase())
-  fit: ShirtFits;
+  fit?: ShirtFits;
 
   @IsOptional()
   @IsString()

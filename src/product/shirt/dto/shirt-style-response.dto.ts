@@ -3,7 +3,7 @@ import { ShirtStyles } from '@product/interface/shirt.interface';
 
 export class ShirtStyleResponseDto {
   @ApiProperty({
-    example: 'shirtId',
+    example: 'shirt-style_id',
   })
   id: string;
 

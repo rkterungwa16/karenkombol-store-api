@@ -5,6 +5,10 @@ import { Transform } from 'class-transformer';
 import { ShirtFits } from '@product/interface/shirt.interface';
 
 export class CreateShirtDto {
+  @IsOptional()
+  @IsString()
+  name: string;
+
   @IsString()
   style_id: string;
 
