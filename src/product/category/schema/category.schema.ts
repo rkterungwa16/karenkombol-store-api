@@ -41,7 +41,7 @@ export class Category extends Document {
   })
   name: string | ClothingTypes;
 
-  @Prop({ type: String, text: true })
+  @Prop({ type: String, text: true, index: true })
   description?: string;
 
   @Prop({

@@ -4,6 +4,7 @@ import { Model, Types, Connection } from 'mongoose';
 
 import { KKConflictException, KKNotFoundException } from '@http/exceptions';
 import { Pagination, PaginationResponseDto } from '@pagination';
+import { ClothingTypes } from '@product/category/interface/category.interface';
 import { Shirt } from './schema/shirt.schema';
 import { Image } from '@lib/image/schema/image.schema';
 import { CreateShirtDto } from './dto/create-shirt.dto';
@@ -11,7 +12,6 @@ import { ShirtMapper } from './mapper';
 import { UpdateShirtDto } from './dto/update-shirt.dto';
 import { ShirtResponseDto } from './dto/shirt-response.dto';
 import { Category } from '@product/category/schema';
-import { ClothingTypes } from '@product/interface/category.interface';
 import { ShirtStyle } from './schema/shirt-style.schema';
 
 @Injectable()
@@ -48,14 +48,14 @@ export class ShirtService {
       const { image_id, style_id, fit } = createShirtDto;
 
       category = await this.categoryModel.findOne({
-        name: ClothingTypes.SHIRT,
+        name: ClothingTypes.SHIRTS,
       });
 
       if (!category) {
         const categories = await this.categoryModel.create(
           [
             {
-              name: ClothingTypes.SHIRT,
+              name: ClothingTypes.SHIRTS,
             },
           ],
           { session },
@@ -82,7 +82,7 @@ export class ShirtService {
       shirt = await this.shirtModel.findOne({
         style: style_id,
         fit,
-        'category.name': ClothingTypes.SHIRT,
+        'category.name': ClothingTypes.SHIRTS,
       });
 
       if (!shirt) {
