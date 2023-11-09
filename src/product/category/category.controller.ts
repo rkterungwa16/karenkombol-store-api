@@ -31,7 +31,7 @@ import {
 } from '@access/permission/interfaces/permission.interface';
 import { JwtGuard } from '@auth/guards';
 import { PermissionGuard } from '@auth/guards/permissions.guard';
-import { PaginationResponseDto } from '@pagination';
+import { PaginationResponseDto, ResponseDto } from '@pagination';
 import { CategoryQueryWithFilterDto } from './dto/category-query.dto';
 
 @Controller('categories')
@@ -64,10 +64,15 @@ export class CategoryController {
   })
   @UseGuards(PermissionGuard)
   @Get('/:id')
-  public getCategoryById(
+  public async getCategoryById(
     @Param('id') id: string,
-  ): Promise<CategoryResponseDto> {
-    return this.categoryService.fetchCategoryById(id);
+  ): Promise<ResponseDto<CategoryResponseDto>> {
+    const data = await this.categoryService.fetchCategoryById(id);
+    return {
+      status: 200,
+      data,
+      message: 'success',
+    };
   }
 
   @ApiOperation({
@@ -80,10 +85,15 @@ export class CategoryController {
   })
   @UseGuards(PermissionGuard)
   @Post()
-  public createCategory(
+  public async createCategory(
     @Body() CategoryDto: CreateCategoryDto,
-  ): Promise<CategoryResponseDto> {
-    return this.categoryService.create(CategoryDto);
+  ): Promise<ResponseDto<CategoryResponseDto>> {
+    const data = await this.categoryService.create(CategoryDto);
+    return {
+      status: 201,
+      data,
+      message: 'success',
+    };
   }
 
   @ApiOperation({ description: 'Update Category by id' })
@@ -91,15 +101,20 @@ export class CategoryController {
     description: "There's no Category with specified id",
   })
   @Permission({
-    resource: PermissionResources.CURRENCIES,
+    resource: PermissionResources.CATEGORIES,
     action: PermissionActionsTypes.UPDATE,
   })
   @UseGuards(PermissionGuard)
   @Put('/:id')
-  public update(
+  public async update(
     @Param('id') id: string,
     @Body() categoryDto: UpdateCategoryDto,
-  ): Promise<CategoryResponseDto> {
-    return this.categoryService.update(id, categoryDto);
+  ): Promise<ResponseDto<CategoryResponseDto>> {
+    const data = await this.categoryService.update(id, categoryDto);
+    return {
+      status: 200,
+      data,
+      message: 'success',
+    };
   }
 }
