@@ -20,9 +20,10 @@ export enum PermissionResources {
   CURRENCIES = 'currencies',
   INVOICE = 'invoice',
   COLORS = 'colors',
-  SIZE = 'size',
-  CATEGORY = 'category',
-  SHIRT = 'shirt',
+  SIZES = 'sizes',
+  CATEGORIES = 'categories',
+  SHIRTS = 'shirts',
+  SHIRT_STYLES = 'shirt_styles',
 }
 
 export interface IPermission {

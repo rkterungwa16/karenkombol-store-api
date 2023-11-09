@@ -8,14 +8,14 @@ export interface ICategory {
 }
 
 export enum ClothingTypes {
-  JEANS_AND_DENIM = 'jeans & denim',
   ATHLETIC_AND_ATHLEISURE = 'athletic & athleisure',
-  DRESSES = 'dress',
-  SKIRT = 'skirt',
+  DRESSES = 'dresses',
+  SKIRTS = 'skirts',
   LOUNGEWEAR = 'loungewear',
   OUTERWEAR = 'outerwear',
-  TROUSERS = 'trousers',
-  SHIRT = 'shirt',
+  TROUSERS = 'trousers or pants',
+  SHIRTS = 'shirts',
+  SHORTS = 'shorts',
   // TOPS_BLOUSES = 'TOPS & BLOUSES',
   SWIMWEAR = 'swimwear',
   UNDERWEAR_LINGERIE_SHAPEWEAR = 'underwear, lingerie, & shapewear',

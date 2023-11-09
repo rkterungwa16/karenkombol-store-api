@@ -46,7 +46,7 @@ export class CategoryController {
     example: 'admin',
   })
   @Permission({
-    resource: PermissionResources.CATEGORY,
+    resource: PermissionResources.CATEGORIES,
     action: PermissionActionsTypes.CREATE,
   })
   @UseGuards(PermissionGuard)
@@ -59,7 +59,7 @@ export class CategoryController {
 
   @ApiOperation({ description: 'Get Category by id' })
   @Permission({
-    resource: PermissionResources.CATEGORY,
+    resource: PermissionResources.CATEGORIES,
     action: PermissionActionsTypes.CREATE,
   })
   @UseGuards(PermissionGuard)
@@ -75,7 +75,7 @@ export class CategoryController {
   })
   @ApiConflictResponse({ description: 'Category exists' })
   @Permission({
-    resource: PermissionResources.CATEGORY,
+    resource: PermissionResources.CATEGORIES,
     action: PermissionActionsTypes.CREATE,
   })
   @UseGuards(PermissionGuard)

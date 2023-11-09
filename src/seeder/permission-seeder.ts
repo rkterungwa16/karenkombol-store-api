@@ -26,6 +26,11 @@ export class PermissionsSeeder implements Seeder {
       });
     });
     permissions = permissions.flat();
+    const data = await this.permission.find({});
+    permissions = permissions.filter((_permission) => {
+      if (data.find((_c) => _c.resource === _permission.resource)) return false;
+      return true;
+    });
     return this.permission.insertMany(permissions);
   }
 

@@ -1,4 +1,4 @@
-import { ImageMapper } from 'src/lib/image/image.mapper';
+import { ImageMapper } from '@lib/image/image.mapper';
 import { ShirtResponseDto } from '../dto/shirt-response.dto';
 import { Shirt } from '../schema/shirt.schema';
 import { CategoryMapper } from '@product/category/mappers';

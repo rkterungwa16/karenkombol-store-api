@@ -19,18 +19,22 @@ import { ShirtStyle } from './shirt-style.schema';
 // DEFINE UNIQUE SHIRT 2
 // - A unique shirt is defined by only its style.
 // - When creating a product
-@Schema({ timestamps: true })
+@Schema({ timestamps: true, autoIndex: true })
 export class Shirt extends Document {
   @Prop({ type: Types.ObjectId, ref: 'Category', required: true })
   category?: string | Category;
 
   @Prop({
     type: String,
+    index: true,
+    text: true,
   })
   description: string;
 
   @Prop({
     type: String,
+    index: true,
+    text: true,
   })
   name: string;
 
@@ -48,6 +52,8 @@ export class Shirt extends Document {
     type: String,
     enum: [...Object.values(ShirtFits)],
     required: true,
+    index: true,
+    text: true,
   })
   fit: ShirtFits;
 

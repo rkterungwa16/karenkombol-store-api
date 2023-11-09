@@ -43,7 +43,7 @@ export class ShirtStyleController {
     example: 'admin',
   })
   @Permission({
-    resource: PermissionResources.SHIRT,
+    resource: PermissionResources.SHIRT_STYLES,
     action: PermissionActionsTypes.READ,
   })
   @UseGuards(PermissionGuard)
@@ -56,7 +56,7 @@ export class ShirtStyleController {
 
   @ApiOperation({ description: 'Get ShirtStyle by id' })
   @Permission({
-    resource: PermissionResources.SHIRT,
+    resource: PermissionResources.SHIRT_STYLES,
     action: PermissionActionsTypes.READ,
   })
   @UseGuards(PermissionGuard)
@@ -72,7 +72,7 @@ export class ShirtStyleController {
   })
   @ApiConflictResponse({ description: 'Shirt exists' })
   @Permission({
-    resource: PermissionResources.SHIRT,
+    resource: PermissionResources.SHIRT_STYLES,
     action: PermissionActionsTypes.CREATE,
   })
   @UseGuards(PermissionGuard)
@@ -93,7 +93,7 @@ export class ShirtStyleController {
     description: "There's no Shirt style with specified id",
   })
   @Permission({
-    resource: PermissionResources.SHIRT,
+    resource: PermissionResources.SHIRT_STYLES,
     action: PermissionActionsTypes.UPDATE,
   })
   @UseGuards(PermissionGuard)

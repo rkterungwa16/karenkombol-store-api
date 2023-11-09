@@ -1,4 +1,4 @@
-import { ImageMapper } from 'src/lib/image/image.mapper';
+import { ImageMapper } from '@lib/image/image.mapper';
 import { ProductResponseDto } from './dto';
 import { Product } from './schema/product.schema';
 import { CategoryMapper } from './category/mappers';

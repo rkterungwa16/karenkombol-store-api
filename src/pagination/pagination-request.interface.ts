@@ -21,3 +21,7 @@ export interface PaginationRequest {
 }
 
 export type PaginationSortOrder = 'asc' | 'desc';
+export const mapPaginationSortOrder = {
+  asc: 1,
+  desc: -1,
+};

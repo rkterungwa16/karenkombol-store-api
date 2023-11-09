@@ -1,6 +1,8 @@
 import 'reflect-metadata';
 import { Type } from 'class-transformer';
-import { IsInt, IsOptional, Min } from 'class-validator';
+import { IsInt, IsOptional, Min, ValidateNested } from 'class-validator';
+import { DateFilterDto } from '@filter';
+import { PaginationSortOrder } from './pagination-request.interface';
 
 export class PaginationQuery {
   static readonly DEFAULT_LIMIT = 10;
@@ -21,4 +23,18 @@ export class PaginationQuery {
   @IsOptional()
   @Type(() => Number)
   skip = 0;
+
+  // @IsOptional()
+  // @ValidateNested()
+  // orderBy?: { [field: string]: PaginationSortOrder };
+
+  @IsOptional()
+  @ValidateNested()
+  @Type(() => DateFilterDto)
+  createdAt?: DateFilterDto;
+
+  @IsOptional()
+  @ValidateNested()
+  @Type(() => DateFilterDto)
+  updatedAt?: DateFilterDto;
 }
