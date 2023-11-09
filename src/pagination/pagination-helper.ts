@@ -14,6 +14,8 @@ export class Pagination {
 
     return {
       data,
+      status: 200,
+      message: 'success',
       pagination: {
         totalPages,
         currentPage: currentPage,

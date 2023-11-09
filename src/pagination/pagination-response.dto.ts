@@ -1,6 +1,8 @@
 export class PaginationResponseDto<T> {
   pagination?: PaginationMetaType;
   data: T;
+  status?: number;
+  message?: string;
 }
 
 export type PaginationMetaType = {
