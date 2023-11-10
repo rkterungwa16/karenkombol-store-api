@@ -9,3 +9,8 @@ export interface IRole {
   createdAt?: Date;
   updatedAt?: Date;
 }
+
+export enum PermissionUpdateActions {
+  ADD = 'add',
+  REMOVE = 'remove',
+}

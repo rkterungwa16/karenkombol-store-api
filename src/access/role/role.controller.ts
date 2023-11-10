@@ -33,6 +33,8 @@ import {
 import { PaginationQueryDto } from '@common';
 import { JwtGuard } from '@auth/guards';
 import { PermissionGuard } from '@auth/guards/permissions.guard';
+import { PermissionUpdateActions } from './interfaces/roles.interface';
+import { ResponseDto } from '@pagination';
 
 @Controller('role')
 @UseGuards(JwtGuard)
@@ -91,11 +93,18 @@ export class RoleController {
     action: PermissionActionsTypes.UPDATE,
   })
   @UseGuards(PermissionGuard)
-  @Put('/:id')
-  public updateRole(
+  @Put('/:id/:permission_action')
+  public async updateRole(
     @Param('id') id: string,
+    @Param('permission_action')
+    permission_action: PermissionUpdateActions,
     @Body() roleDto: UpdateRoleRequestDto,
-  ): Promise<RoleResponseDto> {
-    return this.roleService.update(id, roleDto);
+  ): Promise<ResponseDto<RoleResponseDto>> {
+    const data = await this.roleService.update(id, permission_action, roleDto);
+    return {
+      data,
+      status: 200,
+      message: 'success',
+    };
   }
 }
