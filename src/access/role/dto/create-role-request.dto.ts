@@ -2,7 +2,6 @@ import { IsArray, IsNotEmpty, IsOptional, IsString } from 'class-validator';
 
 import { ApiProperty } from '@nestjs/swagger';
 import { Transform } from 'class-transformer';
-import { IRole } from '../interfaces/roles.interface';
 
 export class CreateRoleRequestDto {
   @IsString()
