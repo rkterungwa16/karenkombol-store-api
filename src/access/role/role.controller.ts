@@ -30,7 +30,6 @@ import {
   PermissionActionsTypes,
   PermissionResources,
 } from '@access/permission/interfaces/permission.interface';
-import { PaginationQueryDto } from '@common';
 import { JwtGuard } from '@auth/guards';
 import { PermissionGuard } from '@auth/guards/permissions.guard';
 import { PermissionUpdateActions } from './interfaces/roles.interface';
