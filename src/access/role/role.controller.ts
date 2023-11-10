@@ -34,7 +34,8 @@ import { PaginationQueryDto } from '@common';
 import { JwtGuard } from '@auth/guards';
 import { PermissionGuard } from '@auth/guards/permissions.guard';
 import { PermissionUpdateActions } from './interfaces/roles.interface';
-import { ResponseDto } from '@pagination';
+import { PaginationResponseDto, ResponseDto } from '@pagination';
+import { RoleQueryWithFilterDto } from './dto/role-query.dto';
 
 @Controller('role')
 @UseGuards(JwtGuard)
@@ -54,8 +55,8 @@ export class RoleController {
   @UseGuards(PermissionGuard)
   @Get()
   public fetchRoles(
-    @Query() paginationQuery: PaginationQueryDto,
-  ): Promise<RoleResponseDto[]> {
+    @Query() paginationQuery: RoleQueryWithFilterDto,
+  ): Promise<PaginationResponseDto<RoleResponseDto[]>> {
     return this.roleService.fetchRoles(paginationQuery);
   }
 
@@ -66,10 +67,15 @@ export class RoleController {
   })
   @UseGuards(PermissionGuard)
   @Get('/:id')
-  public getRoleById(
+  public async getRoleById(
     @Param('id', ParseIntPipe) id: string,
-  ): Promise<RoleResponseDto> {
-    return this.roleService.fetchRoleById(id);
+  ): Promise<ResponseDto<RoleResponseDto>> {
+    const data = await this.roleService.fetchRoleById(id);
+    return {
+      data,
+      status: 200,
+      message: 'success',
+    };
   }
 
   @ApiOperation({ description: 'Create new role' })
@@ -80,10 +86,15 @@ export class RoleController {
   })
   @UseGuards(PermissionGuard)
   @Post()
-  public create(
+  public async create(
     @Body() roleDto: CreateRoleRequestDto,
-  ): Promise<RoleResponseDto> {
-    return this.roleService.create(roleDto);
+  ): Promise<ResponseDto<RoleResponseDto>> {
+    const data = await this.roleService.create(roleDto);
+    return {
+      data,
+      status: 201,
+      message: 'success',
+    };
   }
 
   @ApiOperation({ description: 'Update role by id' })

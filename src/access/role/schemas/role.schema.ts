@@ -4,7 +4,10 @@ import { Document, Types } from 'mongoose';
 
 @Schema({ timestamps: true })
 export class Role extends Document {
-  @Prop({ type: String })
+  @Prop({ type: String, unique: true, text: true })
+  slug: string;
+
+  @Prop({ type: String, text: true, index: true })
   name: string;
 
   @Prop({ type: Types.ObjectId, ref: 'Company', immutable: true })

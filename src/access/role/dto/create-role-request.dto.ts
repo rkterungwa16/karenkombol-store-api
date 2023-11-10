@@ -1,25 +1,29 @@
-import { IsNotEmpty, IsString } from 'class-validator';
+import { IsArray, IsNotEmpty, IsOptional, IsString } from 'class-validator';
 
 import { ApiProperty } from '@nestjs/swagger';
+import { Transform } from 'class-transformer';
 import { IRole } from '../interfaces/roles.interface';
 
 export class CreateRoleRequestDto {
   @IsString()
   @IsNotEmpty()
+  @Transform(({ value }) => value.toLowerCase())
   @ApiProperty({
     example: 'admin',
   })
-  name: IRole['name'];
+  name: string;
 
-  @IsNotEmpty()
+  @IsOptional()
   @ApiProperty({
-    example: 'companyId',
+    example: 'company_id',
   })
-  company: IRole['company'];
+  company_id: string;
 
-  @IsNotEmpty()
+  @IsOptional()
+  @IsArray()
+  @IsString({ each: true })
   @ApiProperty({
-    example: ['permissionId'],
+    example: ['permission_id'],
   })
-  permissions: IRole['permissions'];
+  permissions?: string[];
 }

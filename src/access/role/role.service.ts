@@ -1,6 +1,6 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
+import { Model, Types } from 'mongoose';
 
 import { Role } from './schemas/role.schema';
 import { Company } from '@company/schema/company.schema';
@@ -11,10 +11,9 @@ import {
 } from './dto';
 import { RoleMapper } from './role.mapper';
 import { KKConflictException, KKNotFoundException } from '@http/exceptions';
-import { PaginationQueryDto } from '@common';
-import { IRole, PermissionUpdateActions } from './interfaces/roles.interface';
-import { ICompany } from '@company/interface/company.interface';
+import { PermissionUpdateActions } from './interfaces/roles.interface';
 import { Permission } from '@access/permission/schema/permission.schema';
+import { Pagination, PaginationResponseDto } from '@pagination';
 
 @Injectable()
 export class RoleService {
@@ -27,27 +26,57 @@ export class RoleService {
   public async create(
     createRoleRequestDto: CreateRoleRequestDto,
   ): Promise<RoleResponseDto> {
-    const name = createRoleRequestDto.name.toLowerCase();
-    const roleExists: IRole = await this.roleModel.findOne({
+    let company: Company & {
+      _id: Types.ObjectId;
+    };
+    let createData = {};
+    const { name, permissions, company_id } = createRoleRequestDto;
+    const slug = name.split(' ').join('_');
+    const roleExists = await this.roleModel.findOne({
       name,
     });
     if (roleExists) {
       throw new KKConflictException('role');
     }
-    const newCompany: ICompany = await this.companyModel.findById(
-      createRoleRequestDto.company,
-    );
+    createData = {
+      ...createData,
+      name,
+      slug,
+    };
+    if (company_id) {
+      company = await this.companyModel.findById(company_id);
+      if (!company) {
+        throw new KKNotFoundException('company');
+      }
+      createData = {
+        ...createData,
+        company: company._id,
+      };
+    }
+
+    if (permissions) {
+      createData = {
+        ...createData,
+        permissions,
+      };
+    }
 
     const newRole: Role = await this.roleModel.create({
-      name,
-      company: newCompany._id,
-      permissions: createRoleRequestDto.permissions,
+      ...createData,
     });
     return RoleMapper.toDto(newRole);
   }
 
   /**
    * Test cases
+   * - Check if role exists
+   * - Check if all permission ids are valid and exists in db
+   * - If permission action is to add permission ids, check if a permission id already exists.
+   *   - If a permission exists throw error to prevent duplicate
+   *   - Else modify the update data by add the permission ids to the role permissions.
+   * - If permission action is to remove permissions from a role, check if permission id exists
+   *   - If permission id does not exist in the role to be removed, throw an error.
+   *   - Else modify the update data by removing the permission ids from the role permissions.
    *
    * @param id role id
    * @param permission_action action to be performed with the role permissions
@@ -71,7 +100,7 @@ export class RoleService {
         const permissionsCount = await this.permissionModel
           .find({
             _id: {
-              $in: updateRoleRequestDto.permissions,
+              $in: permissions,
             },
           })
           .count();
@@ -137,17 +166,21 @@ export class RoleService {
   }
 
   public async fetchRoles(
-    paginationQuery: PaginationQueryDto,
-  ): Promise<RoleResponseDto[]> {
-    const { limit, offset } = paginationQuery;
-    const roles: Role[] = await this.roleModel
-      .find()
-      .skip(offset)
-      .limit(limit)
-      .populate('permissions');
+    paginationQuery,
+  ): Promise<PaginationResponseDto<RoleResponseDto[]>> {
+    let data = [];
+    const { limit, skip, filter } = paginationQuery;
+    const totalRecords = await this.roleModel.count();
+    const roles = await this.roleModel
+      .find({
+        ...(filter['$and'].length && { $and: filter['$and'] }),
+      })
+      .populate('image')
+      .skip(skip)
+      .limit(limit);
     if (roles.length) {
-      return roles.map((_role) => RoleMapper.toDto(_role));
+      data = roles.map((_role) => RoleMapper.toDto(_role));
     }
-    return [];
+    return Pagination.of({ limit, skip }, totalRecords, data);
   }
 }

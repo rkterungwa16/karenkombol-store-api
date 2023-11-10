@@ -1,7 +1,7 @@
 import { Transform } from 'class-transformer';
 import { IsOptional } from 'class-validator';
 
-export class BooleanFilterDto {
+export class StringFilterDto {
   @IsOptional()
   @Transform(
     ({ value }) =>
@@ -11,4 +11,8 @@ export class BooleanFilterDto {
       }[value]),
   )
   $eq?: boolean;
+
+  @IsOptional()
+  @Transform(({ value }) => value.toLowerCase())
+  $contains?: string;
 }
