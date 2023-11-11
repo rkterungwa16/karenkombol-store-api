@@ -49,10 +49,12 @@ export class TokenService {
 
   public verifyToken(token: string, type: TokenType) {
     try {
+      console.log('verify___token');
       return this.jwtService.verify(token, {
         secret: this.configService.get('TOKEN_SECRET'),
       });
-    } catch ({ name }) {
+    } catch (e) {
+      const { name } = e;
       if (
         name === TokenError.TokenExpiredError &&
         type === TokenType.AccessToken
@@ -74,6 +76,8 @@ export class TokenService {
   }
 
   public async validateToken(token: string): Promise<ValidateTokenResponseDto> {
+    // TODO: modify token validation
+    // - Possibly use one method, either use "verifyToken" or "validateToken" methods
     try {
       const { id } = this.jwtService.verify(token, {
         secret: this.configService.get('TOKEN_SECRET'),
@@ -89,8 +93,13 @@ export class TokenService {
 
       return { valid: !!id };
     } catch (error) {
-      Logger.error('Validation token error', error);
-      return { valid: false };
+      const { name } = error;
+      if (name === TokenError.TokenExpiredError) {
+        throw new KKUnauthorizedException(
+          UnauthorizedErrorType.EXPIRED_ACCESS_TOKEN,
+        );
+      }
+      throw new KKUnauthorizedException(UnauthorizedErrorType.INVALID_TOKEN);
     }
   }
 
