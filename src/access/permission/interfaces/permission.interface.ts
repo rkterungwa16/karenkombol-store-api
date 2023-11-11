@@ -16,14 +16,14 @@ export enum PermissionResources {
   ROLES = 'roles',
   ADDRESS = 'address',
   FULLFILLMENT = 'fullfillment',
-  PAYMENT_METHOD = 'payment_method',
+  PAYMENT_METHOD = 'payment method',
   CURRENCIES = 'currencies',
   INVOICE = 'invoice',
   COLORS = 'colors',
   SIZES = 'sizes',
   CATEGORIES = 'categories',
   SHIRTS = 'shirts',
-  SHIRT_STYLES = 'shirt_styles',
+  SHIRT_STYLES = 'shirt styles',
 }
 
 export interface IPermission {
