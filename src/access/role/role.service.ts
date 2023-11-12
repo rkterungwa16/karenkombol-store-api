@@ -1,6 +1,7 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, Types } from 'mongoose';
+import { instanceToPlain } from 'class-transformer';
 
 import { Role } from './schemas/role.schema';
 import { Company } from '@company/schema/company.schema';
@@ -169,8 +170,30 @@ export class RoleService {
     paginationQuery,
   ): Promise<PaginationResponseDto<RoleResponseDto[]>> {
     let data = [];
-    const { limit, skip, filter } = paginationQuery;
+    const { limit, skip, name, createdAt, updatedAt } = paginationQuery;
     const totalRecords = await this.roleModel.count();
+
+    const filter = {
+      $and: [
+        ...(name && Object.values(name).length
+          ? [
+              {
+                name: {
+                  ...(name?.$eq && { $eq: name.$eq }),
+                  ...(name?.$contains && { $regex: name.$contains }),
+                },
+              },
+            ]
+          : []),
+        ...(createdAt && Object.values(createdAt).length
+          ? [{ createdAt: instanceToPlain(createdAt) }]
+          : []),
+        ...(updatedAt && Object.values(updatedAt).length
+          ? [{ updatedAt: instanceToPlain(updatedAt) }]
+          : []),
+      ],
+    };
+
     const roles = await this.roleModel
       .find({
         ...(filter['$and']?.length && { $and: filter['$and'] }),

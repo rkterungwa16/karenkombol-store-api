@@ -3,14 +3,8 @@ import { IsOptional } from 'class-validator';
 
 export class StringFilterDto {
   @IsOptional()
-  @Transform(
-    ({ value }) =>
-      ({
-        true: true,
-        false: false,
-      }[value]),
-  )
-  $eq?: boolean;
+  @Transform(({ value }) => value.toLowerCase())
+  $eq?: string;
 
   @IsOptional()
   @Transform(({ value }) => value.toLowerCase())

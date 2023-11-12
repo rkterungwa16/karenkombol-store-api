@@ -34,7 +34,7 @@ import { JwtGuard } from '@auth/guards';
 import { PermissionGuard } from '@auth/guards/permissions.guard';
 import { PermissionUpdateActions } from './interfaces/roles.interface';
 import { PaginationResponseDto, ResponseDto } from '@pagination';
-import { RoleQueryWithFilterDto } from './dto/role-query.dto';
+import { RoleQueryDto } from './dto/role-query.dto';
 
 @Controller('roles')
 @UseGuards(JwtGuard)
@@ -54,7 +54,7 @@ export class RoleController {
   @UseGuards(PermissionGuard)
   @Get()
   public fetchRoles(
-    @Query() paginationQuery: RoleQueryWithFilterDto,
+    @Query() paginationQuery: RoleQueryDto,
   ): Promise<PaginationResponseDto<RoleResponseDto[]>> {
     return this.roleService.fetchRoles(paginationQuery);
   }
