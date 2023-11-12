@@ -36,7 +36,7 @@ import { PermissionUpdateActions } from './interfaces/roles.interface';
 import { PaginationResponseDto, ResponseDto } from '@pagination';
 import { RoleQueryWithFilterDto } from './dto/role-query.dto';
 
-@Controller('role')
+@Controller('roles')
 @UseGuards(JwtGuard)
 export class RoleController {
   constructor(private roleService: RoleService) {}

@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { ICompany } from '@company/interface/company.interface';
 import { PermissionsResponseDto } from '@access/permission/dto';
+import { Company } from '@company/schema/company.schema';
 
 export class RoleResponseDto {
   @ApiProperty({
@@ -13,12 +13,17 @@ export class RoleResponseDto {
       email: 'admin@karenkombol-ateliers.com',
     },
   })
-  company: string | ICompany;
+  company: string | Company;
 
   @ApiProperty({
-    example: 'admin',
+    example: 'super admin',
   })
   name: string;
+
+  @ApiProperty({
+    example: 'super_admin',
+  })
+  slug: string;
 
   @ApiProperty({
     example: [

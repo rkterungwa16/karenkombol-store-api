@@ -9,6 +9,7 @@ export class RoleMapper {
     dto.id = model._id;
     dto.company = model.company;
     dto.name = model.name;
+    dto.slug = model.slug;
     dto.permissions = model?.permissions.map((_permission) => {
       if (_permission) {
         return typeof _permission === 'string'

@@ -173,9 +173,9 @@ export class RoleService {
     const totalRecords = await this.roleModel.count();
     const roles = await this.roleModel
       .find({
-        ...(filter['$and'].length && { $and: filter['$and'] }),
+        ...(filter['$and']?.length && { $and: filter['$and'] }),
       })
-      .populate('image')
+      .populate('permissions')
       .skip(skip)
       .limit(limit);
     if (roles.length) {

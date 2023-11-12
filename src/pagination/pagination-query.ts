@@ -1,8 +1,7 @@
 import 'reflect-metadata';
-import { Type } from 'class-transformer';
 import { IsInt, IsOptional, Min, ValidateNested } from 'class-validator';
+import { Type } from 'class-transformer';
 import { DateFilterDto } from '@filter';
-import { PaginationSortOrder } from './pagination-request.interface';
 
 export class PaginationQuery {
   static readonly DEFAULT_LIMIT = 10;
