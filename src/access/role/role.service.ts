@@ -15,6 +15,7 @@ import { KKConflictException, KKNotFoundException } from '@http/exceptions';
 import { PermissionUpdateActions } from './interfaces/roles.interface';
 import { Permission } from '@access/permission/schema/permission.schema';
 import { Pagination, PaginationResponseDto } from '@pagination';
+import { RoleQueryDto } from './dto/role-query.dto';
 
 @Injectable()
 export class RoleService {
@@ -166,8 +167,34 @@ export class RoleService {
     return RoleMapper.toDto(role);
   }
 
+  /**
+   * Test cases
+   * - Find all roles with name equal to a selected text
+   * - Find all roles with name contained in a text/sentence
+   * - Find all roles with name equal to an item/text in an array of texts
+   *   - add multiple items in the array and check all roles that have same name.
+   * - Find all roles created at:
+   *   - before a selected date
+   *   - after a selected date
+   *   - a range of selected date
+   * - Find all roles with a particular permission
+   *   - Example find all roles that has orders permission
+   *   - Example find all roles that have a create order permission.
+   * - Search for all roles that match a search text. Text search should be performed on the following properties:
+   *   - check role name
+   *   - check role permission resource
+   *   - check role permission action
+   * @param {Object} paginationQuery
+   * @param {Number} paginationQuery.limit
+   * @param {Number} paginationQuery.skip
+   * @param {Object} paginationQuery.name - filter roles by role name using specific properties
+   * @param {String} paginationQuery.name.$eq
+   * @param {String} paginationQuery.name.$contains
+   * @param {Array<String>} paginationQuery.name.$in
+   * @returns {Promise} return roles
+   */
   public async fetchRoles(
-    paginationQuery,
+    paginationQuery: RoleQueryDto,
   ): Promise<PaginationResponseDto<RoleResponseDto[]>> {
     let data = [];
     const { limit, skip, name, createdAt, updatedAt } = paginationQuery;
@@ -181,6 +208,7 @@ export class RoleService {
                 name: {
                   ...(name?.$eq && { $eq: name.$eq }),
                   ...(name?.$contains && { $regex: name.$contains }),
+                  ...(name?.$in && { $in: name.$in }),
                 },
               },
             ]
