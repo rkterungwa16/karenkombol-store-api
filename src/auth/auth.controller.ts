@@ -67,6 +67,7 @@ export class AuthController {
       status: 200,
       data: {
         accessToken: token.accessToken,
+        refreshToken: token.refreshToken,
       },
       message: 'success',
     };
@@ -86,6 +87,7 @@ export class AuthController {
       status: 200,
       data: {
         accessToken: token.accessToken,
+        refreshToken: token.refreshToken,
       },
       message: 'success',
     };
