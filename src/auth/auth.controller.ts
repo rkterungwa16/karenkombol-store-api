@@ -54,12 +54,12 @@ export class AuthController {
   ): Promise<ResponseDto<LoginResponseDto>> {
     const token = await this.authService.login(authCredentialsDto);
     response
-      .cookie(CookieNames.REFRESH_TOKEN, token.refreshToken, {
+      .cookie(CookieNames.ACCESS_TOKEN, token.refreshToken, {
         // Valid for 30 day
         maxAge: 24 * 60 * 60 * 1000,
         httpOnly: true,
-        secure: true,
-        sameSite: 'strict',
+        // secure: true,
+        // sameSite: 'strict',
       })
       .status(HttpStatus.OK);
 
@@ -81,7 +81,7 @@ export class AuthController {
   async getNewToken(
     @Req() request: Request,
   ): Promise<ResponseDto<LoginResponseDto>> {
-    const refreshToken = request.cookies(CookieNames.REFRESH_TOKEN);
+    const refreshToken = request.cookies(CookieNames.ACCESS_TOKEN);
     const token = await this.tokenService.generateRefreshToken(refreshToken);
     return {
       status: 200,

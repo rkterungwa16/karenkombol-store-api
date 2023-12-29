@@ -63,6 +63,8 @@ export class RoleService {
       };
     }
 
+    // TODO: return a list of all permissions with each permission having a property that signifies selected.
+    // TODO: group all permissions by resource.
     const newRole: Role = await this.roleModel.create({
       ...createData,
     });

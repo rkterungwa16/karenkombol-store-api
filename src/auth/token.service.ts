@@ -49,7 +49,6 @@ export class TokenService {
 
   public verifyToken(token: string, type: TokenType) {
     try {
-      console.log('verify___token');
       return this.jwtService.verify(token, {
         secret: this.configService.get('TOKEN_SECRET'),
       });

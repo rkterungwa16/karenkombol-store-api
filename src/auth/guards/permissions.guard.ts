@@ -41,6 +41,9 @@ export class PermissionGuard implements CanActivate {
     if (hasPermission) {
       return true;
     }
+    // TODO: add role to permissions
+    // TODO: find permission using resource and action and check if role is assigned to permission.
+    // NOTE: Each permission should have a role assigned to it.
     const rolePermissions =
       user?.role && typeof user.role !== 'string' ? user.role.permissions : [];
 
