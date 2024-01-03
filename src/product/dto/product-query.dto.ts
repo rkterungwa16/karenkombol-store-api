@@ -2,7 +2,7 @@ import { instanceToPlain, Type } from 'class-transformer';
 import { IsOptional, IsString, ValidateNested } from 'class-validator';
 import { DateFilterDto } from '@filter';
 import { PaginationQuery } from '@pagination';
-import { CategoryQueryDto } from '@product/category/dto/category-query.dto';
+import { ClothingQueryDto } from '@product/clothing/dto/clothing-query.dto';
 
 export class ProductQueryDto extends PaginationQuery {
   @IsOptional()
@@ -21,8 +21,8 @@ export class ProductQueryDto extends PaginationQuery {
 
   @IsOptional()
   @ValidateNested()
-  @Type(() => CategoryQueryDto)
-  category?: CategoryQueryDto;
+  @Type(() => ClothingQueryDto)
+  category?: ClothingQueryDto;
 }
 
 export class ProductQueryWithFilterDto extends ProductQueryDto {

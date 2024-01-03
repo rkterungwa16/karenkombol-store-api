@@ -2,14 +2,14 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Seeder } from './seeder.interface';
-import { Category } from '@product/category/schema';
+import { Clothing } from '@product/clothing/schema';
 import { categories } from './data/categories';
 
 @Injectable()
 export class CategoriesSeeder implements Seeder {
   constructor(
-    @InjectModel(Category.name)
-    private readonly category: Model<Category>,
+    @InjectModel(Clothing.name)
+    private readonly category: Model<Clothing>,
   ) {}
 
   async seed(): Promise<any> {

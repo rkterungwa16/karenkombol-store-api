@@ -15,8 +15,8 @@ import { AccessModule } from '../access/access.module';
 import { UsersModule } from '../user/user.module';
 import { PermissionsSeeder } from './permission-seeder';
 import { PermissionModule } from '@access/permission/permission.module';
-import { CategoriesSeeder } from './categories-seeder';
-import { CategoryModule } from '@product/category/category.module';
+import { CategoriesSeeder } from './clothings-seeder';
+import { ClothingModule } from '@product/clothing/clothing.module';
 
 export interface SeederOptions {
   imports?: Array<
@@ -60,6 +60,6 @@ seeder({
     UsersModule,
     AccessModule,
     PermissionModule,
-    CategoryModule,
+    ClothingModule,
   ],
 }).run([PermissionsSeeder, CategoriesSeeder]);

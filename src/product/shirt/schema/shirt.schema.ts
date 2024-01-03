@@ -2,7 +2,7 @@ import { Schema, Prop, SchemaFactory } from '@nestjs/mongoose';
 import { Document, Types } from 'mongoose';
 import { Image } from '../../../lib/image/schema/image.schema';
 import { ShirtFits } from '@product/interface/shirt.interface';
-import { Category } from '@product/category/schema';
+import { Clothing } from '@product/clothing/schema';
 import { ShirtStyle } from './shirt-style.schema';
 
 // Seed list of shirts
@@ -22,7 +22,7 @@ import { ShirtStyle } from './shirt-style.schema';
 @Schema({ timestamps: true, autoIndex: true })
 export class Shirt extends Document {
   @Prop({ type: Types.ObjectId, ref: 'Category', required: true })
-  category?: string | Category;
+  category?: string | Clothing;
 
   @Prop({
     type: String,

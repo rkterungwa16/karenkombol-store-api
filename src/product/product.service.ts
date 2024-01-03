@@ -3,7 +3,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 
 import { Product } from './schema/product.schema';
-import { Category } from './category/schema/category.schema';
+import { Clothing } from './clothing/schema/clothing.schema';
 import {
   CreateProductRequestDto,
   ProductResponseDto,
@@ -18,7 +18,7 @@ import { Image } from 'src/lib/image/schema/image.schema';
 @Injectable()
 export class ProductService {
   constructor(
-    @InjectModel(Category.name) private readonly categoryModel: Model<Category>,
+    @InjectModel(Clothing.name) private readonly categoryModel: Model<Clothing>,
     @InjectModel(Product.name) private readonly productModel: Model<Product>,
     @InjectModel(Image.name) private readonly imageModel: Model<Image>,
   ) {}

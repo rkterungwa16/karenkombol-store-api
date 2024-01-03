@@ -1,6 +1,6 @@
-import { ICategory } from '@product/category/interface/category.interface';
+import { IClothing } from '@product/clothing/interface/clothing.interface';
 
-export const createdCategory: ICategory = {
+export const createdCategory: IClothing = {
   _id: 'category_12345',
   name: 'women',
   description: 'female clothes',

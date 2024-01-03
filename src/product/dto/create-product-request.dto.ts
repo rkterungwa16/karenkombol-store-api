@@ -4,13 +4,13 @@ import { ApiProperty } from '@nestjs/swagger';
 import { ProductStatus } from '@product/interface/product.interface';
 import { Transform } from 'class-transformer';
 import { Image } from 'src/lib/image/schema/image.schema';
-import { Category } from '@product/category/schema/category.schema';
+import { Clothing } from '@product/clothing/schema/clothing.schema';
 
 export class CreateProductRequestDto {
   @ApiProperty({
     example: 'categoryId',
   })
-  category: string | Category;
+  category: string | Clothing;
 
   @ApiProperty({
     example: 'image_id_1234',

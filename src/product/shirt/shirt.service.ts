@@ -4,14 +4,14 @@ import { Model, Types, Connection } from 'mongoose';
 
 import { KKConflictException, KKNotFoundException } from '@http/exceptions';
 import { Pagination, PaginationResponseDto } from '@pagination';
-import { ClothingTypes } from '@product/category/interface/category.interface';
+import { ClothingTypes } from '@product/clothing/interface/clothing.interface';
 import { Shirt } from './schema/shirt.schema';
 import { Image } from '@lib/image/schema/image.schema';
 import { CreateShirtDto } from './dto/create-shirt.dto';
 import { ShirtMapper } from './mapper';
 import { UpdateShirtDto } from './dto/update-shirt.dto';
 import { ShirtResponseDto } from './dto/shirt-response.dto';
-import { Category } from '@product/category/schema';
+import { Clothing } from '@product/clothing/schema';
 import { ShirtStyle } from './schema/shirt-style.schema';
 
 @Injectable()
@@ -19,7 +19,7 @@ export class ShirtService {
   constructor(
     @InjectModel(Shirt.name) private readonly shirtModel: Model<Shirt>,
     @InjectModel(Image.name) private readonly imageModel: Model<Image>,
-    @InjectModel(Category.name) private readonly categoryModel: Model<Category>,
+    @InjectModel(Clothing.name) private readonly categoryModel: Model<Clothing>,
     @InjectModel(ShirtStyle.name)
     private readonly shirtStyleModel: Model<ShirtStyle>,
     @Inject('DATABASE_CONNECTION')
@@ -28,7 +28,7 @@ export class ShirtService {
   public async create(
     createShirtDto: CreateShirtDto,
   ): Promise<ShirtResponseDto> {
-    let category: Category & {
+    let category: Clothing & {
       _id: Types.ObjectId;
     };
     let shirt: Shirt & {

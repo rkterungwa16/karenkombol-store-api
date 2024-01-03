@@ -1,7 +1,7 @@
 import { ImageMapper } from '@lib/image/image.mapper';
 import { ShirtResponseDto } from '../dto/shirt-response.dto';
 import { Shirt } from '../schema/shirt.schema';
-import { CategoryMapper } from '@product/category/mappers';
+import { ClothingMapper } from '@product/clothing/mappers';
 import { ShirtStyleMapper } from './shirt-style.mapper';
 
 export class ShirtMapper {
@@ -21,7 +21,7 @@ export class ShirtMapper {
       model?.category &&
       (typeof model?.category === 'string'
         ? model?.category
-        : CategoryMapper.toDto(model?.category));
+        : ClothingMapper.toDto(model?.category));
     dto.image =
       model?.image &&
       (typeof model?.image === 'string'

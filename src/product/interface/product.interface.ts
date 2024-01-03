@@ -1,11 +1,11 @@
-import { ICategory } from '@product/category/interface/category.interface';
+import { IClothing } from '@product/clothing/interface/clothing.interface';
 
 export interface IProduct {
   _id: string;
   imageUrl: string;
   name: string;
   description: string;
-  category: string | ICategory;
+  category: string | IClothing;
   published: boolean;
   status: ProductStatus;
   tags: string[];

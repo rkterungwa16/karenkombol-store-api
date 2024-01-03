@@ -1,7 +1,7 @@
 import { ImageMapper } from '@lib/image/image.mapper';
 import { ProductResponseDto } from './dto';
 import { Product } from './schema/product.schema';
-import { CategoryMapper } from './category/mappers';
+import { ClothingMapper } from './clothing/mappers';
 
 export class ProductMapper {
   public static toDto(model: Product): ProductResponseDto {
@@ -13,7 +13,7 @@ export class ProductMapper {
       model?.category &&
       (typeof model?.category === 'string'
         ? model?.category
-        : CategoryMapper.toDto(model?.category));
+        : ClothingMapper.toDto(model?.category));
     dto.description = model.description;
     dto.image =
       model?.image &&

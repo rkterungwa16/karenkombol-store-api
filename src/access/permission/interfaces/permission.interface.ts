@@ -22,6 +22,7 @@ export enum PermissionResources {
   COLORS = 'colors',
   SIZES = 'sizes',
   CATEGORIES = 'categories',
+  CLOTHING = 'clothing',
   SHIRTS = 'shirts',
   SHIRT_STYLES = 'shirt styles',
 }

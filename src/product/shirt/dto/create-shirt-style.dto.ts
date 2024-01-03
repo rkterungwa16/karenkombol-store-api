@@ -1,7 +1,7 @@
 import { IsOptional, IsString } from 'class-validator';
 
 import { ApiProperty } from '@nestjs/swagger';
-import { ShirtStyles } from '@product/category/interface/category.interface';
+import { ShirtStyles } from '@product/clothing/interface/clothing.interface';
 
 export class CreateShirtStyleDto {
   @IsString()

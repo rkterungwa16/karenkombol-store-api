@@ -1,18 +1,15 @@
 import { Module } from '@nestjs/common';
 import { JwtModule } from '@nestjs/jwt';
 import { MongooseModule } from '@nestjs/mongoose';
+import { ClothingController } from './clothing.controller';
+import { ClothingService } from './clothing.service';
+import { Clothing, CategorySchema } from './schema';
 import { UsersModule } from '@user/user.module';
 import { AccessModule } from '@access/access.module';
 import { TokenModule } from '@auth/token.module';
 import { Image, ImageSchema } from '@lib/image/schema/image.schema';
 import { DBConnectionModule } from '@database/db-connection.module';
 import { Shirt, ShirtSchema } from '@product/shirt/schema/shirt.schema';
-import { ShirtStyle, ShirtStyleSchema } from './schema/shirt-style.schema';
-import { ShirtController } from './shirt.controller';
-import { ShirtService } from './shirt.service';
-import { Clothing, CategorySchema } from '@product/clothing/schema';
-import { ShirtStyleService } from './shirt-style.service';
-import { ShirtStyleController } from './shirt-style.controller';
 
 @Module({
   imports: [
@@ -20,9 +17,6 @@ import { ShirtStyleController } from './shirt-style.controller';
       { name: Clothing.name, schema: CategorySchema },
     ]),
     MongooseModule.forFeature([{ name: Shirt.name, schema: ShirtSchema }]),
-    MongooseModule.forFeature([
-      { name: ShirtStyle.name, schema: ShirtStyleSchema },
-    ]),
     MongooseModule.forFeature([{ name: Image.name, schema: ImageSchema }]),
     DBConnectionModule.register(),
     UsersModule,
@@ -30,15 +24,13 @@ import { ShirtStyleController } from './shirt-style.controller';
     TokenModule,
     JwtModule,
   ],
-  providers: [ShirtService, ShirtStyleService],
+  providers: [ClothingService],
   exports: [
-    MongooseModule.forFeature([{ name: Shirt.name, schema: ShirtSchema }]),
     MongooseModule.forFeature([
-      { name: ShirtStyle.name, schema: ShirtStyleSchema },
+      { name: Clothing.name, schema: CategorySchema },
     ]),
-    ShirtService,
-    ShirtStyleService,
+    ClothingService,
   ],
-  controllers: [ShirtController, ShirtStyleController],
+  controllers: [ClothingController],
 })
-export class ShirtModule {}
+export class ClothingModule {}

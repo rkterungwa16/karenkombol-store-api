@@ -3,7 +3,7 @@ import { ProductController } from './product.controller';
 import { TokenService } from '@auth/token.service';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
-import { CategoryService } from './category/category.service';
+import { ClothingService } from './clothing/clothing.service';
 import { getModelToken } from '@nestjs/mongoose';
 import {
   TestCategoryModel,
@@ -24,7 +24,7 @@ describe('ProductController', () => {
         TokenService,
         JwtService,
         ConfigService,
-        CategoryService,
+        ClothingService,
         ProductService,
         {
           provide: getModelToken('User'),

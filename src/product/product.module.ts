@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
-import { CategoryModule } from './category/category.module';
+import { ClothingModule } from './clothing/clothing.module';
 import { ProductController } from './product.controller';
 import { ProductService } from './product.service';
 import { ProductSchema, Product } from './schema/product.schema';
@@ -27,7 +27,7 @@ import { ShirtModule } from './shirt/shirt.module';
     MongooseModule.forFeature([
       { name: ProductColor.name, schema: ProductColorSchema },
     ]),
-    CategoryModule,
+    ClothingModule,
     ShirtModule,
     ImageModule,
     UsersModule,
@@ -44,7 +44,7 @@ import { ShirtModule } from './shirt/shirt.module';
     MongooseModule.forFeature([
       { name: ProductColor.name, schema: ProductColorSchema },
     ]),
-    CategoryModule,
+    ClothingModule,
     ShirtModule,
   ],
 })

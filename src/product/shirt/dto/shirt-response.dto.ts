@@ -1,7 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { ImageResponseDto } from '../../../lib/image/dto';
 import { ShirtFits } from '@product/interface/shirt.interface';
-import { CategoryResponseDto } from '@product/category/dto';
+import { ClothingResponseDto } from '@product/clothing/dto';
 import { ShirtStyleResponseDto } from './shirt-style-response.dto';
 
 export class ShirtResponseDto {
@@ -18,7 +18,7 @@ export class ShirtResponseDto {
   @ApiProperty({
     example: 'categoryId',
   })
-  category: string | CategoryResponseDto;
+  category: string | ClothingResponseDto;
 
   @ApiProperty({
     example: 'Tunic',
