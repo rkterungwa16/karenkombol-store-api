@@ -19,7 +19,7 @@ export class ShirtService {
   constructor(
     @InjectModel(Shirt.name) private readonly shirtModel: Model<Shirt>,
     @InjectModel(Image.name) private readonly imageModel: Model<Image>,
-    @InjectModel(Clothing.name) private readonly categoryModel: Model<Clothing>,
+    @InjectModel(Clothing.name) private readonly clothingModel: Model<Clothing>,
     @InjectModel(ShirtStyle.name)
     private readonly shirtStyleModel: Model<ShirtStyle>,
     @Inject('DATABASE_CONNECTION')
@@ -28,7 +28,7 @@ export class ShirtService {
   public async create(
     createShirtDto: CreateShirtDto,
   ): Promise<ShirtResponseDto> {
-    let category: Clothing & {
+    let clothing: Clothing & {
       _id: Types.ObjectId;
     };
     let shirt: Shirt & {
@@ -47,12 +47,12 @@ export class ShirtService {
     try {
       const { image_id, style_id, fit } = createShirtDto;
 
-      category = await this.categoryModel.findOne({
+      clothing = await this.clothingModel.findOne({
         name: ClothingTypes.SHIRTS,
       });
 
-      if (!category) {
-        const categories = await this.categoryModel.create(
+      if (!clothing) {
+        const clothings = await this.clothingModel.create(
           [
             {
               name: ClothingTypes.SHIRTS,
@@ -60,7 +60,7 @@ export class ShirtService {
           ],
           { session },
         );
-        category = categories[0];
+        clothing = clothings[0];
       }
 
       if (image_id) {
@@ -82,14 +82,14 @@ export class ShirtService {
       shirt = await this.shirtModel.findOne({
         style: style_id,
         fit,
-        'category.name': ClothingTypes.SHIRTS,
+        'clothing.name': ClothingTypes.SHIRTS,
       });
 
       if (!shirt) {
         const shirts = await this.shirtModel.create(
           [
             {
-              category: category._id,
+              clothing: clothing._id,
               ...createShirtDto,
               image: image_id,
               style: style_id,
@@ -100,14 +100,14 @@ export class ShirtService {
         );
         shirt = shirts[0];
         shirt = await shirt.populate('image');
-        shirt = await shirt.populate('category');
+        shirt = await shirt.populate('clothing');
         shirt = await shirt.populate('style');
       } else {
         throw new KKConflictException('shirt');
       }
 
-      await this.categoryModel.findByIdAndUpdate(
-        category._id,
+      await this.clothingModel.findByIdAndUpdate(
+        clothing._id,
         {
           $push: {
             shirts: shirt._id,
@@ -123,7 +123,7 @@ export class ShirtService {
       if (e?.message) {
         throw e;
       }
-      throw new BadRequestException('category could not be created');
+      throw new BadRequestException('clothing could not be created');
     } finally {
       await session.endSession();
     }
@@ -134,23 +134,23 @@ export class ShirtService {
     updateShirtDto: UpdateShirtDto,
   ): Promise<ShirtResponseDto> {
     try {
-      const { image_id, style_id, category_id, ...others } = updateShirtDto;
-      if (category_id) {
-        const category = await this.imageModel.findById(category_id);
-        if (!category) {
-          throw new KKNotFoundException('category');
+      const { imageId, styleId, clothingId, ...others } = updateShirtDto;
+      if (clothingId) {
+        const clothing = await this.imageModel.findById(clothingId);
+        if (!clothing) {
+          throw new KKNotFoundException('clothing');
         }
       }
 
-      if (image_id) {
-        const image = await this.imageModel.findById(image_id);
+      if (imageId) {
+        const image = await this.imageModel.findById(imageId);
         if (!image) {
           throw new KKNotFoundException('image');
         }
       }
 
-      if (style_id) {
-        const style = await this.shirtStyleModel.findById(style_id);
+      if (styleId) {
+        const style = await this.shirtStyleModel.findById(styleId);
         if (!style) {
           throw new KKNotFoundException('shirt style');
         }
@@ -159,15 +159,15 @@ export class ShirtService {
         .findByIdAndUpdate(
           id,
           {
-            image: image_id,
-            style: style_id,
-            category: category_id,
+            image: imageId,
+            style: styleId,
+            clothing: clothingId,
             ...others,
           },
           { new: true },
         )
         .populate('image')
-        .populate('category')
+        .populate('clothing')
         .populate('style');
       return ShirtMapper.toDto(shirt);
     } catch (e) {
@@ -179,7 +179,7 @@ export class ShirtService {
     const shirt = await this.shirtModel
       .findById(id)
       .populate('image')
-      .populate('category')
+      .populate('clothing')
       .populate('style');
     if (!shirt) {
       throw new KKNotFoundException('shirt');
@@ -198,7 +198,7 @@ export class ShirtService {
         ...(filter['$and'].length && { $and: filter['$and'] }),
       })
       .populate('image')
-      .populate('category')
+      .populate('clothing')
       .populate('style')
       .skip(skip)
       .limit(limit);

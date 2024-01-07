@@ -22,7 +22,7 @@ import { ShirtStyle } from './shirt-style.schema';
 @Schema({ timestamps: true, autoIndex: true })
 export class Shirt extends Document {
   @Prop({ type: Types.ObjectId, ref: 'Category', required: true })
-  category?: string | Clothing;
+  clothing?: string | Clothing;
 
   @Prop({
     type: String,

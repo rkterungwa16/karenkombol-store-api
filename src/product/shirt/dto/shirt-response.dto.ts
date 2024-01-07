@@ -16,9 +16,9 @@ export class ShirtResponseDto {
   name: string;
 
   @ApiProperty({
-    example: 'categoryId',
+    example: 'clothingId',
   })
-  category: string | ClothingResponseDto;
+  clothing: string | ClothingResponseDto;
 
   @ApiProperty({
     example: 'Tunic',

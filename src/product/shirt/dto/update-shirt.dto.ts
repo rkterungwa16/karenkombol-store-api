@@ -7,18 +7,18 @@ import { ShirtFits } from '@product/interface/shirt.interface';
 export class UpdateShirtDto {
   @IsOptional()
   @IsString()
-  category_id: string;
+  clothingId: string;
 
   @IsOptional()
   @IsString()
-  style_id: string;
+  styleId: string;
 
   @IsOptional()
   @IsString()
   @ApiProperty({
     example: 'img_id',
   })
-  image_id?: string;
+  imageId?: string;
 
   @IsOptional()
   @IsString()

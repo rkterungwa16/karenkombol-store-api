@@ -17,11 +17,11 @@ export class ShirtMapper {
       (typeof model?.style === 'string'
         ? model?.style
         : ShirtStyleMapper.toDto(model?.style));
-    dto.category =
-      model?.category &&
-      (typeof model?.category === 'string'
-        ? model?.category
-        : ClothingMapper.toDto(model?.category));
+    dto.clothing =
+      model?.clothing &&
+      (typeof model?.clothing === 'string'
+        ? model?.clothing
+        : ClothingMapper.toDto(model?.clothing));
     dto.image =
       model?.image &&
       (typeof model?.image === 'string'

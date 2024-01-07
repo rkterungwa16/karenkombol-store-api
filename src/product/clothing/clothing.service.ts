@@ -16,8 +16,6 @@ import { Pagination, PaginationResponseDto } from '@pagination';
 export class ClothingService {
   constructor(
     @InjectModel(Clothing.name) private readonly clothingModel: Model<Clothing>,
-    @Inject('DATABASE_CONNECTION')
-    private dbConnection: Connection,
   ) {}
   public async create(
     createClothingDto: CreateClothingDto,
