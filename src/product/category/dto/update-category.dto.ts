@@ -1,22 +1,39 @@
-import { IsOptional, IsString } from 'class-validator';
+import { IsEnum, IsOptional } from 'class-validator';
 
 import { ApiProperty } from '@nestjs/swagger';
-import { Transform } from 'class-transformer';
-import { ClothingTypes } from '../interface/category.interface';
+import {
+  AgeGroup,
+  BodyType,
+  Gender,
+  HeightGroup,
+} from '../interface/category.interface';
 
 export class UpdateCategoryDto {
-  @IsOptional()
-  @IsString()
   @ApiProperty({
-    example: 'women',
+    example: 'male',
   })
-  @Transform(({ value }) => value.toLowerCase())
-  name?: ClothingTypes;
+  @IsOptional()
+  @IsEnum(Gender)
+  gender: string | Gender;
 
-  @IsOptional()
-  @IsString()
   @ApiProperty({
-    example: 'category description',
+    example: 'woman',
   })
-  description?: string;
+  @IsOptional()
+  @IsEnum(AgeGroup)
+  ageGroup?: string | AgeGroup;
+
+  @ApiProperty({
+    example: 'slim',
+  })
+  @IsOptional()
+  @IsEnum(BodyType)
+  bodyType?: string | BodyType;
+
+  @ApiProperty({
+    example: 'tall',
+  })
+  @IsOptional()
+  @IsEnum(HeightGroup)
+  heightGroup?: string | HeightGroup;
 }

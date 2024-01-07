@@ -1,4 +1,3 @@
-import { ShirtMapper } from '@product/shirt/mapper';
 import { CategoryResponseDto } from '../dto';
 import { Category } from '../schema/category.schema';
 
@@ -7,17 +6,10 @@ export class CategoryMapper {
     const dto = new CategoryResponseDto();
 
     dto.id = model._id;
-    dto.name = model.name;
-    dto.description = model.description;
-    dto.shirts =
-      model?.shirts &&
-      model?.shirts.map((_shirt) => {
-        if (_shirt) {
-          return typeof _shirt === 'string'
-            ? _shirt
-            : ShirtMapper.toDto(_shirt);
-        }
-      });
+    dto.gender = model.gender;
+    dto.bodyType = model.bodyType;
+    dto.heightGroup = model.heightGroup;
+    dto.ageGroup = model.ageGroup;
     dto.createdAt = model.createdAt;
     dto.updatedAt = model.updatedAt;
     return dto;

@@ -1,6 +1,6 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model, Types, Connection } from 'mongoose';
+import { Model, Types } from 'mongoose';
 
 import { Category } from './schema/category.schema';
 import {
@@ -16,8 +16,6 @@ import { Pagination, PaginationResponseDto } from '@pagination';
 export class CategoryService {
   constructor(
     @InjectModel(Category.name) private readonly categoryModel: Model<Category>,
-    @Inject('DATABASE_CONNECTION')
-    private dbConnection: Connection,
   ) {}
   public async create(
     createCategoryDto: CreateCategoryDto,
@@ -25,9 +23,16 @@ export class CategoryService {
     let category: Category & {
       _id: Types.ObjectId;
     };
-    const name = createCategoryDto.name;
+    const gender = createCategoryDto.gender;
+    const bodyType = createCategoryDto.bodyType;
+    const heightGroup = createCategoryDto.heightGroup;
+    const ageGroup = createCategoryDto.ageGroup;
+
     category = await this.categoryModel.findOne({
-      name,
+      gender,
+      bodyType,
+      heightGroup,
+      ageGroup,
     });
     if (!category) {
       category = await this.categoryModel.create({
@@ -39,94 +44,16 @@ export class CategoryService {
     return CategoryMapper.toDto(category);
   }
 
-  // public async create(
-  //   createCategoryDto: CreateCategoryDto,
-  // ): Promise<CategoryResponseDto> {
-  //   let category: Category & {
-  //     _id: Types.ObjectId;
-  //   };
-  //   let shirt: Shirt & {
-  //     _id: Types.ObjectId;
-  //   };
-  //   const session = await this.dbConnection.startSession();
-  //   session.startTransaction();
-  //   try {
-  //     const name = createCategoryDto.name;
-  //     category = await this.categoryModel.findOne({
-  //       name,
-  //     });
-  //     if (!category) {
-  //       const categories = await this.categoryModel.create(
-  //         [
-  //           {
-  //             name,
-  //           },
-  //         ],
-  //         { session },
-  //       );
-  //       category = categories[0];
-  //       // throw new KKConflictException('clothing');
-  //     }
-  //     // Shirt categories
-  //     if (category.name === ClothingTypes.SHIRT) {
-  //       shirt = await this.shirtModel.findById(createCategoryDto.shirt);
-  //       if (!shirt) {
-  //         throw new KKConflictException('category');
-  //       }
-  //       if (shirt?.category !== category._id) {
-  //         throw new KKConflictException('shirt');
-  //       }
-
-  //       category = await this.categoryModel
-  //         .findByIdAndUpdate(
-  //           category._id,
-  //           {
-  //             $push: {
-  //               shirts: shirt._id,
-  //             },
-  //           },
-  //           { new: true, session },
-  //         )
-  //         .populate({
-  //           path: 'shirt',
-  //           model: 'Shirt',
-  //           populate: {
-  //             path: 'image',
-  //             model: 'Image',
-  //           },
-  //         })
-  //         .populate('clothing');
-  //       await session.commitTransaction();
-  //       return CategoryMapper.toDto(category);
-  //     } else {
-  //       throw new KKNotFoundException('clothing');
-  //     }
-  //   } catch (e) {
-  //     await session.abortTransaction();
-  //     if (e?.message) {
-  //       throw e;
-  //     }
-  //     throw new BadRequestException('category could not be created');
-  //   } finally {
-  //     await session.endSession();
-  //   }
-  // }
-
   public async update(
     id: string,
     updateCategoryRequestDto: UpdateCategoryDto,
   ): Promise<CategoryResponseDto> {
     try {
-      const updatedCategory = await this.categoryModel
-        .findByIdAndUpdate(id, updateCategoryRequestDto, { new: true })
-        .populate({
-          path: 'shirts',
-          model: 'Shirt',
-          populate: {
-            path: 'image',
-            model: 'Image',
-          },
-        });
+      const updatedCategory = await this.categoryModel.findByIdAndUpdate(
+        id,
+        updateCategoryRequestDto,
+        { new: true },
+      );
       return CategoryMapper.toDto(updatedCategory);
     } catch (e) {
       throw new KKNotFoundException('category');
@@ -134,17 +61,7 @@ export class CategoryService {
   }
 
   public async fetchCategoryById(id: string): Promise<CategoryResponseDto> {
-    const category = await this.categoryModel
-      .findById(id)
-      .populate({
-        path: 'shirt',
-        model: 'Shirt',
-        populate: {
-          path: 'image',
-          model: 'Image',
-        },
-      })
-      .populate('clothing');
+    const category = await this.categoryModel.findById(id);
     if (!category) {
       throw new KKNotFoundException('category');
     }
@@ -161,7 +78,6 @@ export class CategoryService {
       .find({
         ...(filter['$and'].length && { $and: filter['$and'] }),
       })
-      .populate('image')
       .skip(skip)
       .limit(limit);
     if (categories.length) {

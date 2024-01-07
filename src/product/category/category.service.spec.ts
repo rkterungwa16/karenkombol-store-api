@@ -14,7 +14,6 @@ import { setModelData } from '../../test/model';
 import { CategoryService } from './category.service';
 import { Category, CategorySchema } from './schema/category.schema';
 import { KKConflictException } from '@http/exceptions';
-import { ClothingTypes } from './interface/category.interface';
 
 describe('CategoryService', () => {
   let service: CategoryService;
@@ -45,7 +44,7 @@ describe('CategoryService', () => {
     service = module.get<CategoryService>(CategoryService);
     categoryModel = module.get(getModelToken('Category'));
     category = await setModelData(categoryModel).populate({
-      name: 'male',
+      gender: 'male',
     });
   });
 
@@ -60,26 +59,26 @@ describe('CategoryService', () => {
   describe('create', () => {
     it('should create a new category', async () => {
       const result = await service.create({
-        name: ClothingTypes.SHIRT,
+        gender: 'female',
+        bodyType: 'slim',
+        ageGroup: 'woman',
+        heightGroup: 'tall',
       });
-      expect(result.name).toEqual('female');
+      expect(result.gender).toEqual('female');
+      expect(result.bodyType).toEqual('slim');
+      expect(result.ageGroup).toEqual('woman');
+      expect(result.heightGroup).toEqual('tall');
     });
 
     it('should throw error if category already exists', async () => {
       await expect(
         service.create({
-          name: ClothingTypes.SHIRT,
+          gender: 'female',
+          bodyType: 'slim',
+          ageGroup: 'woman',
+          heightGroup: 'tall',
         }),
       ).rejects.toThrow(new KKConflictException('category'));
-    });
-  });
-
-  describe('update', () => {
-    it('should update existing category', async () => {
-      const result = await service.update(category._id, {
-        description: 'items for men',
-      });
-      expect(result.description).toEqual('items for men');
     });
   });
 });

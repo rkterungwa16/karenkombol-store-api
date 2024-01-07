@@ -1,22 +1,39 @@
 import { instanceToPlain } from 'class-transformer';
-import { IsOptional, IsString } from 'class-validator';
+import { IsEnum, IsOptional } from 'class-validator';
 import { PaginationQuery } from '@pagination';
+import {
+  AgeGroup,
+  BodyType,
+  Gender,
+  HeightGroup,
+} from '../interface/category.interface';
 
 export class CategoryQueryDto extends PaginationQuery {
   @IsOptional()
-  @IsString()
-  name?: string;
+  @IsEnum(Gender)
+  gender: string | Gender;
 
   @IsOptional()
-  @IsString()
-  description?: string;
+  @IsEnum(AgeGroup)
+  ageGroup?: string | AgeGroup;
+
+  @IsOptional()
+  @IsEnum(BodyType)
+  bodyType?: string | BodyType;
+
+  @IsOptional()
+  @IsEnum(HeightGroup)
+  heightGroup?: string | HeightGroup;
 }
 
 export class CategoryQueryWithFilterDto extends CategoryQueryDto {
   filter() {
     return {
       $and: [
-        ...(this.name ? [{ type: this.name }] : []),
+        ...(this.gender ? [{ gender: this.gender }] : []),
+        ...(this.ageGroup ? [{ ageGroup: this.ageGroup }] : []),
+        ...(this.bodyType ? [{ bodyType: this.bodyType }] : []),
+        ...(this.heightGroup ? [{ heightGroup: this.heightGroup }] : []),
         ...(this.createdAt
           ? [{ createdAt: instanceToPlain(this.createdAt) }]
           : []),
