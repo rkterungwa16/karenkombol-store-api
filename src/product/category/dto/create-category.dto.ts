@@ -16,7 +16,7 @@ export class CreateCategoryDto {
   gender: string | Gender;
 
   @ApiProperty({
-    example: 'woman',
+    example: 'adult',
   })
   @IsEnum(AgeGroup)
   ageGroup?: string | AgeGroup;

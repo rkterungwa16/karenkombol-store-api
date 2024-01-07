@@ -17,7 +17,7 @@ export enum AgeGroup {
 
 export enum BodyType {
   REGULAR = 'regular',
-  LARGE_PLUS = 'large/plus/husky',
+  LARGE = 'large',
   SLIM = 'slim',
 }
 

@@ -17,7 +17,7 @@ export class UpdateCategoryDto {
   gender: string | Gender;
 
   @ApiProperty({
-    example: 'woman',
+    example: 'adult',
   })
   @IsOptional()
   @IsEnum(AgeGroup)

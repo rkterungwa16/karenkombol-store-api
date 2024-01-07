@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, Types } from 'mongoose';
+import { instanceToPlain } from 'class-transformer';
 
 import { Category } from './schema/category.schema';
 import {
@@ -23,20 +24,14 @@ export class CategoryService {
     let category: Category & {
       _id: Types.ObjectId;
     };
-    const gender = createCategoryDto.gender;
-    const bodyType = createCategoryDto.bodyType;
-    const heightGroup = createCategoryDto.heightGroup;
-    const ageGroup = createCategoryDto.ageGroup;
 
+    const createCategoryProps = instanceToPlain(createCategoryDto);
     category = await this.categoryModel.findOne({
-      gender,
-      bodyType,
-      heightGroup,
-      ageGroup,
+      ...createCategoryProps,
     });
     if (!category) {
       category = await this.categoryModel.create({
-        name,
+        ...createCategoryProps,
       });
     } else {
       throw new KKConflictException('category');

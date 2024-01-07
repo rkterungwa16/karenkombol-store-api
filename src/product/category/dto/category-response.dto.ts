@@ -17,7 +17,7 @@ export class CategoryResponseDto {
   gender: string | Gender;
 
   @ApiProperty({
-    example: 'woman',
+    example: 'adult',
   })
   ageGroup?: string | AgeGroup;
 
