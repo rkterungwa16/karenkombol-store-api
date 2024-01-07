@@ -60,7 +60,7 @@ describe('ClothingService', () => {
   describe('create', () => {
     it('should create a new category', async () => {
       const result = await service.create({
-        name: ClothingTypes.SHIRT,
+        name: ClothingTypes.SHIRTS,
       });
       expect(result.name).toEqual('female');
     });
@@ -68,7 +68,7 @@ describe('ClothingService', () => {
     it('should throw error if category already exists', async () => {
       await expect(
         service.create({
-          name: ClothingTypes.SHIRT,
+          name: ClothingTypes.SHIRTS,
         }),
       ).rejects.toThrow(new KKConflictException('category'));
     });
