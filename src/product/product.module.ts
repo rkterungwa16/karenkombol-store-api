@@ -15,6 +15,7 @@ import { ProductSize, ProductSizeSchema } from './schema/product-size.schema';
 import { TokenModule } from '@auth/token.module';
 import { AccessModule } from '@access/access.module';
 import { ShirtModule } from './shirt/shirt.module';
+import { CategoryModule } from './category/category.module';
 
 @Module({
   providers: [ProductService],
@@ -34,6 +35,7 @@ import { ShirtModule } from './shirt/shirt.module';
     TokenModule,
     JwtModule,
     AccessModule,
+    CategoryModule,
   ],
   exports: [
     ProductService,
@@ -46,6 +48,7 @@ import { ShirtModule } from './shirt/shirt.module';
     ]),
     ClothingModule,
     ShirtModule,
+    CategoryModule,
   ],
 })
 export class ProductModule {}
