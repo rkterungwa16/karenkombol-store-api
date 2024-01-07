@@ -1,6 +1,6 @@
 import { ClothingTypes } from '@product/clothing/interface/clothing.interface';
 
-export const clothing = [
+export const clothings = [
   {
     name: ClothingTypes.SHIRTS,
     description: `
